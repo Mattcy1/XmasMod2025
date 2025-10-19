@@ -8,6 +8,7 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
 using XmasMod2025;
 using XmasMod2025.Towers;
+using XmasMod2025.UI;
 using static MelonLoader.MelonLogger;
 using static XmasMod2025.UI.Gift;
 
@@ -49,6 +50,11 @@ public class XmasMod2025 : BloonsTD6Mod
         if (GiftOpenerUI.instance == null)
         {
             GiftOpenerUI.CreatePanel();
+        }
+
+        if (GiftCount.GiftCounterUI.instance == null)
+        {
+            GiftCount.GiftCounterUI.CreatePanel();
         }
     }
 
