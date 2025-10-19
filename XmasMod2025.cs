@@ -74,15 +74,7 @@ public class XmasMod2025 : BloonsTD6Mod
 
         if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
         {
-            var upgradeCost = newBaseTowerModel.cost - tower.towerModel.cost;
-            if (upgradeCost < 0) upgradeCost = 0;
-
-            XmasMod2025.Gifts -= (int)upgradeCost;
-
-            if (InGame.instance != null && InGame.instance.bridge != null)
-            {
-                InGame.instance.bridge.simulation.CreateTextEffect(tower.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"-{(int)upgradeCost} Gifts", true);
-            }
+            
         }
     }
 }
