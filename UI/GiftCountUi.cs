@@ -1,57 +1,70 @@
-﻿using BTD_Mod_Helper.Extensions;
-using CommandLine;
-using HarmonyLib;
-using Il2Cpp;
+﻿using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Components;
+using BTD_Mod_Helper.Api.Enums;
+using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
-using Il2CppAssets.Scripts.Unity.UI_New.InGame.Stats;
+using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using MelonLoader;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace XmasMod2025.UI;
-
-[RegisterTypeInIl2Cpp(false)]
-public class GiftCountUi : MonoBehaviour
+public class GiftCount
 {
-    private NK_TextMeshProUGUI text;
-    private Image icon;
-
-    public void Start()
+    [RegisterTypeInIl2Cpp(false)]
+    public class GiftCounterUI : MonoBehaviour
     {
-        text = GetComponentInChildren<NK_TextMeshProUGUI>();
-        text.gameObject.RemoveComponent<CashDisplay>();
-        icon = GetComponentInChildren<Image>();
-        transform.GetChild(0).Destroy();
+        public static GiftCounterUI instance = null;
+        public static ModHelperText? gift;
 
-        while (transform.childCount > 2)
+        public void Close()
         {
-            transform.GetChild(2).Destroy();
-        }
-    }
-
-    void Update()
-    {
-        text.text = XmasMod2025.Gifts.ToString("#,###");
-    }
-
-    /*[HarmonyPatch(typeof(CashDisplay), nameof(CashDisplay.AddListeners))]
-    private static class DynamicUiObject_OnGameStart
-    {
-        public static void Postfix(CashDisplay __instance)
-        {
-            try
+            if (gameObject)
             {
-                if (__instance.transform.parent.name != "GiftDisplay")
+                gameObject.Destroy();
+            }
+        }
+
+        public static void CreatePanel()
+        {
+            if (InGame.instance != null)
+            {
+                RectTransform rect = InGame.instance.uiRect;
+                var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 0, 0, 0), VanillaSprites.BrownPanel);
+                instance = panel.AddComponent<GiftCounterUI>();
+
+                var Claim = panel.AddImage(new("Button_", -820, 1200, 175), ModContent.GetTextureGUID<XmasMod2025>("PresentIcon"));
+                gift = Claim.AddText(new("Text_", 400, 0, 700, 240), "$10,000,000", 100);
+
+                var textButton = gift.gameObject.AddComponent<Button>();
+                textButton.onClick.AddListener(SetGift);
+
+                var iconButton = Claim.gameObject.AddComponent<Button>();
+                iconButton.onClick.AddListener(SetGift);
+
+                UpdateCount();
+            }
+        }
+        public static void UpdateCount()
+        {
+            if(gift != null)
+            {
+                gift.Text.text = "$" + XmasMod2025.Gifts.ToString("#,###");
+            }
+        }
+
+        public static void SetGift()
+        {
+            if(InGame.instance != null)
+            {
+                if(InGame.instance.bridge.IsSandboxMode())
                 {
-                    var obj = __instance.transform.parent.gameObject.Duplicate();
-                    obj.name = "GiftDisplay";
-                    obj.AddComponent<GiftCountUi>();
+                    Il2CppSystem.Action<int> wantedGifts = (Il2CppSystem.Action<int>)delegate (int newGifts)
+                    { if (newGifts > 0) { XmasMod2025.Gifts = newGifts; } };
+
+                    PopupScreen.instance.ShowSetValuePopup("Gifts", "Set Gifts?", wantedGifts, 100000);
                 }
             }
-            catch
-            {
-                
-            }
         }
-    }*/
+    }
 }
