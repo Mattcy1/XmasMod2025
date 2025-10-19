@@ -1,4 +1,5 @@
-﻿using BTD_Mod_Helper.Api;
+﻿using System;
+using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
@@ -54,7 +55,7 @@ namespace XmasMod2025.Towers
         }
     }
 
-    public class Uprade1 : ModUpgrade<GiftMonkey>
+    public class Upgrade1 : ChristmasUpgrade<GiftMonkey>
     {
         public override int Path => MIDDLE;
 
@@ -67,7 +68,7 @@ namespace XmasMod2025.Towers
         }
     }
 
-    public class Uprade2 : ModUpgrade<GiftMonkey>
+    public class Upgrade2 : ChristmasUpgrade<GiftMonkey>
     {
         public override int Path => MIDDLE;
 
@@ -81,7 +82,7 @@ namespace XmasMod2025.Towers
     }
 
 
-    public class Uprade3 : ModUpgrade<GiftMonkey>
+    public class Upgrade3 : ChristmasUpgrade<GiftMonkey>
     {
         public override int Path => MIDDLE;
 
@@ -95,7 +96,7 @@ namespace XmasMod2025.Towers
     }
 
 
-    public class Uprade4 : ModUpgrade<GiftMonkey>
+    public class Upgrade4 : ChristmasUpgrade<GiftMonkey>
     {
         public override int Path => MIDDLE;
 
@@ -109,7 +110,7 @@ namespace XmasMod2025.Towers
     }
 
 
-    public class Uprade5 : ModUpgrade<GiftMonkey>
+    public class Upgrade5 : ChristmasUpgrade<GiftMonkey>
     {
         public override int Path => MIDDLE;
 
@@ -171,9 +172,9 @@ namespace XmasMod2025.Towers
                 }
 
                 MelonLogger.Msg($"Rolled: {rolledTower}");
-                Il2CppSystem.Action<bool> something = (Il2CppSystem.Action<bool>) delegate { };
+                Action<bool> callback = _ => { };
 
-                InGame.instance.bridge.CreateTowerAt(new Vector2(__instance.tower.Position.X, __instance.tower.Position.Y), Game.instance.model.GetTowerFromId(rolledTower), ObjectId.Create((uint)random.Next(0, 99999), 0), false, something, true, true, false, 0, false);
+                InGame.instance.bridge.CreateTowerAt(new Vector2(__instance.tower.Position.X, __instance.tower.Position.Y), Game.instance.model.GetTowerFromId(rolledTower), ObjectId.Create((uint)random.Next(0, 99999), 0), false, callback, true, true, false, 0, false);
 
                 __instance.tower.worth = 0;
                 __instance.tower.SellTower();
