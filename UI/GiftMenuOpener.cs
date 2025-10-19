@@ -41,10 +41,5 @@ public class Gift
                 gift = Claim.AddText(new("Text_", 0, -65/*-120*/, 200, 150), $"Gift Menu");
             }
         }
-
-        public static void UpdateText()
-        {
-            //gift.Text.text = $"{XmasMod2025.Gifts}";
-        }
     }
 }

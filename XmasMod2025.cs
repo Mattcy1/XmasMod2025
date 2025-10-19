@@ -6,6 +6,7 @@ using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation.Towers;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
+using Octokit;
 using XmasMod2025;
 using XmasMod2025.Towers;
 using XmasMod2025.UI;
@@ -19,6 +20,10 @@ namespace XmasMod2025;
 
 public class XmasMod2025 : BloonsTD6Mod
 {
+    public delegate void GiftsUpdated_Delegate(int gifts);
+
+    public static event GiftsUpdated_Delegate? OnGiftsUpdated;
+
     private static int gifts;
 
     public static int Gifts
@@ -29,7 +34,7 @@ public class XmasMod2025 : BloonsTD6Mod
             int increase = value - gifts;
             gifts = value;
 
-            GiftOpenerUI.UpdateText();
+            OnGiftsUpdated?.Invoke(value);
 
             if (increase > 0)
             {
@@ -52,10 +57,17 @@ public class XmasMod2025 : BloonsTD6Mod
             GiftOpenerUI.CreatePanel();
         }
 
-        if (GiftCount.GiftCounterUI.instance == null)
+        if (GiftCounterUI.instance == null)
         {
-            GiftCount.GiftCounterUI.CreatePanel();
+            GiftCounterUI.CreatePanel();
         }
+
+        gifts = 25;
+    }
+
+    public override void OnRestart()
+    {
+        gifts = 25;
     }
 
     public override void OnTowerSelected(Tower tower)
@@ -73,14 +85,13 @@ public class XmasMod2025 : BloonsTD6Mod
             GiftOpenerUI.CreatePanel();
         }
     }
-
     public override void OnTowerUpgraded(Tower tower, string upgradeName, TowerModel newBaseTowerModel)
     {
         var modTower = tower.towerModel.GetModTower();
 
         if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
         {
-            
+
         }
     }
 }
