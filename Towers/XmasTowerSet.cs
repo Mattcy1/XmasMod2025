@@ -4,6 +4,7 @@ using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
 using CommandLine;
 using HarmonyLib;
+using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation;
 using Il2CppAssets.Scripts.Simulation.Input;
 using Il2CppAssets.Scripts.Simulation.Towers;
@@ -11,6 +12,7 @@ using Il2CppAssets.Scripts.Unity.Bridge;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.RightMenu;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.StoreMenu;
+using MelonLoader;
 
 namespace XmasMod2025.Towers;
 
@@ -81,14 +83,14 @@ public class XmasTowerSet : ModTowerSet
         public static void Postfix(Tower __instance)
         {
             var modTower = __instance.towerModel.GetModTower();
-            if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
+            if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts && __instance.worth > 0)
             {
                 __instance.Sim.AddCash(-__instance.SaleValue, Simulation.CashType.Normal, 1, (Simulation.CashSource)12);
                 XmasMod2025.Gifts += (int)__instance.SaleValue;
 
                 if (InGame.instance != null || InGame.instance.bridge != null)
                 {
-                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{cTower.Cost} Gifts", true);
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{__instance.SaleValue} Gifts", true);
                 }
             }
         }
