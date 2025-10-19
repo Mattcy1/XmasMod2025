@@ -2,13 +2,13 @@
 
 namespace XmasMod2025.Towers;
 
-public class SnowflakeTest : ChristmasTower
+public class SnowMonkey : ChristmasTower
 {
     public override void ModifyBaseTowerModel(TowerModel towerModel)
     {
         
     }
 
-    public override string BaseTower => TowerType.DartMonkey;
-    public override int Cost => 4;
+    public override string BaseTower => "DartMonkey";
+    public override int Cost => 35;
 }

@@ -16,17 +16,15 @@ using XmasMod2025.Towers;
 using static XmasMod2025.UI.Gift;
 
 namespace XmasMod2025.UI;
-public class Pacthes
+
+[HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Open))]
+internal static class MainMenu_Open
 {
-    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.ReOpen))]
-    private static class MainMenu_Pacth
+    public static void Postfix(MainMenu __instance)
     {
-        public static void Postfix(MainMenu __instance)
+        if (GiftOpenerUI.instance != null)
         {
-            if (GiftOpenerUI.instance != null)
-            {
-                GiftOpenerUI.instance.Close();
-            }
+            GiftOpenerUI.instance.Close();
         }
     }
 }

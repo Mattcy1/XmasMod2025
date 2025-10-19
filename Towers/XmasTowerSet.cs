@@ -65,6 +65,7 @@ public class XmasTowerSet : ModTowerSet
             { 
                 tower.sim.AddCash(tower.tower.worth, (Simulation.CashSource)12);
                 XmasMod2025.Gifts -= cTower.Cost;
+                tower.tower.worth = cTower.Cost;
 
                 if (InGame.instance != null || InGame.instance.bridge != null)
                 {
@@ -75,15 +76,15 @@ public class XmasTowerSet : ModTowerSet
     }
 
     [HarmonyPatch(typeof(Tower), nameof(Tower.OnSold))]
-    private static class TowerSold_Pacth
+    private static class Tower_OnSold
     {
         public static void Postfix(Tower __instance)
         {
             var modTower = __instance.towerModel.GetModTower();
             if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
             {
-                __instance.Sim.AddCash(0, Simulation.CashType.Normal, 1, (Simulation.CashSource)12);
-                XmasMod2025.Gifts += cTower.Cost;
+                __instance.Sim.AddCash(-__instance.SaleValue, Simulation.CashType.Normal, 1, (Simulation.CashSource)12);
+                XmasMod2025.Gifts += (int)__instance.SaleValue;
 
                 if (InGame.instance != null || InGame.instance.bridge != null)
                 {
