@@ -33,9 +33,16 @@ public class Gift
                 var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 0, 0, 0), VanillaSprites.BrownPanel);
                 instance = panel.AddComponent<GiftOpenerUI>();
 
-                var Claim = panel.AddButton(new("Button_", 1530f, 1000f, 240f), ModContent.GetTextureGUID<XmasMod2025>("PresentsButton"), new System.Action(() =>
+                var Claim = panel.AddButton(new("Button_", 1515f, 980f, 240f), ModContent.GetTextureGUID<XmasMod2025>("PresentsButton"), new System.Action(() =>
                 {
-                    PopupScreen.instance?.ShowOkPopup($"WIP");
+                    if(GiftMenu.instance == null)
+                    {
+                        GiftMenu.CreatePanel();
+                    }
+                    else
+                    {
+                        GiftMenu.instance.Close();
+                    }
                 }));
 
                 gift = Claim.AddText(new("Text_", 0, -65/*-120*/, 200, 150), $"Gift Menu");
