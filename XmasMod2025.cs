@@ -50,7 +50,7 @@ public class XmasMod2025 : BloonsTD6Mod
         get => totalGifts;
     }
 
-    public override void OnNewGameModel(GameModel result)
+    public override void OnMatchStart()
     {
         if (GiftOpenerUI.instance == null)
         {
@@ -63,11 +63,13 @@ public class XmasMod2025 : BloonsTD6Mod
         }
 
         gifts = 25;
+        totalGifts = 25;
     }
 
     public override void OnRestart()
     {
         gifts = 25;
+        totalGifts = 25;
     }
 
     public override void OnTowerSelected(Tower tower)
