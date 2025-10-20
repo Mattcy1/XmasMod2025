@@ -50,7 +50,7 @@ public class XmasMod2025 : BloonsTD6Mod
         get => totalGifts;
     }
 
-    public override void OnNewGameModel(GameModel result)
+    public override void OnMatchStart()
     {
         if (GiftOpenerUI.instance == null)
         {
