@@ -60,11 +60,6 @@ namespace XmasMod2025.Towers
 
             public override void ModifyDisplayNode(UnityDisplayNode node)
             {
-                node.GetMeshRenderers().ForEach(r =>
-                {
-                    r.ApplyOutlineShader();
-                    r.SetOutlineColor(new Color32(1, 53, 1, 255));
-                });
             }
         }
     }

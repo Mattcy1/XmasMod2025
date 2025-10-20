@@ -3,6 +3,7 @@ using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame.Stats;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using MelonLoader;
 using UnityEngine;
@@ -52,9 +53,10 @@ public class GiftCounterUI : MonoBehaviour
         {
             RectTransform rect = InGame.instance.uiRect;
             var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 0, 0, 0), VanillaSprites.BrownPanel);
+            panel.transform.SetParent(FindFirstObjectByType<CashDisplay>().transform.parent.parent);
             instance = panel.AddComponent<GiftCounterUI>();
 
-            var Claim = panel.AddImage(new("Button_", -820, 1200, 175), ModContent.GetTextureGUID<XmasMod2025>("PresentIcon"));
+            var Claim = panel.AddImage(new("Button_", 225, -90, 175), ModContent.GetTextureGUID<XmasMod2025>("PresentIcon"));
             giftText = Claim.AddText(new("Text_", 460, 0, 700, 240), XmasMod2025.Gifts.ToString("#,###"), 100);
             giftText.Text.alignment = Il2CppTMPro.TextAlignmentOptions.Left;
 
