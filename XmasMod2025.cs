@@ -1,13 +1,17 @@
 ﻿using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
+using Il2CppAssets.Scripts;
 using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Simulation.Objects;
 using Il2CppAssets.Scripts.Simulation.Towers;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
 using Octokit;
+using System.Collections.Generic;
 using XmasMod2025;
+using XmasMod2025.GiftShop.BuffsItems;
 using XmasMod2025.Towers;
 using XmasMod2025.UI;
 using static MelonLoader.MelonLogger;
@@ -21,7 +25,12 @@ namespace XmasMod2025;
 public class XmasMod2025 : BloonsTD6Mod
 {
     public static float PresentBloonChance = 0f;
-    
+    public static int[] TreeDropRates = { 3, 5 };
+    public static int FestiveSpritActiveRounds = 0;
+    public static bool FestiveSpiritActive = false;
+    public static Tower FestiveSpiritTower = null;
+    public static List<ObjectId> GiftOfGivingTowersIds = new List<ObjectId>();
+
     public delegate void GiftsUpdated_Delegate(double gifts);
 
     public static event GiftsUpdated_Delegate? OnGiftsUpdated;
@@ -74,11 +83,57 @@ public class XmasMod2025 : BloonsTD6Mod
         totalGifts = 25;
     }
 
+    public override void OnTowerCreated(Tower tower, Entity target, Model modelToUse)
+    {
+        if(tower.towerModel.baseId == ModContent.TowerID<FestiveSpiritTower>())
+        {
+            FestiveSpiritTower = tower;
+        }
+    }
+
     public override void OnTowerSelected(Tower tower)
     {
         if (GiftOpenerUI.instance != null)
         {
             GiftOpenerUI.instance.Close();
+        }
+    }
+
+    public override void OnTowerDestroyed(Tower tower)
+    {
+        if (tower.towerModel.baseId == ModContent.TowerID<ElfHelper>())
+        {
+            InGame.instance.bridge.simulation.SpawnEffect(ModContent.CreatePrefabReference<GiftEffect>(), tower.Position, 0, 2, 120);
+        }
+    }
+
+    public override void OnRoundEnd()
+    {
+        BuffHandler.GiftOfGivingHandler(false);
+
+        if(FestiveSpritActiveRounds > 0)
+        {
+            FestiveSpritActiveRounds--;
+        }
+
+        if(FestiveSpiritActive)
+        {
+            if(FestiveSpritActiveRounds == 0)
+            {
+                if(FestiveSpiritTower != null)
+                {
+                    FestiveSpiritTower.worth = 0;
+                    FestiveSpiritTower.SellTower();
+                }
+            }
+        }
+
+        foreach(var tower in InGame.instance.GetTowers())
+        {
+            if(tower.towerModel.baseId == ModContent.TowerID<ElfSpawner>())
+            {
+                tower.SellTower();
+            }
         }
     }
 

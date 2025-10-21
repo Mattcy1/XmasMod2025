@@ -73,7 +73,7 @@ namespace XmasMod2025.Towers
         {
             if (__instance.projectileModel.id == "TreeGift")
             {
-                var random = new System.Random().Next(1, 5);
+                var random = new System.Random().Next(XmasMod2025.TreeDropRates[0], XmasMod2025.TreeDropRates[1]);
 
                 if (InGame.instance != null || InGame.instance.bridge != null)
                 {
@@ -143,7 +143,6 @@ namespace XmasMod2025.Towers
         {
             foreach (Renderer renderer in node.genericRenderers)
             {
-                //node.GetComponentInChildren<TextMeshPro>().fontSize *= 1f;
                 node.GetComponentInChildren<TextMeshPro>().outlineColor = new Color32(207, 237, 255, 255);
                 node.GetComponentInChildren<TextMeshPro>().color = new Color(1f, 1f, 1f);     
             }

@@ -1,0 +1,22 @@
+﻿using BTD_Mod_Helper.Api;
+using Il2CppAssets.Scripts.Data.Gameplay.Mods;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppNinjaKiwi.Common.ResourceUtils;
+using System;
+using XmasMod2025.UI;
+
+namespace XmasMod2025.GiftShop.BuffsItems;
+
+public class FestiveSpiritItem : GiftShopItem
+{
+    public override ShopType Shop => ShopType.Buffs;
+    public override double BaseCost => 700;
+    public override void Buy(InGame game)
+    {
+        XmasMod2025.FestiveSpiritActive = true;
+        XmasMod2025.FestiveSpritActiveRounds += 3;
+    }
+
+    public override double PriceMultiplier => 1.15f;
+    public override double GetCostForUpgradeNumber(int upgrade) => BaseCost * Math.Pow(PriceMultiplier, upgrade);
+}

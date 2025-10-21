@@ -1,5 +1,4 @@
-﻿using System;
-using BTD_Mod_Helper.Api;
+﻿using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
@@ -13,6 +12,7 @@ using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
 using Il2CppAssets.Scripts.Models.TowerSets;
+using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Towers.Behaviors.Abilities;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Unity;
@@ -22,6 +22,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
 using Il2CppTMPro;
 using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
@@ -175,10 +176,27 @@ namespace XmasMod2025.Towers
                 Action<bool> callback = _ => { };
 
                 InGame.instance.bridge.CreateTowerAt(new Vector2(__instance.tower.Position.X, __instance.tower.Position.Y), Game.instance.model.GetTowerFromId(rolledTower), ObjectId.Create((uint)random.Next(0, 99999), 0), false, callback, true, true, false, 0, false);
+                InGame.instance.bridge.simulation.SpawnEffect(ModContent.CreatePrefabReference<GiftEffect>(), __instance.Position, 0, 2, 120);
 
                 __instance.tower.worth = 0;
                 __instance.tower.SellTower();
+
+
             }
+        }
+    }
+
+    public class GiftEffect : ModDisplay
+    {
+        public override string BaseDisplay => "6d84b13b7622d2744b8e8369565bc058";
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[0], ModContent.GetTexture<XmasMod2025>("blank"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[3], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[2], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[1], ModContent.GetTexture<XmasMod2025>("blank"));
+            ((Component)((Il2CppArrayBase<Renderer>)node.genericRenderers)[2]).GetComponent<ParticleSystem>().startSpeed *= 0.2f;
         }
     }
 }
