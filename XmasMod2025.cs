@@ -20,18 +20,20 @@ namespace XmasMod2025;
 
 public class XmasMod2025 : BloonsTD6Mod
 {
-    public delegate void GiftsUpdated_Delegate(int gifts);
+    public static float PresentBloonChance = 0f;
+    
+    public delegate void GiftsUpdated_Delegate(double gifts);
 
     public static event GiftsUpdated_Delegate? OnGiftsUpdated;
 
-    private static int gifts;
+    private static double gifts;
 
-    public static int Gifts
+    public static double Gifts
     {
         get => gifts;
         set
         {
-            int increase = value - gifts;
+            double increase = value - gifts;
             gifts = value;
 
             OnGiftsUpdated?.Invoke(value);
@@ -43,9 +45,9 @@ public class XmasMod2025 : BloonsTD6Mod
         }
     }
 
-    private static int totalGifts;
+    private static double totalGifts;
 
-    public static int TotalGifts
+    public static double TotalGifts
     {
         get => totalGifts;
     }
