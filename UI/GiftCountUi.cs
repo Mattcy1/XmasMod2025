@@ -69,9 +69,9 @@ public class GiftCounterUI : MonoBehaviour
             UpdateText(25);
         }
     }
-    public static void UpdateText(int gifts)
+    public static void UpdateText(double gifts)
     {
-        giftText.SetText(gifts.ToString("#,###"));
+        giftText.SetText(gifts.ToString("#,###.##"));
     }
     public static void SetGift()
     {
