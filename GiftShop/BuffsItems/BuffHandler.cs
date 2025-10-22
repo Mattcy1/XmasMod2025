@@ -3,6 +3,7 @@ using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,30 +25,36 @@ namespace XmasMod2025.GiftShop.BuffsItems
             float rateAdd = makeActive ? -0.15f : 0.15f;
             float rangeAdd = makeActive ? 15f : -15f;
 
-            foreach (var towerId in XmasMod2025.GiftOfGivingTowersIds)
+            for (int i = XmasMod2025.GiftOfGivingTowersIds.Count - 1; i >= 0; i--)
             {
-                var tower = game.bridge.GetTowerFromId(towerId);
-                if (tower == null) continue;
+                var towerModel = XmasMod2025.GiftOfGivingTowersIds[i];
+                XmasMod2025.GiftOfGivingTowersIds.RemoveAt(i);
 
-                var model = tower.towerModel;
-                XmasMod2025.GiftOfGivingTowersIds.Remove(towerId);
-
-                foreach (var weapon in model.GetWeapons())
-                {
+                foreach (var weapon in towerModel.GetWeapons())
                     weapon.rate += rateAdd;
-                }
 
-                foreach (var attack in model.GetAttackModels())
-                {
+                foreach (var attack in towerModel.GetAttackModels())
                     attack.range += rangeAdd;
-                }
+
+                towerModel.range += rangeAdd;
             }
         }
+
 
         public static void FestiveSpiritHandler()
         {
             Action<bool> callback = _ => { };
-            InGame.instance.bridge.CreateTowerAt(new Vector2(0, 0), ModContent.GetTowerModel<FestiveSpiritTower>(), ObjectId.Create((uint)0), false, callback, true, true, false, 0, false);
+            if(XmasMod2025.FestiveSpiritTower == null)
+            {
+                InGame.instance.bridge.CreateTowerAt(new Vector2(0, 0), ModContent.GetTowerModel<FestiveSpiritTower>(), ObjectId.Create((uint)0), false, callback, true, true, false, 0, false);
+                MelonLogger.Msg("CreateTower");
+            }
+        }
+
+        public static void SantaHelperHandler()
+        {
+            Action<bool> callback = _ => { };
+            InGame.instance.bridge.CreateTowerAt(new Vector2(0, 0), ModContent.GetTowerModel<ElfSpawner>(), ObjectId.Create((uint)0), false, callback, true, true, false, 0, false);
         }
     }
 }

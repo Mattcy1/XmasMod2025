@@ -29,7 +29,7 @@ public class XmasMod2025 : BloonsTD6Mod
     public static int FestiveSpritActiveRounds = 0;
     public static bool FestiveSpiritActive = false;
     public static Tower FestiveSpiritTower = null;
-    public static List<ObjectId> GiftOfGivingTowersIds = new List<ObjectId>();
+    public static List<TowerModel> GiftOfGivingTowersIds = new List<TowerModel>();
 
     public delegate void GiftsUpdated_Delegate(double gifts);
 
@@ -90,20 +90,16 @@ public class XmasMod2025 : BloonsTD6Mod
             FestiveSpiritTower = tower;
         }
     }
-
-    public override void OnTowerSelected(Tower tower)
-    {
-        if (GiftOpenerUI.instance != null)
-        {
-            GiftOpenerUI.instance.Close();
-        }
-    }
-
-    public override void OnTowerDestroyed(Tower tower)
+    public override void OnTowerDestroyed (Tower tower)
     {
         if (tower.towerModel.baseId == ModContent.TowerID<ElfHelper>())
         {
             InGame.instance.bridge.simulation.SpawnEffect(ModContent.CreatePrefabReference<GiftEffect>(), tower.Position, 0, 2, 120);
+        }
+
+        if (tower.towerModel.baseId == ModContent.TowerID<FestiveSpiritTower>())
+        {
+            FestiveSpiritTower = null;
         }
     }
 
@@ -118,7 +114,7 @@ public class XmasMod2025 : BloonsTD6Mod
 
         if(FestiveSpiritActive)
         {
-            if(FestiveSpritActiveRounds == 0)
+            if(FestiveSpritActiveRounds <= 0)
             {
                 if(FestiveSpiritTower != null)
                 {
@@ -134,14 +130,6 @@ public class XmasMod2025 : BloonsTD6Mod
             {
                 tower.SellTower();
             }
-        }
-    }
-
-    public override void OnTowerDeselected(Tower tower)
-    {
-        if (GiftOpenerUI.instance == null)
-        {
-            GiftOpenerUI.CreatePanel();
         }
     }
     public override void OnTowerUpgraded(Tower tower, string upgradeName, TowerModel newBaseTowerModel)

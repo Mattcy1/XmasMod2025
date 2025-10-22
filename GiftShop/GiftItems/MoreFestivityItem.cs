@@ -3,7 +3,7 @@ using XmasMod2025.UI;
 
 namespace XmasMod2025.GiftShop.GiftItems;
 
-public class MoreFestivityItem : GiftShopItem
+public class MoreFestivity : GiftShopItem
 {
     public override ShopType Shop => ShopType.Gift;
     public override double BaseCost => 0;
@@ -12,6 +12,7 @@ public class MoreFestivityItem : GiftShopItem
         XmasMod2025.TreeDropRates[0] += 5;
         XmasMod2025.TreeDropRates[1] += 7;
     }
+    public override string Description => "Increases, the xmas tree’s gifts drop rate.";
 
     public override int MaxUpgrades => 2;
 

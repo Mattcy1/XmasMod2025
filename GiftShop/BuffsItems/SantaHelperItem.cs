@@ -14,8 +14,12 @@ public class SantaHelperItem : GiftShopItem
 {
     public override ShopType Shop => ShopType.Buffs;
     public override double BaseCost => 750;
+
+    public override string DisplayName => "Santa's Helpers";
+    public override string Description => "Elves spawns for the entire rounds helping you.";
     public override void Buy(InGame game)
     {
+        BuffHandler.SantaHelperHandler();
     }
 
     public override double PriceMultiplier => 1.1f;

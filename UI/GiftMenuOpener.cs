@@ -3,6 +3,7 @@ using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame.Stats;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using MelonLoader;
 using UnityEngine;
@@ -31,6 +32,7 @@ public class Gift
             {
                 RectTransform rect = InGame.instance.uiRect;
                 var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 0, 0, 0), VanillaSprites.BrownPanel);
+                panel.transform.SetParent(FindFirstObjectByType<RoundDisplay>().transform.parent.parent);
                 instance = panel.AddComponent<GiftOpenerUI>();
 
                 var Claim = panel.AddButton(new("Button_", 1515f, 980f, 240f), ModContent.GetTextureGUID<XmasMod2025>("PresentsButton"), new System.Action(() =>

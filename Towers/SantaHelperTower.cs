@@ -34,6 +34,7 @@ namespace XmasMod2025.Towers
         {
             towerModel.dontDisplayUpgrades = true;
             towerModel.range = 999;
+            towerModel.ignoreTowerForSelection = true;
             towerModel.RemoveBehavior<AttackModel>();
 
             AttackModel[] Avatarspawner = { Game.instance.model.GetTowerFromId("EngineerMonkey-200").GetAttackModels().First(a => a.name == "AttackModel_Spawner_").Duplicate() };

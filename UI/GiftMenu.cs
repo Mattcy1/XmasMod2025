@@ -38,7 +38,6 @@ namespace XmasMod2025.UI
         public static List<ModHelperImage> slotIcon = new();
         public static List<ModHelperButton> slotButton = new();
         public static ModHelperText section;
-
         public static ModHelperPanel normal;
         public static ModHelperScrollPanel scroll;
         
@@ -91,7 +90,7 @@ namespace XmasMod2025.UI
             mainPanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanelBright"));
             mainPanel.AddImage(new("Icon", 0, 397.5f, 350), item.IconReference.GetGUID());
             mainPanel.AddText(new("Name", 0, 72.5f, 525, 100), item.DisplayName).EnableAutoSizing(80);
-            var desc = mainPanel.AddText(new("Description", 0, -575.5f, 525, 1200), item.Description);
+            var desc = mainPanel.AddText(new("Description", 0, -150, 525, 1200), item.Description);
             desc.EnableAutoSizing(45);
             mainPanel.AddButton(new("Purchase", 0, -550, 500, 500 / ModHelperButton.LongBtnRatio), VanillaSprites.GreenBtnLong, new Action(() =>
             {
@@ -106,13 +105,27 @@ namespace XmasMod2025.UI
                 XmasMod2025.Gifts -= cost;
                 item.Upgrades++;
                 item.Buy(InGame.instance);
+
+                mainPanel.transform.FindChild("Purchase").FindChild("CountText").GetComponent<NK_TextMeshProUGUI>().text = $"{item.GetCostForUpgradeNumber(item.Upgrades + 1)} Gifts";
+
                 if (item.Upgrades >= item.MaxUpgrades && item.MaxUpgrades > 0)
                 {
                     mainPanel.transform.FindChild("Purchase").GetComponent<Button>().interactable = false;
-                    mainPanel.transform.FindChild("CountText").GetComponent<NK_TextMeshProUGUI>().text = "Max Upgrades!";
+                    mainPanel.transform.FindChild("Purchase").FindChild("CountText").GetComponent<NK_TextMeshProUGUI>().text = "Max Upgrades!";
                 }
-            })).AddText(new("Text", 500, 500 / ModHelperButton.LongBtnRatio), $"{item.GetCostForUpgradeNumber(item.Upgrades + 1)} Gifts");
-            
+            })).AddText(new("CountText", 500, 500 / ModHelperButton.LongBtnRatio), $"{item.GetCostForUpgradeNumber(item.Upgrades + 1)} Gifts");
+
+            var initialText = mainPanel.transform.FindChild("Purchase").FindChild("CountText").GetComponent<NK_TextMeshProUGUI>();
+            if (item.Upgrades >= item.MaxUpgrades && item.MaxUpgrades > 0)
+            {
+                mainPanel.transform.FindChild("Purchase").GetComponent<Button>().interactable = false;
+                initialText.text = "Max Upgrades!";
+            }
+            else
+            {
+                initialText.text = $"{item.GetCostForUpgradeNumber(item.Upgrades + 1)} Gifts";
+            }
+
             return mainPanel;
         }
         
@@ -146,56 +159,6 @@ namespace XmasMod2025.UI
             scroll.Background.SetSprite(insertPanel);
 
             MelonCoroutines.Start(UpdateLayouts());
-            
-            #region old bad shop
-            /*panel.AddImage(new("Image_", -1500, 550, 800, 400), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
-            panel.AddImage(new("Image_", -1500, 550, 725, 325), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
-            panel.AddImage(new("Image_", -1775, 625, 150, 150), ModContent.GetTextureGUID<XmasMod2025>("Gift1"));
-            giftText = panel.AddText(new("Text_", -1525, 625, 700, 150), ": Gifts " + FormatNumber(XmasMod2025.Gifts), 75);
-            panel.AddImage(new("Image_", -1775, 475, 150, 150), ModContent.GetTextureGUID<XmasMod2025>("PresentIcon"));
-            TotalgiftText = panel.AddText(new("Text_", -1475, 475, 700, 150), ": Total Gifts " + FormatNumber(XmasMod2025.TotalGifts), 60);
-
-            float w = 1900 / 3.3f;
-            float h = 1300;
-            var imgCenter = panel.AddImage(new("Image_", 0, 0, w, h), AssetHelper.GetSprite("ChristmasPanelBright")).UseCustomScaling();
-            var imgRight = panel.AddImage(new("Image_", w + 50, 0, w, h), AssetHelper.GetSprite("ChristmasPanelBright")).UseCustomScaling();
-            var imgLeft = panel.AddImage(new("Image_", -w - 50, 0, w, h), AssetHelper.GetSprite("ChristmasPanelBright")).UseCustomScaling();
-
-            float iw = w - 75;
-            float ih = 1225;
-            var imgInsideCenter = panel.AddImage(new("Image_", 0, 0, iw, ih), AssetHelper.GetSprite("ChristmasInsertPanelBright")).UseCustomScaling();
-            var imgInsideRight = panel.AddImage(new("Image_", w + 50, 0, iw, ih), AssetHelper.GetSprite("ChristmasInsertPanelBright")).UseCustomScaling();
-            var imgInsideLeft = panel.AddImage(new("Image_", -w - 50, 0, iw, ih), AssetHelper.GetSprite("ChristmasInsertPanelBright")).UseCustomScaling();
-
-            Color color = new(0.8f, 0.8f, 0.8f);
-            imgInsideCenter.Image.color = color;
-            imgInsideRight.Image.color = color;
-            imgInsideLeft.Image.color = color;
-
-            slotTitle.Add(imgInsideCenter.AddText(new("Text_", 0, 550, 500, 150), "Buff", 80));
-            slotTitle.Add(imgInsideRight.AddText(new("Text_", 0, 550, 500, 150), "Buff", 80));
-            slotTitle.Add(imgInsideLeft.AddText(new("Text_", 0, 550, 500, 150), "Buff", 80));
-
-            slotIcon.Add(imgInsideCenter.AddImage(new("Image_", 0, 350, 500, 500), VanillaSprites.BloonariusIcon));
-            slotIcon.Add(imgInsideRight.AddImage(new("Image_", 0, 350, 500, 500), VanillaSprites.BloonariusIcon));
-            slotIcon.Add(imgInsideLeft.AddImage(new("Image_", 0, 350, 500, 500), VanillaSprites.BloonariusIcon));
-
-            slotTitle.Add(imgInsideCenter.AddText(new("Text_", 0, 150, 500, 150), "―――――", 80));
-            slotTitle.Add(imgInsideRight.AddText(new("Text_", 0, 150, 500, 150), "―――――", 80));
-            slotTitle.Add(imgInsideLeft.AddText(new("Text_", 0, 150, 500, 150), "―――――", 80));
-
-            slotTitle.Add(imgInsideCenter.AddText(new("Text_", 0, 0, 400, 300), "Description: Spawns bloonarius idk or do smth else", 50));
-            slotTitle.Add(imgInsideRight.AddText(new("Text_", 0, 0, 400, 300), "Description: Spawns bloonarius idk or do smth else", 50));
-            slotTitle.Add(imgInsideLeft.AddText(new("Text_", 0, 0, 400, 300), "Description: Spawns bloonarius idk or do smth else", 50));
-
-            slotTitle.Add(imgInsideCenter.AddText(new("Text_", 0, -150, 500, 150), "―――――", 80));
-            slotTitle.Add(imgInsideRight.AddText(new("Text_", 0, -150, 500, 150), "―――――", 80));
-            slotTitle.Add(imgInsideLeft.AddText(new("Text_", 0, -150, 500, 150), "―――――", 80));
-
-            slotTitle.Add(imgInsideCenter.AddText(new("Text_", 0, -225, 400, 150), "Price: 500 Gifts", 50));
-            slotTitle.Add(imgInsideRight.AddText(new("Text_", 0, -225, 400, 150), "Price: 500 Gifts", 50));
-            slotTitle.Add(imgInsideLeft.AddText(new("Text_", 0, -225, 400, 150), "Price: 500 Gifts", 50));*/
-            #endregion
 
             var Exit = panel.AddButton(new("Button_", 1000, 700, 200), VanillaSprites.RedBtnSquareSmall, new System.Action(() => instance.Close()));
             Exit.AddText(new("Text_", 0, 0, 150), "X", 100);
