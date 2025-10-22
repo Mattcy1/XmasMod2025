@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
@@ -7,8 +8,11 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using MelonLoader;
 using System.Collections.Generic;
+using System.Linq;
 using Il2Cpp;
+using Il2CppTMPro;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 using XmasMod2025.Assets;
 using XmasMod2025.GiftShop;
@@ -20,7 +24,7 @@ namespace XmasMod2025.UI
         Buffs,
         Gift
     }
-
+    
     [RegisterTypeInIl2Cpp(false)]
     public class GiftMenu : MonoBehaviour
     {
@@ -35,6 +39,9 @@ namespace XmasMod2025.UI
         public static List<ModHelperButton> slotButton = new();
         public static ModHelperText section;
 
+        public static ModHelperPanel normal;
+        public static ModHelperScrollPanel scroll;
+        
         public void Close()
         {
             if (gameObject)
@@ -53,7 +60,7 @@ namespace XmasMod2025.UI
         }
 
         public static ShopType CurrentPage = ShopType.Buffs;
-
+        
         public static string FormatNumber(double num)
         {
             if (num < 1000)
@@ -66,30 +73,27 @@ namespace XmasMod2025.UI
                 double newNum = Math.Round(num / (10 ^ zeros), 2);
                 return newNum.ToString("#.##") + $"e{zeros}";
             }
-
-            int index = (zeros - 3) / 3; // 1000 = 0, 10000 = 0.33 (0), 100000 = 0.67 (0), 1000000 = 1 (1)... 
+            
+            int index = (zeros - 3 ) / 3; // 1000 = 0, 10000 = 0.33 (0), 100000 = 0.67 (0), 1000000 = 1 (1)... 
             if (index < 0)
             {
                 return num.ToString("###");
             }
 
             string[] suffixes = ["K", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No", "De", "UDe", "DDe"];
-
+            
             return (num / (10 ^ (zeros - 3))).ToString("#.##") + suffixes[index]; // 10,134,560,000,000 > 10.13T
         }
 
         private static ModHelperPanel ShopPanel(GiftShopItem item)
         {
-            float w = 1900 / 3.3f;
-            float h = 1300;
-
-            var mainPanel = ModHelperPanel.Create(new("Panel_" + item.Id, 0, 0, w, h), "");
+            var mainPanel = ModHelperPanel.Create(new("Panel_" + item.Id, 0, 0, 575, 1300), "");
             mainPanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanelBright"));
-            mainPanel.AddImage(new("InnerPanel", 0, 0, w - 75, h - 75), AssetHelper.GetSprite("ChristmasInsertPanelBright")).UseCustomScaling();
             mainPanel.AddImage(new("Icon", 0, 397.5f, 350), item.IconReference.GetGUID());
-            mainPanel.AddText(new("Name", 0, 72.5f, 1000, 100), item.DisplayName).EnableAutoSizing(80);
-            mainPanel.AddText(new("Description", 0, -227.5f, 1000, 600), item.Description).EnableAutoSizing(45);
-            mainPanel.AddButton(new("Purchase", 0, -550, 281, 100), VanillaSprites.GreenBtnLong, new Action(() =>
+            mainPanel.AddText(new("Name", 0, 72.5f, 525, 100), item.DisplayName).EnableAutoSizing(80);
+            var desc = mainPanel.AddText(new("Description", 0, -575.5f, 525, 1200), item.Description);
+            desc.EnableAutoSizing(45);
+            mainPanel.AddButton(new("Purchase", 0, -550, 500, 500 / ModHelperButton.LongBtnRatio), VanillaSprites.GreenBtnLong, new Action(() =>
             {
                 var cost = item.GetCostForUpgradeNumber(item.Upgrades + 1);
                 if (cost > XmasMod2025.Gifts)
@@ -98,7 +102,7 @@ namespace XmasMod2025.UI
                         $"You need {cost - XmasMod2025.Gifts} more gifts to purchase this item!");
                     return;
                 }
-
+                
                 XmasMod2025.Gifts -= cost;
                 item.Upgrades++;
                 item.Buy(InGame.instance);
@@ -107,11 +111,11 @@ namespace XmasMod2025.UI
                     mainPanel.transform.FindChild("Purchase").GetComponent<Button>().interactable = false;
                     mainPanel.transform.FindChild("CountText").GetComponent<NK_TextMeshProUGUI>().text = "Max Upgrades!";
                 }
-            }));
-
+            })).AddText(new("Text", 500, 500 / ModHelperButton.LongBtnRatio), $"{item.GetCostForUpgradeNumber(item.Upgrades + 1)} Gifts");
+            
             return mainPanel;
         }
-
+        
         public static void CreatePanel()
         {
             if (InGame.instance == null) return;
@@ -121,21 +125,30 @@ namespace XmasMod2025.UI
             instance = panel.AddComponent<GiftMenu>();
 
             panel.AddImage(new("Image_", 0, 0, 2000, 1500), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
-            panel.AddImage(new("Image_", 0, 0, 1900, 1400), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
 
             panel.AddText(new("Text_", -700, 750, 700, 150), "GIFTS MENU", 100);
             section = panel.AddText(new("Text_", 0, 750, 700, 150), "BUFFS", 100);
 
             rightArrow = panel.AddButton(new("Button_", 1000, 0, 200), VanillaSprites.NextArrow, new System.Action(() =>
             {
-                handleArrows(false);
+                HandleArrow(false);
             }));
             leftArrow = panel.AddButton(new("Button_", -1000, 0, 200), VanillaSprites.PrevArrow, new System.Action(() =>
             {
-                handleArrows(true);
+                HandleArrow(true);
             }));
 
-            panel.AddImage(new("Image_", -1500, 550, 800, 400), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
+            Sprite insertPanel = AssetHelper.GetSprite("ChristmasInsertPanel");
+            
+            normal = panel.AddPanel(new("Content_Normal", 0, 0, 1900, 1400),"");
+            normal.Background.SetSprite(insertPanel);
+            scroll = panel.AddScrollPanel(new("Content_Scroll", 0, 0, 1900, 1400), RectTransform.Axis.Vertical, "", 35, 35);
+            scroll.Background.SetSprite(insertPanel);
+
+            MelonCoroutines.Start(UpdateLayouts());
+            
+            #region old bad shop
+            /*panel.AddImage(new("Image_", -1500, 550, 800, 400), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
             panel.AddImage(new("Image_", -1500, 550, 725, 325), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
             panel.AddImage(new("Image_", -1775, 625, 150, 150), ModContent.GetTextureGUID<XmasMod2025>("Gift1"));
             giftText = panel.AddText(new("Text_", -1525, 625, 700, 150), ": Gifts " + FormatNumber(XmasMod2025.Gifts), 75);
@@ -181,38 +194,72 @@ namespace XmasMod2025.UI
 
             slotTitle.Add(imgInsideCenter.AddText(new("Text_", 0, -225, 400, 150), "Price: 500 Gifts", 50));
             slotTitle.Add(imgInsideRight.AddText(new("Text_", 0, -225, 400, 150), "Price: 500 Gifts", 50));
-            slotTitle.Add(imgInsideLeft.AddText(new("Text_", 0, -225, 400, 150), "Price: 500 Gifts", 50));
+            slotTitle.Add(imgInsideLeft.AddText(new("Text_", 0, -225, 400, 150), "Price: 500 Gifts", 50));*/
+            #endregion
 
             var Exit = panel.AddButton(new("Button_", 1000, 700, 200), VanillaSprites.RedBtnSquareSmall, new System.Action(() => instance.Close()));
             Exit.AddText(new("Text_", 0, 0, 150), "X", 100);
 
-            //handleArrows();
+            UpdatePage();
         }
 
-        public static void handleArrows(bool back)
+        private static IEnumerator UpdateLayouts()
         {
-            int max = 1;
-            if (page < 0) page = 0;
-            if (page > max) page = max;
-            leftArrow.SetActive(page != 0);
-            rightArrow.SetActive(page != max);
-            handlePage();
+            GridLayoutGroup normalGroup = normal.AddComponent<GridLayoutGroup>();
+            normalGroup.cellSize = new Vector2(575, 1300);
+            normalGroup.spacing = new(35, 50);
+            normalGroup.padding = new RectOffset { bottom = 50, left = 17, right = 18, top = 50 };
+            normalGroup.startCorner = GridLayoutGroup.Corner.UpperLeft;
+            yield return new WaitForEndOfFrame();
+            scroll.ScrollContent.RemoveComponent<LayoutGroup>();
+            yield return new WaitForEndOfFrame();
+            GridLayoutGroup scrollGroup = scroll.ScrollContent.AddComponent<GridLayoutGroup>();
+            scrollGroup.cellSize = new Vector2(575, 1300);
+            scrollGroup.spacing = new(35, 50);
+            scrollGroup.padding = new RectOffset { bottom = 50, left = 17, right = 18, top = 50 };
+            scrollGroup.startCorner = GridLayoutGroup.Corner.UpperLeft;
+            scroll.AddComponent<Mask>();
+        }
+        
+        public static void HandleArrow(bool back)
+        {
+            List<ShopType> allTypes = ((ShopType[])Enum.GetValues(typeof(ShopType))).ToList();
+            int currentPageIndex = allTypes.IndexOf(CurrentPage);
+            int newIndex = currentPageIndex + (back ? -1 : 1);
+            if(newIndex < 0) newIndex = allTypes.Count - 1;
+            else if (newIndex >= allTypes.Count) newIndex = 0;
+            CurrentPage = allTypes[newIndex];
+            
+            UpdatePage();
         }
 
-        public static void handlePage()
+        public static void UpdatePage()
         {
-            switch (page)
+            List<GiftShopItem> items = GiftShopItem.GiftShopItems[CurrentPage];
+
+            scroll.ScrollContent.gameObject.DestroyAllChildren();
+            normal.gameObject.DestroyAllChildren();
+            
+            if (items.Count > 3)
             {
-                case 0:
-                    section.SetText("Buffs");
-                    slotTitle[0].SetText("Buff 1");
-                    slotTitle[1].SetText("Buff 2");
-                    slotTitle[2].SetText("Buff 0");
-                    break;
-                case 1:
-                    section.SetText("Yet To Come");
-                    break;
+                scroll.gameObject.SetActive(true);
+                normal.gameObject.SetActive(false);
+                foreach (var item in items)
+                {
+                    scroll.AddScrollContent(ShopPanel(item));
+                }
             }
+            else
+            {
+                scroll.gameObject.SetActive(false);
+                normal.gameObject.SetActive(true);
+                foreach (var item in items)
+                {
+                    normal.AddModHelperComponent(ShopPanel(item));
+                }
+            }
+            
+            section.SetText(CurrentPage.ToString() ?? "");
         }
 
         public static void UpdateText()
@@ -232,3 +279,4 @@ namespace XmasMod2025.UI
         }
     }
 }
+ 

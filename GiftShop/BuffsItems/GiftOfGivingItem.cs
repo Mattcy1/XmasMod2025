@@ -34,5 +34,4 @@ public class GiftOfGivingItem : GiftShopItem
 
 
     public override double PriceMultiplier => 1.1f;
-    public override double GetCostForUpgradeNumber(int upgrade) => BaseCost * Math.Pow(PriceMultiplier, upgrade);
 }

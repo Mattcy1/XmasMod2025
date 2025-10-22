@@ -18,5 +18,4 @@ public class FestiveSpiritItem : GiftShopItem
     }
 
     public override double PriceMultiplier => 1.15f;
-    public override double GetCostForUpgradeNumber(int upgrade) => BaseCost * Math.Pow(PriceMultiplier, upgrade);
 }

@@ -5,12 +5,13 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
 using System;
 using System.Linq;
+using UnityEngine;
 using XmasMod2025.Towers;
 using XmasMod2025.UI;
 
 namespace XmasMod2025.GiftShop.BuffsItems;
 
-public class SantaHelperItem : GiftShopItem
+public class SantaHelperItem2 : GiftShopItem
 {
     public override ShopType Shop => ShopType.Buffs;
     public override double BaseCost => 750;

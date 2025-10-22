@@ -12,6 +12,12 @@ public class PresentBloonItem : GiftShopItem
         XmasMod2025.PresentBloonChance += 5;
     }
 
+    public override void Reset()
+    {
+        base.Reset();
+        XmasMod2025.PresentBloonChance = 0;
+    }
+
     public override int MaxUpgrades => 5;
 
     public override double GetCostForUpgradeNumber(int upgrade)
