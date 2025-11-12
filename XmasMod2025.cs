@@ -1,33 +1,32 @@
 ﻿using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Hooks;
+using BTD_Mod_Helper.Api.Hooks.BloonHooks;
 using BTD_Mod_Helper.Extensions;
+using Il2Cpp;
 using Il2CppAssets.Scripts;
 using Il2CppAssets.Scripts.Data;
 using Il2CppAssets.Scripts.Data.MapEditor;
 using Il2CppAssets.Scripts.Models;
+using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Models.ContentBrowser;
-using Il2CppAssets.Scripts.Models.Map;
-using Il2CppAssets.Scripts.Models.MapEditorBehaviors;
 using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Simulation.Bloons;
+using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Objects;
 using Il2CppAssets.Scripts.Simulation.Towers;
+using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Unity;
-using Il2CppAssets.Scripts.Unity.MapProps;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
-using Il2CppNinjaKiwi.Common;
-using Il2CppSystem;
 using MelonLoader;
-using Octokit;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using XmasMod2025;
+using XmasMod2025.Bloons;
 using XmasMod2025.GiftShop.BuffsItems;
 using XmasMod2025.Towers;
 using XmasMod2025.UI;
-using static MelonLoader.MelonLogger;
 using static XmasMod2025.UI.Gift;
 
 [assembly: MelonInfo(typeof(XmasMod2025.XmasMod2025), ModHelperData.Name, ModHelperData.Version, ModHelperData.Author)]
@@ -151,8 +150,33 @@ public class XmasMod2025 : BloonsTD6Mod
 
         if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
         {
-
         }
+    }
+
+    [HookTarget(typeof(BloonDamageHook), HookTargetAttribute.EHookType.Postfix)]
+    [HookPriority(HookPriorityAttribute.Higher)]
+    public static bool BloonDamagePostfix(Bloon @this, ref float totalAmount, Projectile projectile, ref bool distributeToChildren, ref bool overrideDistributeBlocker, ref bool createEffect, Tower tower, BloonProperties immuneBloonProperties, BloonProperties originalImmuneBloonProperties, ref bool canDestroyProjectile, ref bool ignoreNonTargetable, ref bool blockSpawnChildren, HookNullable<int> powerActivatedByPlayerId)
+    {
+        if(@this.bloonModel.baseId == ModContent.BloonID<SnowBloon>())
+        {
+            System.Random rand = new System.Random();
+            var val = rand.Next(4);
+
+            if(val >= 0)
+            {
+                TimeTriggerModel time = Game.instance.model.GetBloon("Vortex1").GetBehavior<TimeTriggerModel>().Duplicate();
+                time.interval = 1f;
+                time.actionIds = new string[] { "SnowBloonStun" };
+                time.name = "SnowBloonStun";
+
+                if (@this != null)
+                {
+                    @this.bloonModel.AddBehavior(time);
+                }
+            }
+        }
+
+        return true;
     }
 }
 
@@ -697,6 +721,19 @@ public class ChangeMap
         {
             PopupScreen.instance.ShowOkPopup("It's recommended to play this mod on cubsim, The code for loading a custom map was made by datjanedoe credits to him.");
 
+        }
+    }
+}
+
+[HarmonyLib.HarmonyPatch(typeof(TimeTrigger), nameof(TimeTrigger.Trigger))]
+public class TimeTriggerPacth
+{
+    [HarmonyLib.HarmonyPostfix]
+    public static void Postfix(TimeTrigger __instance)
+    {
+        if(__instance.timeTriggerModel.name.Contains("SnowBloonStun"))
+        {
+            __instance.bloon.bloonModel.RemoveBehavior<TimeTriggerModel>();
         }
     }
 }
