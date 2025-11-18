@@ -24,7 +24,6 @@ namespace XmasMod2025.Towers
 {
     public class XmasTree : ChristmasTower
     {
-        public override bool CostsGifts => false;
 
         public override string BaseTower => TowerType.BananaFarm;
         public override int Cost => 0;
@@ -73,7 +72,7 @@ namespace XmasMod2025.Towers
         {
             if (__instance.projectileModel.id == "TreeGift")
             {
-                var random = new System.Random().Next(XmasMod2025.TreeDropRates[0], XmasMod2025.TreeDropRates[1]);
+                var random = new System.Random().Next(XmasMod2025.TreeDropRates.Min, XmasMod2025.TreeDropRates.Min);
 
                 if (InGame.instance != null || InGame.instance.bridge != null)
                 {

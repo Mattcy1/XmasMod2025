@@ -36,18 +36,93 @@ namespace XmasMod2025;
 
 public class XmasMod2025 : BloonsTD6Mod
 {
+    public override void OnApplicationStart()
+    {
+    }
+
     public static float PresentBloonChance = 0f;
-    public static int[] TreeDropRates = { 3, 5 };
+    public static IntMinMax TreeDropRates = new(3, 5);
     public static int FestiveSpritActiveRounds = 0;
     public static bool FestiveSpiritActive = false;
     public static Tower FestiveSpiritTower = null;
     public static List<TowerModel> GiftOfGivingTowersIds = new List<TowerModel>();
 
-    public delegate void GiftsUpdated_Delegate(double gifts);
+    public delegate void CurrencyChangedDelegate(double amount);
 
-    public static event GiftsUpdated_Delegate? OnGiftsUpdated;
+    public static event CurrencyChangedDelegate? OnGiftsUpdated;
+    public static event CurrencyChangedDelegate? OnSnowflakesUpdated;
 
     private static double gifts;
+
+    public static double GetCurrency(CurrencyType currency)
+    {
+        switch (currency)
+        {
+            case CurrencyType.Gift:
+                return Gifts;
+            case CurrencyType.Cash:
+                return InGame.instance.GetCash();
+            case CurrencyType.Snowflake:
+                return Snowflakes;
+            default:
+                return Gifts;
+        }
+    }
+    public static void SetCurrency(CurrencyType currency, double amount)
+    {
+        switch (currency)
+        {
+            case CurrencyType.Gift:
+                Gifts = amount;
+                return;
+            case CurrencyType.Cash:
+                InGame.instance.SetCash(amount);
+                return;
+            case CurrencyType.Snowflake:
+                Snowflakes = amount;
+                return;
+            default:
+                Gifts = amount;
+                return;
+        }
+    }
+    public static void AddCurrency(CurrencyType currency, double amount)
+    {
+        switch (currency)
+        {
+            case CurrencyType.Gift:
+                Gifts += amount;
+                return;
+            case CurrencyType.Cash:
+                InGame.instance.AddCash(amount);
+                return;
+            case CurrencyType.Snowflake:
+                 Snowflakes += amount;
+                 return;
+            default:
+                Gifts += amount;
+                return;
+        }
+    }
+
+    private static double snowflakes;
+
+    public static double Snowflakes
+    {
+        get => snowflakes;
+        set
+        {
+            double increase = value - snowflakes;
+            snowflakes = value;
+            
+            OnSnowflakesUpdated?.Invoke(increase);
+
+            if (increase > 0)
+            {
+                totalSnowflakes += increase;   
+            }
+        }
+    }
 
     public static double Gifts
     {
@@ -68,10 +143,11 @@ public class XmasMod2025 : BloonsTD6Mod
 
     private static double totalGifts;
 
-    public static double TotalGifts
-    {
-        get => totalGifts;
-    }
+    public static double TotalGifts => totalGifts;
+    
+    private static double totalSnowflakes;
+
+    public static double TotalSnowflakes => totalSnowflakes;
 
     public override void OnMatchStart()
     {
@@ -144,17 +220,17 @@ public class XmasMod2025 : BloonsTD6Mod
             }
         }
     }
-    public override void OnTowerUpgraded(Tower tower, string upgradeName, TowerModel newBaseTowerModel)
+    /*public override void OnTowerUpgraded(Tower tower, string upgradeName, TowerModel newBaseTowerModel)
     {
         var modTower = tower.towerModel.GetModTower();
 
-        if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
+        if (modTower != null && modTower is ChristmasTower cTower && cTower.Currency != CurrencyType.Cash)
         {
         }
-    }
+    }*/
 
     [HookTarget(typeof(BloonDamageHook), HookTargetAttribute.EHookType.Postfix)]
-    [HookPriority(HookPriorityAttribute.Higher)]
+    [HookPriority(HookPriorityAttribute.Low)]
     public static bool BloonDamagePostfix(Bloon @this, ref float totalAmount, Projectile projectile, ref bool distributeToChildren, ref bool overrideDistributeBlocker, ref bool createEffect, Tower tower, BloonProperties immuneBloonProperties, BloonProperties originalImmuneBloonProperties, ref bool canDestroyProjectile, ref bool ignoreNonTargetable, ref bool blockSpawnChildren, HookNullable<int> powerActivatedByPlayerId)
     {
         if(@this.bloonModel.baseId == ModContent.BloonID<SnowBloon>())
@@ -180,6 +256,7 @@ public class XmasMod2025 : BloonsTD6Mod
     }
 }
 
+// why mattcy why
 public enum PropsEnum
 {
     AmbientFxDust = 10000,

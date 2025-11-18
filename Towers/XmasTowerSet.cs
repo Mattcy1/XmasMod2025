@@ -21,16 +21,18 @@ public class XmasTowerSet : ModTowerSet
 {
     public override string DisplayName => "Christmas Towers";
 
+    #region Custom Currency Support for Towers
+
     [HarmonyPatch(typeof(TowerPurchaseButton), nameof(TowerPurchaseButton.Update))]
     private static class TowerPurchaseButton_Update
     {
         public static void Postfix(TowerPurchaseButton __instance)
         {
             var modTower = __instance.towerModel.GetModTower();
-            if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
+            if (modTower is ChristmasTower cTower && cTower.Currency != CurrencyType.Cash)
             {
-                __instance.Cast<TowerPurchaseButton>().costText.text = $"{cTower.Cost} Gifts";
-                if (XmasMod2025.Gifts < cTower.Cost)
+                __instance.Cast<TowerPurchaseButton>().costText.text = $"{cTower.Cost} {cTower.Currency}";
+                if (XmasMod2025.GetCurrency(cTower.Currency) < cTower.Cost)
                 {
                     __instance.SetUnavailable();
                     __instance.SetNotEnoughCash();
@@ -46,9 +48,9 @@ public class XmasTowerSet : ModTowerSet
         public static bool Prefix(TowerPurchaseButton __instance)
         {
             var modTower = __instance.towerModel.GetModTower();
-            if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
+            if (modTower is ChristmasTower cTower && cTower.Currency != CurrencyType.Cash)
             { 
-                if (XmasMod2025.Gifts < cTower.Cost)
+                if (XmasMod2025.GetCurrency(cTower.Currency) < cTower.Cost)
                 {
                     return false;
                 }
@@ -64,15 +66,15 @@ public class XmasTowerSet : ModTowerSet
         public static void Postfix(TowerToSimulation tower)
         {
             var modTower = tower.tower.towerModel.GetModTower();
-            if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts)
+            if (modTower is ChristmasTower cTower && cTower.Currency != CurrencyType.Cash)
             { 
                 tower.sim.AddCash(tower.tower.worth, (Simulation.CashSource)12);
-                XmasMod2025.Gifts -= cTower.Cost;
+                XmasMod2025.AddCurrency(cTower.Currency, -cTower.Cost);
                 tower.tower.worth = cTower.Cost;
 
-                if (InGame.instance != null || InGame.instance.bridge != null)
+                if (InGame.instance != null && InGame.instance.bridge != null)
                 {
-                    InGame.instance.bridge.simulation.CreateTextEffect(tower.position.ToSMathVector(), ModContent.CreatePrefabReference<CollectText>(), 2f, $"-{cTower.Cost} Gifts", true); 
+                    InGame.instance.bridge.simulation.CreateTextEffect(tower.position.ToSMathVector(), ModContent.CreatePrefabReference<CollectText>(), 2f, $"-{cTower.Cost} {cTower.Currency}", true); 
                 }
             }
         }
@@ -84,14 +86,14 @@ public class XmasTowerSet : ModTowerSet
         public static void Postfix(Tower __instance)
         {
             var modTower = __instance.towerModel.GetModTower();
-            if (modTower != null && modTower is ChristmasTower cTower && cTower.CostsGifts && __instance.worth > 0)
+            if (modTower is ChristmasTower cTower && cTower.Currency != CurrencyType.Cash && __instance.worth > 0)
             {
                 __instance.Sim.AddCash(-__instance.SaleValue, Simulation.CashType.Normal, 1, (Simulation.CashSource)12);
-                XmasMod2025.Gifts += (int)__instance.SaleValue;
+                XmasMod2025.AddCurrency(cTower.Currency, (int)__instance.SaleValue);
 
-                if (InGame.instance != null || InGame.instance.bridge != null)
+                if (InGame.instance != null && InGame.instance.bridge != null)
                 {
-                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{__instance.SaleValue} Gifts", true);
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{__instance.SaleValue} {cTower.Currency}", true);
                 }
             }
         }
@@ -107,9 +109,9 @@ public class XmasTowerSet : ModTowerSet
                 return true;
             }
             ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
-            if (modUpgrade != null && modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.CostsGifts)
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
             {
-                if (XmasMod2025.Gifts < cUpgrade.Cost)
+                if (XmasMod2025.GetCurrency(cUpgrade.Currency) < cUpgrade.Cost)
                 {
                     __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
                     __result = UpgradeButton.UpgradeStatus.CanNotAfford;
@@ -130,9 +132,9 @@ public class XmasTowerSet : ModTowerSet
                 return;
             }
             ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
-            if (modUpgrade is ChristmasUpgrade { CostsGifts: true } cUpgrade)
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
             {
-                __instance.cost.text = $"{cUpgrade.Cost} Gifts";
+                __instance.cost.text = $"{cUpgrade.Cost} {cUpgrade.Currency}";
             }
         }
     }
@@ -140,7 +142,7 @@ public class XmasTowerSet : ModTowerSet
     private static class TowerManager_UpgradeTower
     {
         [HarmonyPrefix]
-        public static void Prefix(ref Tower tower, ref TowerModel def, ref string __state)
+        public static void Prefix(ref Tower tower, ref TowerModel def, ref string? __state)
         {
             __state = null;
             foreach (var upgrade in def.appliedUpgrades)
@@ -158,28 +160,28 @@ public class XmasTowerSet : ModTowerSet
         }
 
         [HarmonyPostfix]
-        public static void Postfix(Tower tower, TowerModel def, float upgradeCost, string __state)
+        public static void Postfix(Tower tower, TowerModel def, float upgradeCost, string? __state)
         {
-            if (__state != null)
+            if (__state == null) return;
+            var modTower = tower.towerModel.GetModTower();
+            
+            if (modTower is ChristmasTower cTower &&  cTower.Currency != CurrencyType.Cash)
             {
-                var modTower = tower.towerModel.GetModTower();
-                if (modTower is ChristmasTower { CostsGifts: true })
+                var modUpgrade =  GetContent<ModUpgrade>().Find(m => m.Id == __state);
+                if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
                 {
-                    var modUpgrade =  GetContent<ModUpgrade>().Find(m => m.Id == __state);
-                    if (modUpgrade is ChristmasUpgrade { CostsGifts: true } cUpgrade)
-                    {
-                        tower.worth -= upgradeCost;
-                        tower.worth += cUpgrade.Cost;
-                        tower.GetTowerToSim().sim.AddCash(upgradeCost, Simulation.CashSource.TowerUpgraded);
-                        XmasMod2025.Gifts -= cUpgrade.Cost;
+                    tower.worth -= upgradeCost;
+                    tower.worth += cUpgrade.Cost;
+                    tower.GetTowerToSim().sim.AddCash(upgradeCost, Simulation.CashSource.TowerUpgraded);
+                    XmasMod2025.AddCurrency(cUpgrade.Currency, -cUpgrade.Cost);
                         
-                        if (InGame.instance != null || InGame.instance.bridge != null)
-                        {
-                            InGame.instance.bridge.simulation.CreateTextEffect(tower.Position, CreatePrefabReference<CollectText>(), 2f, $"-{cUpgrade.Cost} Gifts", true);
-                        }
+                    if (InGame.instance != null || InGame.instance.bridge != null)
+                    {
+                        InGame.instance.bridge.simulation.CreateTextEffect(tower.Position, CreatePrefabReference<CollectText>(), 2f, $"-{cUpgrade.Cost} {cUpgrade.Currency}", true);
                     }
                 }
             }
         }
     }
+    #endregion
 }

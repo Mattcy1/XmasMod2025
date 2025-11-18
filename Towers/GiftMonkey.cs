@@ -34,7 +34,6 @@ namespace XmasMod2025.Towers
 {
     public class GiftMonkey : ChristmasTower
     {
-        public override bool CostsGifts => true;
 
         public static List<string> towers = new List<string>();
         public override string BaseTower => TowerType.DartMonkey;
