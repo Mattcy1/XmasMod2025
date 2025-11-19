@@ -8,6 +8,7 @@ using Il2CppAssets.Scripts;
 using Il2CppAssets.Scripts.Data;
 using Il2CppAssets.Scripts.Data.MapEditor;
 using Il2CppAssets.Scripts.Models;
+using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Models.ContentBrowser;
 using Il2CppAssets.Scripts.Models.Towers;
@@ -46,6 +47,7 @@ public class XmasMod2025 : BloonsTD6Mod
     public static bool FestiveSpiritActive = false;
     public static Tower FestiveSpiritTower = null;
     public static List<TowerModel> GiftOfGivingTowersIds = new List<TowerModel>();
+    public static Bloon boss = null;
 
     public delegate void CurrencyChangedDelegate(double amount);
 
@@ -137,6 +139,14 @@ public class XmasMod2025 : BloonsTD6Mod
             if (increase > 0)
             {
                 totalGifts += increase;
+
+                if(boss != null)
+                {
+                    if(boss.bloonModel.baseId == ModContent.BloonID<Bosses.GiftBoss>())
+                    {
+                        boss.health += (int)(increase *= 3);
+                    }
+                }
             }
         }
     }
