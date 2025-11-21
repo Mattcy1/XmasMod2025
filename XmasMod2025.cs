@@ -401,3 +401,24 @@ public class TimeTriggerPacth
         }
     }
 }
+
+
+[HarmonyLib.HarmonyPatch(typeof(Bloon), nameof(Bloon.OnDestroy))]
+public class Bloon_Destroy
+{
+    [HarmonyLib.HarmonyPostfix]
+    public static void Postfix(Bloon __instance)
+    {
+        if(__instance.bloonModel.baseId == ModContent.BloonID<GiftBloon>())
+        {
+            var random = new System.Random().Next(1, 25);
+
+            if (InGame.instance != null || InGame.instance.bridge != null)
+            {
+                InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+            }
+
+            XmasMod2025.Gifts += random;
+        }
+    }
+}

@@ -1,4 +1,5 @@
 ﻿using Bosses.ModBossContenet;
+using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Bloons;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XmasMod2025.Bloons;
 
 namespace XmasMod2025.Bosses
 {
@@ -36,15 +38,19 @@ namespace XmasMod2025.Bosses
 
             SpawnBloonsActionModel spawn = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<SpawnBloonsActionModel>().Duplicate();
             spawn.actionId = "SpawnsGift";
-            spawn.bloonType = BloonType.sRainbow;
+            spawn.bloonType = ModContent.BloonID<CandyCaneBloon>();
             spawn.spawnCount = 4;
             spawn.bossName = "";
+            spawn.spawnTrackMax += 2;
+            spawn.spawnTrackMin -= 2;
 
             SpawnBloonsActionModel spawn1 = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<SpawnBloonsActionModel>().Duplicate();
             spawn1.actionId = "ModdedSkull" + bloonModel.baseId;
             spawn1.bloonType = BloonType.sMoab;
             spawn1.spawnCount = 2;
             spawn1.bossName = "";
+            spawn1.spawnTrackMax += 2;
+            spawn1.spawnTrackMin -= 2;
 
             TimeTriggerModel timeTrigger = new TimeTriggerModel("SpawnsGiftTimer", 30, false, new string[] { "SpawnsGift" });
 
