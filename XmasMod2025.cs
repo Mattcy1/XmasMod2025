@@ -21,10 +21,16 @@ using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Objects;
 using Il2CppAssets.Scripts.Simulation.Towers;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
+using Il2CppAssets.Scripts.Simulation.Track;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Bridge;
+using Il2CppAssets.Scripts.Unity.Map;
+using Il2CppAssets.Scripts.Unity.Scenes;
+using Il2CppAssets.Scripts.Unity.UI_New;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame.Stats;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
+using Il2CppAssets.Scripts.Unity.UI_New.Utils;
 using MelonLoader;
 using Octokit;
 using System.Collections.Generic;
@@ -50,7 +56,7 @@ namespace XmasMod2025;
 public class XmasMod2025 : BloonsTD6Mod
 {
     public static MapModel customMap;
-    
+    public static string lastMap = null;
     private MapModel? GetEmbeddedMap(string resourceName)
     {
         var stream = MelonAssembly.Assembly.GetManifestResourceStream(resourceName);
@@ -64,32 +70,6 @@ public class XmasMod2025 : BloonsTD6Mod
         string json = reader.ReadToEnd();
 
         return ModelSerializer.DeserializeModel<MapModel>(json);
-    }
-
-    public override void OnTitleScreen()
-    {
-        var map = GetEmbeddedMap("map");
-        if (map == null)
-        {
-            return;
-        }
-        
-        LoggerInstance.Msg($"Old count: {GameData.Instance.mapSet.Maps.items.Count}");
-
-        GameData.Instance.mapSet.Maps.items = GameData.Instance.mapSet.Maps.items.AddTo(new MapDetails
-        {
-            id = map.mapName,
-            coopMapDivisionType = CoopDivision.FREE_FOR_ALL,
-            difficulty = MapDifficulty.Intermediate,
-            mapSprite = ModContent.GetSpriteReference(this, "XmasMap"),
-            hasWater = true,
-            theme = MapTheme.Snow,
-            unlockDifficulty = MapDifficulty.Beginner,
-
-        });
-        
-        
-        LoggerInstance.Msg($"New count: {GameData.Instance.mapSet.Maps.items.Count}");
     }
 
     public static float PresentBloonChance = 0f;
@@ -247,7 +227,6 @@ public class XmasMod2025 : BloonsTD6Mod
             FestiveSpiritTower = null;
         }
     }
-
     public override void OnRoundEnd()
     {
         BuffHandler.GiftOfGivingHandler(false);
@@ -349,6 +328,64 @@ public class XmasMod2025 : BloonsTD6Mod
     }
 }
 
+[HarmonyLib.HarmonyPatch(typeof(TitleScreen), nameof(TitleScreen.Start))]
+public class CreateMap
+{
+    [HarmonyLib.HarmonyPostfix]
+    public static void Postfix(TitleScreen __instance)
+    {
+        var maps = GameData.Instance.mapSet.Maps.items;
+
+        var customMap = new MapDetails
+        {
+            id = "Xmas Cubism",
+            coopMapDivisionType = CoopDivision.FREE_FOR_ALL,
+            difficulty = MapDifficulty.Beginner,
+            mapSprite = ModContent.GetSpriteReference<XmasMod2025>("MapIcon"),
+            hasWater = true,
+            theme = MapTheme.Snow,
+            unlockDifficulty = MapDifficulty.Beginner,
+        };
+
+        var list = GameData.Instance.mapSet.Maps.items.ToList();
+        list.Insert(0, customMap);
+        GameData.Instance.mapSet.Maps.items = list.ToArray();
+
+        /*GameData.Instance.mapSet.Maps.items = GameData.Instance.mapSet.Maps.items.AddTo(new MapDetails
+        {
+            id = map.mapName,
+            coopMapDivisionType = CoopDivision.FREE_FOR_ALL,
+            difficulty = MapDifficulty.Intermediate,
+            mapSprite = ModContent.GetSpriteReference(this, "XmasMap"),
+            hasWater = true,
+            theme = MapTheme.Snow,
+            unlockDifficulty = MapDifficulty.Beginner,
+
+        });*/
+
+    }
+}
+
+//Credit goes to Timotheeee
+
+[HarmonyLib.HarmonyPatch(typeof(MapLoader), nameof(MapLoader.LoadScene))]
+public class LoadMap
+{
+    [HarmonyLib.HarmonyPrefix]
+    internal static bool Fix(ref MapLoader __instance)
+    {
+        MelonLogger.Msg(__instance.currentMapName);
+        XmasMod2025.lastMap = __instance.currentMapName;
+        if (XmasMod2025.lastMap == "Xmas Cubism")
+        {
+            __instance.currentMapName = "Cubism";
+
+        }
+
+        return true;
+    }
+}
+
 [HarmonyLib.HarmonyPatch(typeof(InGame), nameof(InGame.StartMatch))]
 public class ChangeMap
 {
@@ -379,7 +416,7 @@ public class ChangeMap
 
         GameObject terrain = GameObject.Find("CubismTerrain");
 
-        if (terrain != null)
+        if (terrain != null && XmasMod2025.lastMap == "Xmas Cubism")
         {
             terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<BossAPI>("map");
             var data = XmasMod2025.LoadJson("MapMaker-8977.json");

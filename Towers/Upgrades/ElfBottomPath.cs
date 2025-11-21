@@ -76,9 +76,9 @@ namespace XmasMod2025.Towers.Upgrades
                 var cashModel = weapon.projectile.GetBehavior<CashModel>();
                 weapon.projectile.GetBehavior<CreateTextEffectModel>().assetId = new("");
 
-                cashModel.minimum = 4;
-                weapon.GetBehavior<EmissionsPerRoundFilterModel>().count = 8;
-                cashModel.maximum = 7;
+                cashModel.minimum = 2;
+                weapon.GetBehavior<EmissionsPerRoundFilterModel>().count = 6;
+                cashModel.maximum = 4;
                 cashModel.name = "Elf003";
                 weapon.projectile.id = "Elf003";
 
@@ -105,9 +105,9 @@ namespace XmasMod2025.Towers.Upgrades
             var weapon = towerModel.GetWeapon();
             var cashModel = weapon.projectile.GetBehavior<CashModel>();
 
-            cashModel.minimum = 7;
-            cashModel.maximum = 10;
-            weapon.GetBehavior<EmissionsPerRoundFilterModel>().count = 12;
+            cashModel.minimum = 4;
+            cashModel.maximum = 5;
+            weapon.GetBehavior<EmissionsPerRoundFilterModel>().count = 8;
         }
     }
 
@@ -123,9 +123,9 @@ namespace XmasMod2025.Towers.Upgrades
             var weapon = towerModel.GetWeapon();
             var cashModel = weapon.projectile.GetBehavior<CashModel>();
 
-            cashModel.minimum = 9;
-            cashModel.maximum = 15;
-            weapon.GetBehavior<EmissionsPerRoundFilterModel>().count = 16;
+            cashModel.minimum = 6;
+            cashModel.maximum = 8;
+            weapon.GetBehavior<EmissionsPerRoundFilterModel>().count = 10;
         }
     }
 

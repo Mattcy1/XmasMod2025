@@ -60,6 +60,7 @@ public abstract class ModBoss : ModBloon
         healthBarTriggerModel.actionIds = new string[] { "HealthBar" + BossID};
         bossBloonModel.AddBehavior(healthBarTriggerModel);
 
+        bossBloonModel.disallowCosmetics = true;
         bossBloonModel.AddInfo(SkullCount > 0, SkullCount, CustomSkullIcon, Stars, HealthBar, HealthBarBackground, BossName, IconGuid, registeredBossId, SpawnsRound, BossID);
     }
 
