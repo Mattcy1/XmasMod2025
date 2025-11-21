@@ -366,7 +366,7 @@ public class CreateMap
     }
 }
 
-//Credit goes to Timotheeee
+//Credit goes to Timotheeee: https://github.com/Timotheeee/btd6_mods/blob/master/custom_maps_v2/Main.cs#L406
 
 [HarmonyLib.HarmonyPatch(typeof(MapLoader), nameof(MapLoader.LoadScene))]
 public class LoadMap
@@ -374,7 +374,6 @@ public class LoadMap
     [HarmonyLib.HarmonyPrefix]
     internal static bool Fix(ref MapLoader __instance)
     {
-        MelonLogger.Msg(__instance.currentMapName);
         XmasMod2025.lastMap = __instance.currentMapName;
         if (XmasMod2025.lastMap == "Xmas Cubism")
         {
@@ -419,7 +418,7 @@ public class ChangeMap
         if (terrain != null && XmasMod2025.lastMap == "Xmas Cubism")
         {
             terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<BossAPI>("map");
-            var data = XmasMod2025.LoadJson("MapMaker-8977.json");
+            var data = XmasMod2025.LoadJson("XmasCubismProps.json");
             List<string> lines = JsonSerializer.Deserialize<List<string>>(data);
 
             foreach (var line in lines)
