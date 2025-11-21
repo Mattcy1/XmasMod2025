@@ -1,0 +1,551 @@
+﻿using BTD_Mod_Helper;
+using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Components;
+using BTD_Mod_Helper.Api.Enums;
+using BTD_Mod_Helper.Api.Hooks;
+using BTD_Mod_Helper.Api.Hooks.BloonHooks;
+using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
+using Il2Cpp;
+using Il2CppAssets.Scripts;
+using Il2CppAssets.Scripts.Data;
+using Il2CppAssets.Scripts.Models.Bloons;
+using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
+using Il2CppAssets.Scripts.Models.Rounds;
+using Il2CppAssets.Scripts.Simulation;
+using Il2CppAssets.Scripts.Simulation.Bloons;
+using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
+using Il2CppAssets.Scripts.Simulation.Towers;
+using Il2CppAssets.Scripts.Simulation.Towers.Behaviors;
+using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
+using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.Scenes;
+using Il2CppAssets.Scripts.Unity.UI_New.Achievements;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.Popups;
+using Il2CppTMPro;
+using MelonLoader;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using XmasMod2025;
+using static Bosses.BossAPI.BossAPI;
+using Info = BTD_Mod_Helper.Api.Components.Info;
+
+[assembly: MelonInfo(typeof(Bosses.BossAPI.BossAPI), ModHelperData.Name, ModHelperData.Version, ModHelperData.RepoOwner)]
+[assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
+
+namespace Bosses.BossAPI;
+
+public class BossAPI : BloonsTD6Mod
+{
+    public static List<ModHelperImage> skullUIs = new List<ModHelperImage>();
+    public class BossInfo
+    {
+        public Bloon Boss { get; set; }
+        public bool HasSkull { get; set; }
+        public int SkullsCount { get; set; }
+        public string SkullIcon { get; set; }
+        public int StarsCount { get; set; }
+        public string HealthBarIcon { get; set; }
+        public string HealthBarBackground { get; set; }
+        public string DisplayName { get; set; }
+        public string BossIcon { get; set; }
+        public string BossID { get; set; }
+        public int SpawnRound { get; set; }
+        public string BossToSpawn { get; set; }
+    }
+
+    public static List<BossInfo> BossInfos = new List<BossInfo>();
+    public override void OnApplicationStart()
+    {
+        ModHelper.Msg<BossAPI>("BossAPI loaded!");
+    }
+}
+
+[RegisterTypeInIl2Cpp]
+
+public class TemplateBehavior : MonoBehaviour
+{
+    public Bloon bossInstance;
+    public ModHelperText bossUIName;
+    public ModHelperImage bossUIHealthBar;
+    public ModHelperImage bossUIIcon;
+    public TemplateBehavior() : base()
+    {
+    }
+
+    public void Start()
+    {
+        if (BossUI.instance != null)
+        {
+            bossUIName = BossUI.bossName;
+            bossUIHealthBar = BossUI.bossPanelInside;
+            bossUIIcon = BossUI.bossIcon;
+        }
+    }
+
+    public void Update()
+    {
+
+    }
+}
+public class Hooks
+{
+    [HookTarget(typeof(BloonDamageHook), HookTargetAttribute.EHookType.Postfix)]
+    [HookPriority(HookPriorityAttribute.Higher)]
+    public static bool BloonDamagePostfix(Bloon @this, ref float totalAmount, Projectile projectile, ref bool distributeToChildren, ref bool overrideDistributeBlocker, ref bool createEffect, Tower tower, BloonProperties immuneBloonProperties, BloonProperties originalImmuneBloonProperties, ref bool canDestroyProjectile, ref bool ignoreNonTargetable, ref bool blockSpawnChildren, HookNullable<int> powerActivatedByPlayerId)
+    {
+        foreach (var tag in @this.bloonModel.tags)
+        {
+            foreach (var bossInfo in BossAPI.BossInfos)
+            {
+                if (@this.bloonModel.IsModdedBoss())
+                {
+                    BossUI.HandleUI(@this);
+                }
+            }
+        }
+
+        return true;
+    }
+    public static T StartMonobehavior<T>() where T : MonoBehaviour
+    {
+        var obj = InGame.instance.GetInGameUI().AddComponent<T>();
+
+        return obj as T;
+    }
+
+    /*[HarmonyPatch(typeof(TitleScreen), nameof(TitleScreen.Start))]
+    public class HandleBosses_Pacth
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix()
+        {
+            foreach (var bloonModel in Game.instance.model.bloons)
+            {
+                if (bloonModel.baseId == "Bad")
+                {
+                    bloonModel.BecomeModdedBoss("Bad");
+
+                    int skullsCount = 5;
+                    float[] percentageValues = CalculateHealthTriggerPercentages(skullsCount);
+
+                    bloonModel.AddInfo(true, skullsCount, "Blue", "", 2, "", "HealthbarBG", "Test Boss", "Icon", bloonModel.GetBossID());
+
+                    foreach (var bossInfo in BossAPI.BossInfos)
+                    {
+                        if (bossInfo.BossID == bloonModel.GetBossID())
+                        {
+                            HealthPercentTriggerModel healthPercentTriggerModel = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<HealthPercentTriggerModel>().Duplicate();
+                            healthPercentTriggerModel.percentageValues = percentageValues;
+                            healthPercentTriggerModel.actionIds = new string[] { "ModdedSkull" + bossInfo.BossID };
+                            bloonModel.AddBehavior(healthPercentTriggerModel);
+
+                            HealthPercentTriggerModel HealthBarTriggerModel = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<HealthPercentTriggerModel>().Duplicate();
+                            HealthBarTriggerModel.percentageValues = CalculateHealthTriggerPercentages(10);
+                            HealthBarTriggerModel.actionIds = new string[] { "HealthBar" + bossInfo.BossID };
+                            bloonModel.AddBehavior(HealthBarTriggerModel);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }*/
+
+    [HarmonyPatch(typeof(TitleScreen), nameof(TitleScreen.Start))]
+    public class SpawnBoss_Pacth
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix(TitleScreen __instance)
+        {
+            foreach(var info in BossAPI.BossInfos)
+            {
+                foreach (RoundSetModel roundSet in GameData.Instance.roundSets)
+                {
+                    try
+                    {
+                        roundSet.rounds[info.SpawnRound - 1].ClearBloonGroups();
+                        roundSet.rounds[info.SpawnRound - 1].AddBloonGroup(info.BossToSpawn, 1);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    [HarmonyPatch(typeof(Bloon), nameof(Bloon.OnSpawn))]
+    public class HandleBossSpawn_Pacth
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix(Bloon __instance)
+        {
+            foreach (var bossInfo in BossAPI.BossInfos)
+            {
+                if (__instance.bloonModel.baseId == bossInfo.BossToSpawn)
+                {
+                    bossInfo.Boss = __instance;
+
+                    if (BossUI.instance != null)
+                    {
+                        BossUI.instance.Close();
+                    }
+                    BossUI.CreateBossBar(bossInfo);
+
+
+                    XmasMod2025.XmasMod2025.boss = __instance;
+                    __instance.bloonModel.BecomeModdedBoss(bossInfo.DisplayName);
+
+                    break;
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Bloon), nameof(Bloon.Leaked))]
+    public class HandeBossLeaks_Pacth
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix(Bloon __instance)
+        {
+            foreach (var bossInfo in BossAPI.BossInfos)
+            {
+                if (__instance.bloonModel.IsModdedBoss())
+                {
+                    foreach (var BossInfo in BossAPI.BossInfos)
+                    {
+                        if (BossInfo.BossID == __instance.bloonModel.GetBossID())
+                        {
+                            if (BossUI.instance != null)
+                            {
+                                BossUI.instance.Close();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    [HarmonyPatch(typeof(HealthPercentTrigger), nameof(HealthPercentTrigger.Trigger))]
+    public class HandleSkull_Patch
+    {
+        [HarmonyPostfix]
+        public static void Postfix(HealthPercentTrigger __instance)
+        {
+
+            if (BossAPI.skullUIs.Count > 0 && __instance.bloon.bloonModel.IsModdedBoss() && __instance.modl.actionIds.Contains("ModdedSkull" + __instance.bloon.bloonModel.baseId))
+            {
+                int lastIndex = BossAPI.skullUIs.Count - 1;
+                MelonCoroutines.Start(BossUI.HandeSkull(BossAPI.skullUIs[lastIndex], __instance.bloon.GetInfo().SkullIcon));
+            }
+
+            if (BossUI.bossPanelInside != null && __instance.modl.actionIds.Contains("HealthBar" + __instance.bloon.bloonModel.baseId))
+            {
+                Bloon boss = __instance.bloon;
+
+                foreach (var bossInfo in BossAPI.BossInfos)
+                {
+                    if (bossInfo.BossID == __instance.bloon.bloonModel.GetBossID())
+                    {
+                        if (string.IsNullOrEmpty(bossInfo.HealthBarIcon))
+                        {
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("90");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("80");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("70");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("60");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("50");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("40");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("30");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("20");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("10");
+
+                        }
+                        else
+                        {
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "90");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "80");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "70");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "60");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "50");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "40");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "30");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "20");
+                            if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "10");
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static float[] CalculateHealthTriggerPercentages(int skullCount)
+    {
+        float[] percentageValues = new float[skullCount];
+
+        for (int i = 0; i < skullCount; i++)
+        {
+            percentageValues[i] = 1f - ((i + 1f) / (skullCount + 1f));
+        }
+
+        return percentageValues;
+    }
+}
+
+public static class Ext
+{
+    public static void BecomeModdedBoss(this BloonModel bloonModel, string ID)
+    {
+        bloonModel.AddTag("ModdedBoss" + ID);
+    }
+
+    public static bool IsModdedBoss(this BloonModel bloonModel)
+    {
+        string bossID = bloonModel.GetBossID();
+        if (string.IsNullOrEmpty(bossID)) return false;
+
+        return bloonModel.tags.Any(tag => tag.ContainsIgnoreCase("ModdedBoss") && tag.ContainsIgnoreCase(bossID));
+    }
+
+
+    public static string GetBossID(this BloonModel bloonModel)
+    {
+        foreach (var tag in bloonModel.tags)
+        {
+            if (tag.Contains("ModdedBoss"))
+            {
+                return tag;
+            }
+        }
+
+        return "Null";
+    }
+
+
+    public static bool AddInfo(this BloonModel bloon, bool hasSkull, int skullsCount, string customSkullIcon, int starsCount, string healthBarIcon, string healthBarBackground, string displayName, string bossIcon, string bossID, int round, string ToSpawn)
+    {
+        BossAPI.BossInfos.Add(new BossAPI.BossInfo
+        {
+            Boss = null,
+            HasSkull = hasSkull,
+            SkullsCount = skullsCount,
+            SkullIcon = customSkullIcon,
+            StarsCount = starsCount,
+            HealthBarIcon = healthBarIcon,
+            HealthBarBackground = healthBarBackground,
+            DisplayName = displayName,
+            BossIcon = bossIcon,
+            BossID = bossID,
+            SpawnRound = round,
+            BossToSpawn = ToSpawn
+        });
+
+
+        return true;
+    }
+
+    public static BossAPI.BossInfo GetInfo(this Bloon bloon)
+    {
+        string bossID = bloon.bloonModel.GetBossID();
+        if (string.IsNullOrEmpty(bossID)) return null;
+
+        return BossAPI.BossInfos.FirstOrDefault(info => info.BossID == bossID);
+    }
+}
+
+[RegisterTypeInIl2Cpp(false)]
+public class BossUI : MonoBehaviour
+{
+    public static BossUI? instance;
+    public static ModHelperPanel? bossPanel;
+    public static ModHelperImage? bossPanelInside;
+    public static ModHelperImage? bossLeftBackground;
+    public static ModHelperImage? bossStars;
+    public static ModHelperText? bossHealth;
+    public static ModHelperImage? bossIcon;
+    public static ModHelperText? bossName;
+    public static ModHelperImage? bossHealthIcon;
+    public void Close()
+    {
+        if (gameObject)
+        {
+            gameObject.Destroy();
+        }
+    }
+
+    public static void CreateBossBar(BossAPI.BossInfo bossInfo)
+    {
+        if (InGame.instance != null)
+        {
+            RectTransform rect = InGame.instance.uiRect;
+            if(bossInfo.HealthBarBackground == "")
+            {
+                bossInfo.HealthBarBackground = "HealthbarBG";
+            }
+            bossPanel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1150, 1250, 100), ModContent.GetTextureGUID<BossAPI>(bossInfo.HealthBarBackground));
+            instance = bossPanel.AddComponent<BossUI>();
+            bossLeftBackground = bossPanel.AddImage(new Info("LeftBackground", -725, 0f, 250, 250), VanillaSprites.BossTiersIconSmall);
+            bossStars = bossPanel.AddImage(new Info("stars", -425, 100, 400, 80), ModContent.GetTextureGUID<BossAPI>($"Tier{bossInfo.StarsCount}Boss"));
+            bossHealth = bossPanel.AddText(new Info("HealthText_", 450, 80, 500, 250), bossInfo.Boss.health + "/" + bossInfo.Boss.bloonModel.maxHealth, 50);
+            bossIcon = bossLeftBackground.AddImage(new Info("leftIcon", 0, 0f, 250, 250), ModContent.GetTextureGUID<BossAPI>(bossInfo.BossIcon));
+            bossName = bossPanel.AddText(new Info("NameText_", 0, 80, 750, 250), bossInfo.DisplayName, 50);
+
+            string textureName = "100";
+            if (!string.IsNullOrEmpty(bossInfo.HealthBarIcon))
+            {
+                textureName = bossInfo.HealthBarIcon + "100";
+            }
+
+            bossPanelInside = bossPanel.AddImage(new Info("PanelInside", 0, 0, 1250, 90), ModContent.GetTextureGUID<BossAPI>(textureName));
+
+            HandleUI(bossInfo.Boss);
+
+            if (bossInfo.HasSkull)
+            {
+                CreateSkulls(bossInfo, bossPanel);
+            }
+
+            //VertexGradient bossGradient = new VertexGradient(UnityEngine.Color.red, UnityEngine.Color.yellow, UnityEngine.Color.green, UnityEngine.Color.blue);
+            //BossUI.UpdateHealthColor(null, bossGradient);
+        }
+    }
+
+    public static void CreateSkulls(BossAPI.BossInfo info, ModHelperPanel panel)
+    {
+        float panelWidth = panel.RectTransform.rect.width;
+
+        var skullsCount = info.SkullsCount;
+        float spacing = panelWidth / (skullsCount + 1);
+
+        float[] percentageValues = Hooks.CalculateHealthTriggerPercentages(skullsCount);
+
+        for (int i = 0; i < skullsCount; i++)
+        {
+            float xPosition = panelWidth * (1f - percentageValues[i]);
+
+            ModHelperImage skull = panel.AddImage(new Info($"Skull_{i}", xPosition - panelWidth / 2, 0, 112, 112), ModContent.GetTextureGUID<BossAPI>($"{info.SkullIcon}Skull"));
+
+            skull.RectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            skull.RectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            skull.RectTransform.anchoredPosition = new Vector2(xPosition - panelWidth / 2, -panel.RectTransform.rect.height / 2);
+
+            BossAPI.skullUIs.Add(skull);
+        }
+    }
+    
+    public static void HandleUI(Bloon b)
+    {
+        if (instance == null) return;
+
+        if (b == null || b.health <= 0f)
+        {
+            instance.Close();
+        }
+
+        if (bossHealth != null && bossPanelInside != null)
+        {
+            float currentHP = b.health;
+            float maxHP = b.bloonModel.maxHealth;
+
+            float healthPercent = currentHP / maxHP;
+
+            bossPanelInside.transform.localScale = new Vector3(healthPercent, 1f, 1f);
+
+            bossPanelInside.transform.localPosition = new Vector3(
+                (1f - healthPercent) * -bossPanelInside.RectTransform.rect.width / 2f,
+                bossPanelInside.transform.localPosition.y,
+                bossPanelInside.transform.localPosition.z
+            );
+
+            bossHealth.Text.text = $"{currentHP}/{maxHP}";
+        }
+
+    }
+    public static void UpdateHealthColor(UnityEngine.Color? color = null, VertexGradient? colorGradient = null)
+    {
+        if (bossHealth == null) return;
+
+        var text = bossHealth.Text;
+
+        if (color.HasValue)
+        {
+            text.enableVertexGradient = false;
+            text.color = color.Value;
+        }
+        else if (colorGradient.HasValue)
+        {
+            text.enableVertexGradient = true;
+            text.colorGradient = colorGradient.Value;
+
+            text.ForceMeshUpdate();
+        }
+    }
+
+    public static void UpdateNameColor(UnityEngine.Color? color = null, VertexGradient? colorGradient = null)
+    {
+        if (bossName == null) return;
+
+        var text = bossName.Text;
+
+        if (color.HasValue)
+        {
+            text.enableVertexGradient = false;
+            text.color = color.Value;
+        }
+        else if (colorGradient.HasValue)
+        {
+            text.enableVertexGradient = true;
+            text.colorGradient = colorGradient.Value;
+
+            text.ForceMeshUpdate();
+        }
+    }
+    public static IEnumerator HandeSkull(ModHelperImage skullUI, string customSkull)
+    {
+        if (skullUI != null)
+        {
+            skullUI.AddImage(new BTD_Mod_Helper.Api.Components.Info($"Skull_", 0, 0, 112, 112), ModContent.GetTextureGUID<BossAPI>($"{customSkull}ActivateSkull"));
+
+            yield return new WaitForSeconds(1f);
+
+            if (skullUI != null && skullUI.gameObject != null)
+            {
+                GameObject.Destroy(skullUI.gameObject);
+                BossAPI.skullUIs.Remove(skullUI);
+            }
+        }
+    }
+}
