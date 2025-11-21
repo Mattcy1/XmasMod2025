@@ -14,6 +14,8 @@
     </ItemGroup>
     <ItemGroup>
       <None Remove="Assets\XmasMap.json" />
+      <None Remove="MapMaker-8977.json" />
+      <EmbeddedResource Include="MapMaker-8977.json" />
       <Resource Include="Assets\XmasMap.json" />
     </ItemGroup>
 

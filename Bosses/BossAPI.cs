@@ -418,7 +418,7 @@ public class BossUI : MonoBehaviour
             bossPanel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1150, 1250, 100), ModContent.GetTextureGUID<BossAPI>(bossInfo.HealthBarBackground));
             instance = bossPanel.AddComponent<BossUI>();
             bossLeftBackground = bossPanel.AddImage(new Info("LeftBackground", -725, 0f, 250, 250), VanillaSprites.BossTiersIconSmall);
-            bossStars = bossPanel.AddImage(new Info("stars", -425, 100, 400, 80), ModContent.GetTextureGUID<BossAPI>($"Tier{bossInfo.StarsCount}Boss"));
+            bossStars = bossPanel.AddImage(new Info("stars", -400, 100, 400, 80), ModContent.GetTextureGUID<BossAPI>($"Tier{bossInfo.StarsCount}Boss"));
             bossHealth = bossPanel.AddText(new Info("HealthText_", 450, 80, 500, 250), bossInfo.Boss.health + "/" + bossInfo.Boss.bloonModel.maxHealth, 50);
             bossIcon = bossLeftBackground.AddImage(new Info("leftIcon", 0, 0f, 250, 250), ModContent.GetTextureGUID<BossAPI>(bossInfo.BossIcon));
             bossName = bossPanel.AddText(new Info("NameText_", 0, 80, 750, 250), bossInfo.DisplayName, 50);

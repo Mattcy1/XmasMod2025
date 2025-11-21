@@ -1,5 +1,6 @@
 ﻿using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Helpers;
 using BTD_Mod_Helper.Api.Hooks;
 using BTD_Mod_Helper.Api.Hooks.BloonHooks;
 using BTD_Mod_Helper.Extensions;
@@ -7,10 +8,12 @@ using Il2Cpp;
 using Il2CppAssets.Scripts;
 using Il2CppAssets.Scripts.Data;
 using Il2CppAssets.Scripts.Data.MapEditor;
+using Il2CppAssets.Scripts.Data.MapSets;
 using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Models.ContentBrowser;
+using Il2CppAssets.Scripts.Models.Map;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
@@ -18,16 +21,16 @@ using Il2CppAssets.Scripts.Simulation.Objects;
 using Il2CppAssets.Scripts.Simulation.Towers;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.Bridge;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using MelonLoader;
+using Octokit;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using BTD_Mod_Helper.Api.Helpers;
-using Il2CppAssets.Scripts.Data.MapSets;
-using Il2CppAssets.Scripts.Models.Map;
-using Il2CppAssets.Scripts.Unity.Bridge;
+using System.Reflection;
+using System.Text.Json;
 using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons;
@@ -93,6 +96,8 @@ public class XmasMod2025 : BloonsTD6Mod
     public static Tower FestiveSpiritTower = null;
     public static List<TowerModel> GiftOfGivingTowersIds = new List<TowerModel>();
     public static Bloon boss = null;
+    public static List<MapEditorProp> MapEditorProps => GameData.Instance.mapEditorData.mapEditorProps.ToList();
+
 
     public delegate void CurrencyChangedDelegate(double amount);
 
@@ -196,30 +201,13 @@ public class XmasMod2025 : BloonsTD6Mod
         }
     }
 
-    private static double totalGifts;
+    public static double totalGifts;
 
     public static double TotalGifts => totalGifts;
     
     private static double totalSnowflakes;
 
     public static double TotalSnowflakes => totalSnowflakes;
-
-    public override void OnMatchStart()
-    {
-        if (GiftOpenerUI.instance == null)
-        {
-            GiftOpenerUI.CreatePanel();
-        }
-
-        if (GiftCounterUI.instance == null)
-        {
-            GiftCounterUI.CreatePanel();
-        }
-
-        gifts = 25;
-        totalGifts = 25;
-    }
-
     public override void OnRestart()
     {
         gifts = 25;
@@ -275,6 +263,29 @@ public class XmasMod2025 : BloonsTD6Mod
             }
         }
     }
+
+    public static string LoadJson(string filename)
+    {
+        var asm = Assembly.GetExecutingAssembly();
+
+        string resourceName = asm.GetManifestResourceNames()
+            .FirstOrDefault(n => n.EndsWith(filename));
+
+        if (resourceName == null)
+        {
+            MelonLogger.Error("JSON resource not found: " + filename);
+            return null;
+        }
+
+        MelonLogger.Msg("Loading: " + resourceName);
+
+        using (var stream = asm.GetManifestResourceStream(resourceName))
+        using (var reader = new StreamReader(stream))
+        {
+            return reader.ReadToEnd();
+        }
+    }
+
     /*public override void OnTowerUpgraded(Tower tower, string upgradeName, TowerModel newBaseTowerModel)
     {
         var modTower = tower.towerModel.GetModTower();
@@ -317,15 +328,61 @@ public class ChangeMap
     [HarmonyLib.HarmonyPostfix]
     public static void Postfix()
     {
-        GameObject game = GameObject.Find("CubismTerrain");
-
-        if (game != null)
+        if (GiftOpenerUI.instance == null)
         {
-            game.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("Map");
+            GiftOpenerUI.CreatePanel();
+        }
+
+        if (GiftCounterUI.instance == null)
+        {
+            GiftCounterUI.CreatePanel();
+        }
+
+        XmasMod2025.SetCurrency(CurrencyType.Gift, 25);
+        XmasMod2025.totalGifts = 25;
+
+        GameObject terrain = GameObject.Find("CubismTerrain");
+
+        if (terrain != null)
+        {
+            //terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("map");
+            var data = XmasMod2025.LoadJson("MapMaker-8977.json");
+            List<string> lines = JsonSerializer.Deserialize<List<string>>(data);
+
+            foreach (var line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
+
+                var match = System.Text.RegularExpressions.Regex.Match(line, @"^(.*?),\s*(\d+),\s*(-?[\d\.]+),\s*\(([\d\.-]+),\s*([\d\.-]+),\s*([\d\.-]+)\),\s*(-?[\d\.]+),\s*(-?[\d\.]+)$");
+                if (!match.Success)
+                    continue;
+
+                string propName = match.Groups[1].Value;
+                int propId = int.Parse(match.Groups[2].Value);
+                float rot = float.Parse(match.Groups[3].Value);
+                float x = float.Parse(match.Groups[7].Value);
+                float y = float.Parse(match.Groups[8].Value);
+
+                PositionalData positionalData = new PositionalData
+                {
+                    //scale = float.Parse(match.Groups[6].Value),
+                    rotation = new Vector3(0, 0, rot),
+                    position = new Vector3(x, 0, y)
+                };
+
+                foreach (var p in XmasMod2025.MapEditorProps)
+                {
+                    if (p.Def().id == propId)
+                    {
+                        InGame.instance.bridge.CreateMapEditorPropAt(propName, positionalData, p.Def(), default, null);
+                    }
+                }
+            }
         }
         else
         {
-            PopupScreen.instance.ShowOkPopup("It's recommended to play this mod on cubsim, The code for loading a custom map was made by datjanedoe credits to him.");
+            PopupScreen.instance.ShowOkPopup("It's recommended to play this mod on cubsim.");
 
         }
     }
