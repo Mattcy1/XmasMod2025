@@ -26,6 +26,22 @@ namespace XmasMod2025.Bloons
             bloonModel.leakDamage += 5;
             bloonModel.RemoveAllChildren();
             bloonModel.speed -= 0.3f;
+            bloonModel.AddToChildren(ModContent.BloonID<MiniCandyCaneBloon>(), 2);
+            //bloonModel.icon = "";
+
+            bloonModel.disallowCosmetics = true;
+        }
+    }
+
+    public class MiniCandyCaneBloon : ModBloon
+    {
+        public override string BaseBloon => BloonType.sWhite;
+
+        public override void ModifyBaseBloonModel(BloonModel bloonModel)
+        {
+            bloonModel.maxHealth += 2;
+            bloonModel.RemoveAllChildren();
+            bloonModel.speed -= 0.3f;
             //bloonModel.icon = "";
 
             bloonModel.disallowCosmetics = true;
@@ -39,6 +55,17 @@ namespace XmasMod2025.Bloons
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
             Set2DTexture(node, "CandyCaneBloon");
+        }
+    }
+
+    public class MiniCandyCaneBloonDisplay : ModBloonDisplay<MiniCandyCaneBloon>
+    {
+        public override string BaseDisplay => Generic2dDisplay;
+
+        public override float Scale => 2f;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            Set2DTexture(node, "MiniCandyCaneBloon");
         }
     }
 }

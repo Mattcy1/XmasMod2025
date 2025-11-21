@@ -41,16 +41,16 @@ namespace XmasMod2025.Bosses
             spawn.bloonType = ModContent.BloonID<CandyCaneBloon>();
             spawn.spawnCount = 4;
             spawn.bossName = "";
-            spawn.spawnTrackMax += 2;
-            spawn.spawnTrackMin -= 2;
+            spawn.spawnTrackMax += 0.5f;
+            spawn.spawnTrackMin -= 0.5f;
 
             SpawnBloonsActionModel spawn1 = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<SpawnBloonsActionModel>().Duplicate();
             spawn1.actionId = "ModdedSkull" + bloonModel.baseId;
             spawn1.bloonType = BloonType.sMoab;
             spawn1.spawnCount = 2;
             spawn1.bossName = "";
-            spawn1.spawnTrackMax += 2;
-            spawn1.spawnTrackMin -= 2;
+            spawn1.spawnTrackMax += 0.5f;
+            spawn1.spawnTrackMin -= 0.5f;
 
             TimeTriggerModel timeTrigger = new TimeTriggerModel("SpawnsGiftTimer", 30, false, new string[] { "SpawnsGift" });
 

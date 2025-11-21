@@ -15,15 +15,14 @@ using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
 using System.Linq;
 using UnityEngine;
-using XmasMod2025.Towers;
 using static Il2CppSystem.DateTimeParse;
 
-namespace XmasMod2025.Towers
+namespace XmasMod2025.Towers.SubTowers
 {
     public class ElfSpawner : ChristmasTower
     {
         public override string BaseTower => TowerType.DartMonkey;
-        public override bool DontAddToShop => false;
+        public override bool DontAddToShop => true;
         public override string Icon => VanillaSprites.MonkeyVillageElfPetIcon;
         public override string Portrait => Icon;
         public override string Description => "One of Santa's Minions, help you defend.";
@@ -40,7 +39,7 @@ namespace XmasMod2025.Towers
             Avatarspawner[0].weapons[0].rate = 10f;
             Avatarspawner[0].weapons[0].projectile.RemoveBehavior<CreateTowerModel>();
             Avatarspawner[0].name = "ElfSpawner";
-            Avatarspawner[0].weapons[0].projectile.AddBehavior(new CreateTowerModel("CreateTower", ModContent.GetTowerModel<ElfHelper>(), 0, false, false, false, false, false));
+            Avatarspawner[0].weapons[0].projectile.AddBehavior(new CreateTowerModel("CreateTower", GetTowerModel<ElfHelper>(), 0, false, false, false, false, false));
             Avatarspawner[0].range = 999;
             towerModel.AddBehavior(Avatarspawner[0]);
 

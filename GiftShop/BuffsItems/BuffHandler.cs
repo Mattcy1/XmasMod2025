@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using XmasMod2025.Towers;
+using XmasMod2025.Towers.SubTowers;
 using static MelonLoader.MelonLogger;
 
 namespace XmasMod2025.GiftShop.BuffsItems
@@ -47,7 +47,6 @@ namespace XmasMod2025.GiftShop.BuffsItems
             if(XmasMod2025.FestiveSpiritTower == null)
             {
                 InGame.instance.bridge.CreateTowerAt(new Vector2(0, 0), ModContent.GetTowerModel<FestiveSpiritTower>(), ObjectId.Create((uint)0), false, callback, true, true, false, 0, false);
-                MelonLogger.Msg("CreateTower");
             }
         }
 

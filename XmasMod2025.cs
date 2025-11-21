@@ -37,7 +37,9 @@ using XmasMod2025;
 using XmasMod2025.Bloons;
 using XmasMod2025.GiftShop.BuffsItems;
 using XmasMod2025.Towers;
+using XmasMod2025.Towers.SubTowers;
 using XmasMod2025.UI;
+using static MelonLoader.MelonLogger;
 using static XmasMod2025.UI.Gift;
 
 [assembly: MelonInfo(typeof(XmasMod2025.XmasMod2025), ModHelperData.Name, ModHelperData.Version, ModHelperData.Author)]
@@ -211,8 +213,19 @@ public class XmasMod2025 : BloonsTD6Mod
     public static double TotalSnowflakes => totalSnowflakes;
     public override void OnRestart()
     {
-        gifts = 25;
-        totalGifts = 25;
+        if (InGame.Bridge == null)
+            return;
+
+        if (InGame.Bridge.IsSandboxMode())
+        {
+            XmasMod2025.SetCurrency(CurrencyType.Gift, 99999);
+            XmasMod2025.totalGifts = 99999;
+        }
+        else
+        {
+            XmasMod2025.SetCurrency(CurrencyType.Gift, 25);
+            XmasMod2025.totalGifts = 25;
+        }
     }
 
     public override void OnTowerCreated(Tower tower, Entity target, Model modelToUse)
@@ -261,6 +274,19 @@ public class XmasMod2025 : BloonsTD6Mod
             if(tower.towerModel.baseId == ModContent.TowerID<ElfSpawner>())
             {
                 tower.SellTower();
+            }
+
+            if(tower.towerModel.baseId == ModContent.TowerID<ElfMonkey>())
+            {
+                if(tower.towerModel.tiers[2] == 5)
+                {
+                    AddCurrency(CurrencyType.Gift, 150);
+
+                    if (InGame.instance != null || InGame.instance.bridge != null)
+                    {
+                        InGame.instance.bridge.simulation.CreateTextEffect(tower.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+150 Gifts", true);
+                    }
+                }
             }
         }
     }
@@ -327,7 +353,7 @@ public class XmasMod2025 : BloonsTD6Mod
 public class ChangeMap
 {
     [HarmonyLib.HarmonyPostfix]
-    public static void Postfix()
+    public static void Postfix(InGame __instance)
     {
         if (GiftOpenerUI.instance == null)
         {
@@ -339,8 +365,17 @@ public class ChangeMap
             GiftCounterUI.CreatePanel();
         }
 
-        XmasMod2025.SetCurrency(CurrencyType.Gift, 25);
-        XmasMod2025.totalGifts = 25;
+        if(__instance.bridge.IsSandboxMode())
+        {
+            XmasMod2025.SetCurrency(CurrencyType.Gift, 99999);
+            XmasMod2025.totalGifts = 99999;
+        }
+        else
+        {
+            XmasMod2025.SetCurrency(CurrencyType.Gift, 25);
+            XmasMod2025.totalGifts = 25;
+        }
+
 
         GameObject terrain = GameObject.Find("CubismTerrain");
 
@@ -419,6 +454,18 @@ public class Bloon_Destroy
             }
 
             XmasMod2025.Gifts += random;
+
+            var bloons = Game.instance.model.bloons.ToList().FindAll(bloon => !bloon.isMoab && !bloon.isBoss);
+            System.Random rand = new();
+
+            var bloon = bloons[rand.Next(bloons.Count)];
+            var countRand = rand.Next(1, 5);
+
+
+            if (!bloon.baseId.Contains("Rock") && !bloon.baseId.Contains("TestBloon") && !bloon.baseId.Contains("Gold"))
+            {
+                InGame.instance.SpawnBloons(bloon.id, countRand, 10);
+            }
         }
     }
 }
