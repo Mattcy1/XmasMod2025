@@ -12,6 +12,10 @@
     <ItemGroup>
         <Content Include=".github\workflows\build.yml" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="Assets\XmasMap.json" />
+      <Resource Include="Assets\XmasMap.json" />
+    </ItemGroup>
 
     <Import Project="..\btd6.targets" />
 </Project>

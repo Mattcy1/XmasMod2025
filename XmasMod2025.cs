@@ -21,6 +21,12 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using MelonLoader;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using BTD_Mod_Helper.Api.Helpers;
+using Il2CppAssets.Scripts.Data.MapSets;
+using Il2CppAssets.Scripts.Models.Map;
+using Il2CppAssets.Scripts.Unity.Bridge;
 using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons;
@@ -36,8 +42,47 @@ namespace XmasMod2025;
 
 public class XmasMod2025 : BloonsTD6Mod
 {
-    public override void OnApplicationStart()
+    public static MapModel customMap;
+    
+    private MapModel? GetEmbeddedMap(string resourceName)
     {
+        var stream = MelonAssembly.Assembly.GetManifestResourceStream(resourceName);
+
+        if (stream == null)
+        {
+            return null;
+        }
+        
+        var reader = new StreamReader(stream);
+        string json = reader.ReadToEnd();
+
+        return ModelSerializer.DeserializeModel<MapModel>(json);
+    }
+
+    public override void OnTitleScreen()
+    {
+        var map = GetEmbeddedMap("map");
+        if (map == null)
+        {
+            return;
+        }
+        
+        LoggerInstance.Msg($"Old count: {GameData.Instance.mapSet.Maps.items.Count}");
+
+        GameData.Instance.mapSet.Maps.items = GameData.Instance.mapSet.Maps.items.AddTo(new MapDetails
+        {
+            id = map.mapName,
+            coopMapDivisionType = CoopDivision.FREE_FOR_ALL,
+            difficulty = MapDifficulty.Intermediate,
+            mapSprite = ModContent.GetSpriteReference(this, "XmasMap"),
+            hasWater = true,
+            theme = MapTheme.Snow,
+            unlockDifficulty = MapDifficulty.Beginner,
+
+        });
+        
+        
+        LoggerInstance.Msg($"New count: {GameData.Instance.mapSet.Maps.items.Count}");
     }
 
     public static float PresentBloonChance = 0f;
