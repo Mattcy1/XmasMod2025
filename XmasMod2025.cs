@@ -1,4 +1,5 @@
-﻿using BTD_Mod_Helper;
+﻿using Bosses.BossAPI;
+using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Helpers;
 using BTD_Mod_Helper.Api.Hooks;
@@ -345,7 +346,7 @@ public class ChangeMap
 
         if (terrain != null)
         {
-            //terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("map");
+            terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<BossAPI>("map");
             var data = XmasMod2025.LoadJson("MapMaker-8977.json");
             List<string> lines = JsonSerializer.Deserialize<List<string>>(data);
 
