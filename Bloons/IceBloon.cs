@@ -1,4 +1,5 @@
-﻿using BTD_Mod_Helper.Api.Bloons;
+﻿using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Bloons;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Bloons;
@@ -28,6 +29,8 @@ namespace XmasMod2025.Bloons
 
             bloonModel.RemoveAllChildren();
             bloonModel.AddToChildren<SnowBloon>();
+            bloonModel.icon = ModContent.GetSpriteReference<XmasMod2025>("IceBloon");
+            bloonModel.disallowCosmetics = true;
         }
     }
 

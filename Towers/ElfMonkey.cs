@@ -65,18 +65,4 @@ namespace XmasMod2025.Towers
             }
         }
     }
-
-
-    [HarmonyLib.HarmonyPatch(typeof(Weapon), nameof(Weapon.Emit))]
-    public class Weapon_Emit
-    {
-        [HarmonyLib.HarmonyPostfix]
-        public static void Postfix(Weapon __instance)
-        {
-            if(__instance.weaponModel.projectile.id == "ElfProj")
-            {
-                XmasMod2025.AddCurrency(CurrencyType.Gift, -1);
-            }
-        }
-    }
 }
