@@ -1,4 +1,4 @@
-﻿using Bosses.BossAPI;
+﻿using System;
 using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Helpers;
@@ -38,6 +38,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using BTD_Mod_Helper.Api.Internal;
+using CommandLine;
+using HarmonyLib;
+using Il2CppAssets.Scripts.Models.MapEditorBehaviors;
+using MelonLoader.Utils;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons;
@@ -55,21 +61,25 @@ namespace XmasMod2025;
 
 public class XmasMod2025 : BloonsTD6Mod
 {
-    public static MapModel customMap;
+    public static Assembly ModAssembly => Assembly.GetExecutingAssembly();
     public static string lastMap = null;
-    private MapModel? GetEmbeddedMap(string resourceName)
+    public static T GetEmbeddedModelFromJson<T>(string resourceName) where T : Model
     {
-        var stream = MelonAssembly.Assembly.GetManifestResourceStream(resourceName);
+        return ModelSerializer.DeserializeModel<T>(LoadEmbeddedJson(resourceName));
+    }
+    public static T GetEmbeddedObjectFromJson<T>(string resourceName) where T : class
+    {
+        return Il2CppJsonConvert.DeserializeObject(LoadEmbeddedJson(resourceName)).Cast<T>();
+    }
 
-        if (stream == null)
+    public static void PlacePropsFromEditorData(List<MapEditorPropData> props)
+    {
+        foreach (var prop in props)
         {
-            return null;
+            string propName = "Prop_" + props.IndexOf(prop);
+            
+            InGame.instance.bridge.CreateMapEditorPropAt(propName, prop.positionalData, prop.Def().propModel, ObjectId.FromString(prop.Def().propModel.name + "_" + props.IndexOf(prop)), null);
         }
-        
-        var reader = new StreamReader(stream);
-        string json = reader.ReadToEnd();
-
-        return ModelSerializer.DeserializeModel<MapModel>(json);
     }
 
     public static float PresentBloonChance = 0f;
@@ -270,26 +280,22 @@ public class XmasMod2025 : BloonsTD6Mod
         }
     }
 
-    public static string LoadJson(string filename)
+    public static string LoadEmbeddedJson(string resourceName)
     {
-        var asm = Assembly.GetExecutingAssembly();
+        var stream = ModAssembly.GetEmbeddedResource(resourceName);
 
-        string resourceName = asm.GetManifestResourceNames()
-            .FirstOrDefault(n => n.EndsWith(filename));
-
-        if (resourceName == null)
+        if (stream == null)
         {
-            MelonLogger.Error("JSON resource not found: " + filename);
+            Msg("Embedded resource not found: " + resourceName + ", valid names are the following:");
+            foreach (string name in ModAssembly.GetManifestResourceNames())
+            {
+                Msg(name);
+            }
             return null;
         }
-
-        MelonLogger.Msg("Loading: " + resourceName);
-
-        using (var stream = asm.GetManifestResourceStream(resourceName))
-        using (var reader = new StreamReader(stream))
-        {
-            return reader.ReadToEnd();
-        }
+        
+        var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
     }
 
     /*public override void OnTowerUpgraded(Tower tower, string upgradeName, TowerModel newBaseTowerModel)
@@ -351,17 +357,17 @@ public class CreateMap
         list.Insert(0, customMap);
         GameData.Instance.mapSet.Maps.items = list.ToArray();
 
-        /*GameData.Instance.mapSet.Maps.items = GameData.Instance.mapSet.Maps.items.AddTo(new MapDetails
+        GameData.Instance.mapSet.Maps.items = GameData.Instance.mapSet.Maps.items.AddTo(new MapDetails
         {
-            id = map.mapName,
+            id = "Christmas Disaster",
             coopMapDivisionType = CoopDivision.FREE_FOR_ALL,
             difficulty = MapDifficulty.Intermediate,
-            mapSprite = ModContent.GetSpriteReference(this, "XmasMap"),
+            mapSprite = ModContent.GetSpriteReference<XmasMod2025>("XmasMapIcon"),
             hasWater = true,
             theme = MapTheme.Snow,
             unlockDifficulty = MapDifficulty.Beginner,
 
-        });*/
+        });
 
     }
 }
@@ -378,10 +384,51 @@ public class LoadMap
         if (XmasMod2025.lastMap == "Xmas Cubism")
         {
             __instance.currentMapName = "Cubism";
-
+        }
+        else if (XmasMod2025.lastMap == "Christmas Disaster")
+        {
+            __instance.currentMapName = "Tutorial";
         }
 
         return true;
+    }
+}
+
+// Credits: Timotheeee, https://github.com/Timotheeee/btd6_mods/blob/master/custom_maps_v2/Main.cs#L427
+[HarmonyPatch(typeof(UnityToSimulation), nameof(UnityToSimulation.InitMap))]
+public class UnityToSimulation_InitMap
+{
+    public static readonly string ExportPath =
+        System.IO.Path.Combine(MelonEnvironment.UserDataDirectory, "Exported Maps");
+    public static void Prefix(UnityToSimulation __instance, ref MapModel map)
+    {
+        if (XmasMod2025.lastMap == "Christmas Disaster")
+        {
+            /*foreach (var ob in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            {
+                if (ob.name.Contains("Festive") || ob.name.Contains("Rocket") || ob.name.Contains("Firework") || ob.name.Contains("Box") || ob.name.Contains("Candy") || ob.name.Contains("Gift") || ob.name.Contains("Snow") || ob.name.Contains("Ripples") || ob.name.Contains("Grass") || ob.name.Contains("Christmas") || ob.name.Contains("WhiteFlower") || ob.name.Contains("Tree") || ob.name.Contains("Rock") || ob.name.Contains("Shadow") || ob.name.Contains("WaterSplashes"))// || ob.name.Contains("Body")   || ob.name.Contains("Ouch") || ob.name.Contains("Statue")|| ob.name.Contains("Chute")  || ob.name.Contains("Jump") || ob.name.Contains("Timer") || ob.name.Contains("Wheel") || ob.name.Contains("Body") || ob.name.Contains("Axle") || ob.name.Contains("Leg") || ob.name.Contains("Clock") ||
+                    if (ob.name != "TutorialTerrain")
+                        ob.transform.position = new Vector3(1000, 1000, 1000);
+            }
+            
+            UnityEngine.Object.FindObjectsOfType<MeshRenderer>().First(mr => mr.name.EndsWith("Terrain")).material.mainTexture = ModContent.GetTexture<XmasMod2025>("ChristmasDisasterMap");*/
+            var props = XmasMod2025.GetEmbeddedObjectFromJson<JArray>("XmasMapProps.json").ToObject<List<MapEditorPropData>>();
+            
+            XmasMod2025.PlacePropsFromEditorData(props);
+            
+            var map2 = XmasMod2025.GetEmbeddedModelFromJson<MapModel>("XmasMap.json");
+
+            foreach (var point in map2.paths[0].points)
+            {
+                point.id = map2.paths[0].points.IndexOf(point).ToString();
+            }
+            
+            map.areas = map2.areas;
+            map.paths = map2.paths;
+            map.name = map2.name;
+            map2.mapName = map2.mapName;
+            map.spawner = map2.spawner;
+        }
     }
 }
 
@@ -417,8 +464,8 @@ public class ChangeMap
 
         if (terrain != null && XmasMod2025.lastMap == "Xmas Cubism")
         {
-            terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<BossAPI>("map");
-            var data = XmasMod2025.LoadJson("XmasCubismProps.json");
+            terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("Map");
+            var data = XmasMod2025.LoadEmbeddedJson("XmasCubismProps.json");
             List<string> lines = JsonSerializer.Deserialize<List<string>>(data);
 
             foreach (var line in lines)
@@ -451,11 +498,6 @@ public class ChangeMap
                     }
                 }
             }
-        }
-        else
-        {
-            PopupScreen.instance.ShowOkPopup("It's recommended to play this mod on cubsim.");
-
         }
     }
 }

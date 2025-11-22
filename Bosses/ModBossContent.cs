@@ -1,4 +1,4 @@
-﻿using Bosses.BossAPI;
+﻿using XmasMod2025.BossAPI;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Bloons;
 using BTD_Mod_Helper.Extensions;
@@ -10,11 +10,11 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
 using System;
 using System.Collections.Generic;
-using static Bosses.BossAPI.BossAPI;
-using static Bosses.BossAPI.Hooks;
+using static XmasMod2025.BossAPI.BossAPI;
+using static XmasMod2025.BossAPI.Hooks;
 using static MelonLoader.MelonLogger;
 
-namespace Bosses.ModBossContenet;
+namespace XmasMod2025.ModBossContenet;
 
 public abstract class ModBoss : ModBloon
 {

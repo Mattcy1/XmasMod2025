@@ -1,4 +1,4 @@
-﻿using Bosses.ModBossContenet;
+﻿using XmasMod2025.ModBossContenet;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models;

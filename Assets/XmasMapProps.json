@@ -1,0 +1,2794 @@
+[
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 11.85186,
+        "y": 0.0,
+        "z": 39.98682,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.28417456,
+          "y": 0.0,
+          "z": 0.95877254,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.2841746,
+            "y": 0.0,
+            "z": 0.9587726,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 41.706264,
+        "sqrMagnitude": 1739.4124
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 23.33334,
+        "y": 0.0,
+        "z": 35.28247,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.5516144,
+          "y": 0.0,
+          "z": 0.8340992,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.55161446,
+            "y": 0.0,
+            "z": 0.83409923,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 42.30009,
+        "sqrMagnitude": 1789.2976
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.83,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 15.74074,
+        "y": 0.0,
+        "z": 30.79196,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.45517132,
+          "y": 0.0,
+          "z": 0.8904039,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 34.582012,
+        "sqrMagnitude": 1195.9156
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.56,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 22.96297,
+        "y": 0.0,
+        "z": 54.52747,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.38811496,
+          "y": 0.0,
+          "z": 0.921611,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 59.165386,
+        "sqrMagnitude": 3500.543
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.78,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 6.851864,
+        "y": 0.0,
+        "z": 59.44568,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.114504494,
+          "y": 0.0,
+          "z": 0.99342275,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 59.839256,
+        "sqrMagnitude": 3580.7368
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -5.492582,
+        "y": 0.0,
+        "z": 47.59073,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.11465179,
+          "y": 0.0,
+          "z": 0.9934057,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.1146518,
+            "y": 0.0,
+            "z": 0.99340576,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 47.90664,
+        "sqrMagnitude": 2295.046
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.37,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -10.92592,
+        "y": 0.0,
+        "z": 64.79147,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.16628434,
+          "y": 0.0,
+          "z": 0.98607785,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 65.706245,
+        "sqrMagnitude": 4317.3105
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.57,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 21.85185,
+        "y": 0.0,
+        "z": 78.263,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.2689247,
+          "y": 0.0,
+          "z": 0.96316123,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 81.256386,
+        "sqrMagnitude": 6602.6006
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.32,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 35.72409,
+        "y": 0.0,
+        "z": 68.17223,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.46415815,
+          "y": 0.0,
+          "z": 0.8857524,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 76.96534,
+        "sqrMagnitude": 5923.664
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.59,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 6.481487,
+        "y": 0.0,
+        "z": 85.31949,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.07574899,
+          "y": 0.0,
+          "z": 0.99712694,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 85.56532,
+        "sqrMagnitude": 7321.425
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.3703773,
+        "y": 0.0,
+        "z": 25.01846,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.01480254,
+          "y": 0.0,
+          "z": 0.99989045,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 25.0212,
+        "sqrMagnitude": 626.0605
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 24.25926,
+        "y": 0.0,
+        "z": -42.12521,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.49904713,
+          "y": 0.0,
+          "z": -0.8665749,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 48.61116,
+        "sqrMagnitude": 2363.045
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -7.407395,
+        "y": 0.0,
+        "z": -36.99319,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.1963393,
+          "y": 0.0,
+          "z": -0.980536,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.19633931,
+            "y": 0.0,
+            "z": -0.98053604,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 37.72752,
+        "sqrMagnitude": 1423.3657
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 65.00003,
+        "y": 0.0,
+        "z": -10.47791,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.98725533,
+          "y": 0.0,
+          "z": -0.15914412,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.9872554,
+            "y": 0.0,
+            "z": -0.15914413,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 65.83913,
+        "sqrMagnitude": 4334.7905
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 49.44445,
+        "y": 0.0,
+        "z": -23.09402,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.90604305,
+          "y": 0.0,
+          "z": -0.42318556,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 54.571854,
+        "sqrMagnitude": 2978.0874
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 37.77777,
+        "y": 0.0,
+        "z": -35.49637,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.7287695,
+          "y": 0.0,
+          "z": -0.6847591,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 51.83775,
+        "sqrMagnitude": 2687.1523
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 11.11112,
+        "y": 0.0,
+        "z": -42.12521,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.2550415,
+          "y": 0.0,
+          "z": -0.96693015,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 43.56593,
+        "sqrMagnitude": 1897.9904
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -0.1333247,
+        "y": 0.0,
+        "z": -54.33294,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.0024538392,
+          "y": 0.0,
+          "z": -0.99999696,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.0024538394,
+            "y": 0.0,
+            "z": -0.999997,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 54.333103,
+        "sqrMagnitude": 2952.0862
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 17.22223,
+        "y": 0.0,
+        "z": -59.65955,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.27735013,
+          "y": 0.0,
+          "z": -0.9607689,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.27735016,
+            "y": 0.0,
+            "z": -0.96076894,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 62.09563,
+        "sqrMagnitude": 3855.8672
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 34.39446,
+        "y": 0.0,
+        "z": -53.87322,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.5381166,
+          "y": 0.0,
+          "z": -0.8428704,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 63.91637,
+        "sqrMagnitude": 4085.3025
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 48.20558,
+        "y": 0.0,
+        "z": -45.40541,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.7279327,
+          "y": 0.0,
+          "z": -0.6856485,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.72793275,
+            "y": 0.0,
+            "z": -0.68564856,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 66.22258,
+        "sqrMagnitude": 4385.4297
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 62.13892,
+        "y": 0.0,
+        "z": -34.67954,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.8732136,
+          "y": 0.0,
+          "z": -0.4873378,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 71.161194,
+        "sqrMagnitude": 5063.916
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 73.26116,
+        "y": 0.0,
+        "z": -24.94155,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.94664365,
+          "y": 0.0,
+          "z": -0.32228208,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.9466437,
+            "y": 0.0,
+            "z": -0.3222821,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 77.390434,
+        "sqrMagnitude": 5989.279
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -12.59258,
+        "y": 0.0,
+        "z": -47.25723,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.2574842,
+          "y": 0.0,
+          "z": -0.96628255,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 48.906223,
+        "sqrMagnitude": 2391.8186
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -11.66665,
+        "y": 0.0,
+        "z": -70.99274,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.16216072,
+          "y": 0.0,
+          "z": -0.9867643,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.16216074,
+            "y": 0.0,
+            "z": -0.9867644,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 71.94498,
+        "sqrMagnitude": 5176.0796
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 6.911125,
+        "y": 0.0,
+        "z": -71.62782,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.096040584,
+          "y": 0.0,
+          "z": -0.9953774,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 71.960464,
+        "sqrMagnitude": 5178.3086
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 27.50558,
+        "y": 0.0,
+        "z": -69.44029,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.36826605,
+          "y": 0.0,
+          "z": -0.92972046,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 74.68943,
+        "sqrMagnitude": 5578.511
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 47.61114,
+        "y": 0.0,
+        "z": -75.93227,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.5312298,
+          "y": 0.0,
+          "z": -0.84722775,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.53122985,
+            "y": 0.0,
+            "z": -0.8472278,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 89.62438,
+        "sqrMagnitude": 8032.53
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 59.16115,
+        "y": 0.0,
+        "z": -85.52911,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.5688764,
+          "y": 0.0,
+          "z": -0.82242304,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 103.9965,
+        "sqrMagnitude": 10815.271
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 77.40743,
+        "y": 0.0,
+        "z": -97.50809,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.6217567,
+          "y": 0.0,
+          "z": -0.7832104,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.62175673,
+            "y": 0.0,
+            "z": -0.78321046,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 124.49795,
+        "sqrMagnitude": 15499.738
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 89.07411,
+        "y": 0.0,
+        "z": -106.7029,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.6408424,
+          "y": 0.0,
+          "z": -0.7676725,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 138.99535,
+        "sqrMagnitude": 19319.707
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 94.44447,
+        "y": 0.0,
+        "z": -115.4701,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.6331131,
+          "y": 0.0,
+          "z": -0.7740594,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.633113,
+            "y": 0.0,
+            "z": -0.7740593,
+            "normalized": {
+              "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+              "x": 0.6331131,
+              "y": 0.0,
+              "z": -0.77405936,
+              "magnitude": 1.0,
+              "sqrMagnitude": 1.0
+            },
+            "magnitude": 0.99999994,
+            "sqrMagnitude": 0.9999999
+          },
+          "magnitude": 1.0000001,
+          "sqrMagnitude": 1.0000002
+        },
+        "magnitude": 149.17473,
+        "sqrMagnitude": 22253.102
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 69.26667,
+        "y": 0.0,
+        "z": -89.57269,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.6117317,
+          "y": 0.0,
+          "z": -0.7910653,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 113.23047,
+        "sqrMagnitude": 12821.139
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 79.90003,
+        "y": 0.0,
+        "z": -83.36295,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.69195294,
+          "y": 0.0,
+          "z": -0.7219426,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 115.47033,
+        "sqrMagnitude": 13333.396
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 86.56116,
+        "y": 0.0,
+        "z": -69.67332,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.77900225,
+          "y": 0.0,
+          "z": -0.6270211,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.7790023,
+            "y": 0.0,
+            "z": -0.62702113,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 111.11798,
+        "sqrMagnitude": 12347.205
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 85.46116,
+        "y": 0.0,
+        "z": -54.71354,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.8421891,
+          "y": 0.0,
+          "z": -0.5391823,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 101.47503,
+        "sqrMagnitude": 10297.182
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 83.07783,
+        "y": 0.0,
+        "z": -40.95337,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.8969416,
+          "y": 0.0,
+          "z": -0.44214904,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 92.62345,
+        "sqrMagnitude": 8579.104
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 72.81115,
+        "y": 0.0,
+        "z": -45.18728,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.84967077,
+          "y": 0.0,
+          "z": -0.5273136,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 85.69337,
+        "sqrMagnitude": 7343.3535
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 74.25928,
+        "y": 0.0,
+        "z": -61.37024,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.77083117,
+          "y": 0.0,
+          "z": -0.6370395,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 96.33663,
+        "sqrMagnitude": 9280.746
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 61.48151,
+        "y": 0.0,
+        "z": -57.73505,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.7289682,
+          "y": 0.0,
+          "z": -0.68454754,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 84.340454,
+        "sqrMagnitude": 7113.312
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 62.22223,
+        "y": 0.0,
+        "z": -75.05557,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.63822055,
+          "y": 0.0,
+          "z": -0.76985365,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 97.4933,
+        "sqrMagnitude": 9504.944
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 19.01666,
+        "y": 39.0,
+        "z": -21.14389,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.39398935,
+          "y": 0.80800647,
+          "z": -0.43806154,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 48.26694,
+        "sqrMagnitude": 2329.6975
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 2.0,
+      "heightOffset": 39.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -10.92592,
+        "y": 0.0,
+        "z": 83.60883,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.12957731,
+          "y": 0.0,
+          "z": 0.99156934,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 84.3197,
+        "sqrMagnitude": 7109.8125
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.58,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -5.740733,
+        "y": 0.0,
+        "z": 96.01117,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.05968575,
+          "y": 0.0,
+          "z": 0.9982172,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 96.18264,
+        "sqrMagnitude": 9251.101
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.31,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 20.3704,
+        "y": 0.0,
+        "z": 90.66534,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.21921206,
+          "y": 0.0,
+          "z": 0.9756772,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.21921207,
+            "y": 0.0,
+            "z": 0.97567725,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 92.925545,
+        "sqrMagnitude": 8635.156
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": -60.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 60.0,
+        "sqrMagnitude": 3600.0
+      },
+      "scale": 1.15,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 32.40742,
+        "y": 0.0,
+        "z": 87.45782,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.3474618,
+          "y": 0.0,
+          "z": 0.9376942,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 93.26902,
+        "sqrMagnitude": 8699.11
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 157.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 157.0,
+        "sqrMagnitude": 24649.0
+      },
+      "scale": 1.31,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 28.70372,
+        "y": 0.0,
+        "z": 96.43887,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.2852689,
+          "y": 0.0,
+          "z": 0.9584476,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 100.61987,
+        "sqrMagnitude": 10124.359
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 141.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 141.0,
+        "sqrMagnitude": 19881.0
+      },
+      "scale": 1.56,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 15.55556,
+        "y": 0.0,
+        "z": 105.6337,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.14568827,
+          "y": 0.0,
+          "z": 0.9893305,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.14568828,
+            "y": 0.0,
+            "z": 0.98933053,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 106.77291,
+        "sqrMagnitude": 11400.454
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": -160.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 160.0,
+        "sqrMagnitude": 25600.0
+      },
+      "scale": 1.62,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -1.296285,
+        "y": 0.0,
+        "z": 105.6337,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.012270587,
+          "y": 0.0,
+          "z": 0.99992466,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.0122705875,
+            "y": 0.0,
+            "z": 0.9999247,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.9999999
+        },
+        "magnitude": 105.641655,
+        "sqrMagnitude": 11160.159
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": -170.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 170.0,
+        "sqrMagnitude": 28900.0
+      },
+      "scale": 0.8,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 2.222228,
+        "y": 0.0,
+        "z": 109.2689,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.020333037,
+          "y": 0.0,
+          "z": 0.99979323,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.020333039,
+            "y": 0.0,
+            "z": 0.9997933,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0000001
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 109.2915,
+        "sqrMagnitude": 11944.631
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 140.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 140.0,
+        "sqrMagnitude": 19600.0
+      },
+      "scale": 1.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30412,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -5.720563,
+        "y": 0.0,
+        "z": -4.188934,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.8068181,
+          "y": 0.0,
+          "z": -0.59079987,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 7.090276,
+        "sqrMagnitude": 50.27201
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": -139.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 139.0,
+        "sqrMagnitude": 19321.0
+      },
+      "scale": 1.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": 1,
+    "CategoryLayerId": 1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30239,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 40.55556,
+        "y": -8.0,
+        "z": -99.00491,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.3780063,
+          "y": -0.07456562,
+          "z": -0.9227953,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 107.288055,
+        "sqrMagnitude": 11510.727
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 36.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 36.0,
+        "sqrMagnitude": 1296.0
+      },
+      "scale": 1.0,
+      "heightOffset": -8.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30263,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 142.7778,
+        "y": 90.0,
+        "z": -18.17584,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.8410947,
+          "y": 0.5301841,
+          "z": -0.10707269,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": 0.84109473,
+            "y": 0.53018415,
+            "z": -0.107072696,
+            "normalized": {
+              "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+              "x": 0.8410946,
+              "y": 0.5301841,
+              "z": -0.10707268,
+              "magnitude": 0.9999999,
+              "sqrMagnitude": 0.9999998
+            },
+            "magnitude": 1.0000001,
+            "sqrMagnitude": 1.0000002
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 169.75235,
+        "sqrMagnitude": 28815.861
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 80.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 80.0,
+        "sqrMagnitude": 6400.0
+      },
+      "scale": 1.51,
+      "heightOffset": 90.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30268,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -146.05,
+        "y": 0.0,
+        "z": -116.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.7830609,
+          "y": 0.0,
+          "z": -0.62194496,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.78306097,
+            "y": 0.0,
+            "z": -0.621945,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 186.51167,
+        "sqrMagnitude": 34786.6
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 14.0,
+        "y": 16.0,
+        "z": 0.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.6585046,
+          "y": 0.7525767,
+          "z": 0.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 21.260292,
+        "sqrMagnitude": 452.0
+      },
+      "scale": 1.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30268,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -129.6111,
+        "y": 0.0,
+        "z": -116.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.7451494,
+          "y": 0.0,
+          "z": -0.66689754,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.74514943,
+            "y": 0.0,
+            "z": -0.6668976,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 173.93976,
+        "sqrMagnitude": 30255.037
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -5.0,
+        "y": 16.0,
+        "z": -16.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.21576594,
+          "y": 0.69045097,
+          "z": -0.69045097,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 23.17326,
+        "sqrMagnitude": 537.0
+      },
+      "scale": 1.21,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30268,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -109.6277,
+        "y": 16.0,
+        "z": -116.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.68343693,
+          "y": 0.09974661,
+          "z": -0.7231629,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 160.40646,
+        "sqrMagnitude": 25730.232
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 1.0,
+        "y": 8.0,
+        "z": -16.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.055814557,
+          "y": 0.44651645,
+          "z": -0.8930329,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 17.916473,
+        "sqrMagnitude": 321.0
+      },
+      "scale": 0.86,
+      "heightOffset": 16.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30258,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -102.963,
+        "y": 0.0,
+        "z": 101.9985,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.71042633,
+          "y": 0.0,
+          "z": 0.7037715,
+          "normalized": {
+            "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+            "x": -0.7104264,
+            "y": 0.0,
+            "z": 0.70377153,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.9999999,
+          "sqrMagnitude": 0.9999998
+        },
+        "magnitude": 144.93127,
+        "sqrMagnitude": 21005.072
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": -39.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 39.0,
+        "sqrMagnitude": 1521.0
+      },
+      "scale": 0.55,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30257,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -67.40741,
+        "y": 0.0,
+        "z": 103.923,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.5441792,
+          "y": 0.0,
+          "z": 0.83896905,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 123.86988,
+        "sqrMagnitude": 15343.748
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30258,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": -103.3333,
+        "y": 0.0,
+        "z": 88.09933,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": -0.7609717,
+          "y": 0.0,
+          "z": 0.64878505,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 135.79124,
+        "sqrMagnitude": 18439.262
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": -130.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1.0,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 130.0,
+        "sqrMagnitude": 16900.0
+      },
+      "scale": 0.55,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30284,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 138.6892,
+        "y": 96.342,
+        "z": 0.9666443,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.8212731,
+          "y": 0.5705065,
+          "z": 0.0057241586,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 168.87099,
+        "sqrMagnitude": 28517.408
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30286,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 125.2947,
+        "y": 96.342,
+        "z": -2.255585,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.79266113,
+          "y": 0.6094955,
+          "z": -0.014269673,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 158.06844,
+        "sqrMagnitude": 24985.63
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "magnitude": 0.0,
+        "sqrMagnitude": 0.0
+      },
+      "scale": 1.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": -1,
+    "CategoryLayerId": -1,
+    "layer": 0,
+    "orderInLayer": -1
+  },
+  {
+    "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.MapEditorPropData, Assembly-CSharp",
+    "id": 30270,
+    "positionalData": {
+      "$type": "Il2CppAssets.Scripts.Models.ContentBrowser.PositionalData, Assembly-CSharp",
+      "position": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 13.81313,
+        "y": 0.0,
+        "z": -23.20004,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.51158184,
+          "y": 0.0,
+          "z": -0.85923463,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0000001
+        },
+        "magnitude": 27.000822,
+        "sqrMagnitude": 729.04443
+      },
+      "rotation": {
+        "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+        "x": 74.0,
+        "y": 0.0,
+        "z": -11.0,
+        "normalized": {
+          "$type": "UnityEngine.Vector3, UnityEngine.CoreModule",
+          "x": 0.98913157,
+          "y": 0.0,
+          "z": -0.14703307,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 74.8131,
+        "sqrMagnitude": 5597.0
+      },
+      "scale": 2.0,
+      "heightOffset": 0.0
+    },
+    "disablePlacementOnLoad": false,
+    "isAnimatorEnabled": true,
+    "isSightAndPlacementBlockingDisabled": false,
+    "groupLayer": 1,
+    "CategoryLayerId": 1,
+    "layer": 0,
+    "orderInLayer": -1
+  }
+]

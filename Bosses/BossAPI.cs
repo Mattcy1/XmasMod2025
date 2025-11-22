@@ -30,15 +30,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using XmasMod2025;
-using static Bosses.BossAPI.BossAPI;
+using static XmasMod2025.BossAPI.BossAPI;
 using Info = BTD_Mod_Helper.Api.Components.Info;
+namespace XmasMod2025.BossAPI;
 
-[assembly: MelonInfo(typeof(Bosses.BossAPI.BossAPI), ModHelperData.Name, ModHelperData.Version, ModHelperData.RepoOwner)]
-[assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
-
-namespace Bosses.BossAPI;
-
-public class BossAPI : BloonsTD6Mod
+public class BossAPI
 {
     public static List<ModHelperImage> skullUIs = new List<ModHelperImage>();
     public class BossInfo
@@ -58,10 +54,6 @@ public class BossAPI : BloonsTD6Mod
     }
 
     public static List<BossInfo> BossInfos = new List<BossInfo>();
-    public override void OnApplicationStart()
-    {
-        ModHelper.Msg<BossAPI>("BossAPI loaded!");
-    }
 }
 
 [RegisterTypeInIl2Cpp]
@@ -203,7 +195,7 @@ public class Hooks
                     BossUI.CreateBossBar(bossInfo);
 
 
-                    XmasMod2025.XmasMod2025.boss = __instance;
+                    XmasMod2025.boss = __instance;
                     __instance.bloonModel.BecomeModdedBoss(bossInfo.DisplayName);
 
                     break;
@@ -264,45 +256,45 @@ public class Hooks
                         if (string.IsNullOrEmpty(bossInfo.HealthBarIcon))
                         {
                             if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("90");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("90");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("80");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("80");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("70");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("70");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("60");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("60");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("50");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("50");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("40");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("40");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("30");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("30");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("20");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("20");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>("10");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("10");
 
                         }
                         else
                         {
                             if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "90");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "90");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "80");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "80");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "70");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "70");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "60");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "60");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "50");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "50");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "40");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "40");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "30");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "30");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "20");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "20");
                             if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<BossAPI>(bossInfo.HealthBarIcon + "10");
+                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "10");
                         }
 
                         break;
@@ -415,12 +407,12 @@ public class BossUI : MonoBehaviour
             {
                 bossInfo.HealthBarBackground = "HealthbarBG";
             }
-            bossPanel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1150, 1250, 100), ModContent.GetTextureGUID<BossAPI>(bossInfo.HealthBarBackground));
+            bossPanel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1150, 1250, 100), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.HealthBarBackground));
             instance = bossPanel.AddComponent<BossUI>();
             bossLeftBackground = bossPanel.AddImage(new Info("LeftBackground", -725, 0f, 250, 250), VanillaSprites.BossTiersIconSmall);
-            bossStars = bossPanel.AddImage(new Info("stars", -400, 100, 400, 80), ModContent.GetTextureGUID<BossAPI>($"Tier{bossInfo.StarsCount}Boss"));
+            bossStars = bossPanel.AddImage(new Info("stars", -400, 100, 400, 80), ModContent.GetTextureGUID<XmasMod2025>($"Tier{bossInfo.StarsCount}Boss"));
             bossHealth = bossPanel.AddText(new Info("HealthText_", 450, 80, 500, 250), bossInfo.Boss.health + "/" + bossInfo.Boss.bloonModel.maxHealth, 50);
-            bossIcon = bossLeftBackground.AddImage(new Info("leftIcon", 0, 0f, 250, 250), ModContent.GetTextureGUID<BossAPI>(bossInfo.BossIcon));
+            bossIcon = bossLeftBackground.AddImage(new Info("leftIcon", 0, 0f, 250, 250), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossIcon));
             bossName = bossPanel.AddText(new Info("NameText_", 0, 80, 750, 250), bossInfo.DisplayName, 50);
 
             string textureName = "100";
@@ -429,7 +421,7 @@ public class BossUI : MonoBehaviour
                 textureName = bossInfo.HealthBarIcon + "100";
             }
 
-            bossPanelInside = bossPanel.AddImage(new Info("PanelInside", 0, 0, 1250, 90), ModContent.GetTextureGUID<BossAPI>(textureName));
+            bossPanelInside = bossPanel.AddImage(new Info("PanelInside", 0, 0, 1250, 90), ModContent.GetTextureGUID<XmasMod2025>(textureName));
 
             HandleUI(bossInfo.Boss);
 
@@ -456,7 +448,7 @@ public class BossUI : MonoBehaviour
         {
             float xPosition = panelWidth * (1f - percentageValues[i]);
 
-            ModHelperImage skull = panel.AddImage(new Info($"Skull_{i}", xPosition - panelWidth / 2, 0, 112, 112), ModContent.GetTextureGUID<BossAPI>($"{info.SkullIcon}Skull"));
+            ModHelperImage skull = panel.AddImage(new Info($"Skull_{i}", xPosition - panelWidth / 2, 0, 112, 112), ModContent.GetTextureGUID<XmasMod2025>($"{info.SkullIcon}Skull"));
 
             skull.RectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             skull.RectTransform.anchorMax = new Vector2(0.5f, 0.5f);
@@ -537,7 +529,7 @@ public class BossUI : MonoBehaviour
     {
         if (skullUI != null)
         {
-            skullUI.AddImage(new BTD_Mod_Helper.Api.Components.Info($"Skull_", 0, 0, 112, 112), ModContent.GetTextureGUID<BossAPI>($"{customSkull}ActivateSkull"));
+            skullUI.AddImage(new BTD_Mod_Helper.Api.Components.Info($"Skull_", 0, 0, 112, 112), ModContent.GetTextureGUID<XmasMod2025>($"{customSkull}ActivateSkull"));
 
             yield return new WaitForSeconds(1f);
 

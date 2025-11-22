@@ -13,9 +13,10 @@
         <Content Include=".github\workflows\build.yml" />
     </ItemGroup>
     <ItemGroup>
-      <None Remove="Assets\XmasMap.json" />
-      <None Remove="MapMaker-8977.json" />
-      <Resource Include="Assets\XmasMap.json" />
+        <EmbeddedResource Include="Assets\XmasMap.json" />
+        <EmbeddedResource Include="XmasCubismProps.json" />
+        <None Remove="Assets\XmasMapProps.json" />
+        <EmbeddedResource Include="Assets\XmasMapProps.json" />
     </ItemGroup>
 
     <Import Project="..\btd6.targets" />
