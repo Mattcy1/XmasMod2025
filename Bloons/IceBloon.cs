@@ -1,4 +1,5 @@
-﻿using BTD_Mod_Helper.Api.Bloons;
+﻿using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Bloons;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Bloons;
@@ -9,8 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Il2CppAssets.Scripts.Models.Audio;
-using Il2CppAssets.Scripts.Models.Towers.Behaviors;
 using XmasMod2025.Bloons;
 
 namespace XmasMod2025.Bloons
@@ -30,7 +29,8 @@ namespace XmasMod2025.Bloons
 
             bloonModel.RemoveAllChildren();
             bloonModel.AddToChildren<SnowBloon>();
-            bloonModel.AddBehavior(new CreateSoundOnBloonDestroyedModel("CreateSoundOnBloonDestroyedModel_Ice", new SoundModel("IceShatter_1", GetAudioClipReference("IceShatter_1")), new SoundModel("IceShatter_2", GetAudioClipReference("IceShatter_2")), "IceBloon"));
+            bloonModel.icon = ModContent.GetSpriteReference<XmasMod2025>("IceBloon");
+            bloonModel.disallowCosmetics = true;
         }
     }
 

@@ -350,14 +350,10 @@ public class CreateMap
             mapSprite = ModContent.GetSpriteReference<XmasMod2025>("MapIcon"),
             hasWater = true,
             theme = MapTheme.Snow,
-            unlockDifficulty = MapDifficulty.Beginner,
+            unlockDifficulty = MapDifficulty.Beginner
         };
 
-        var list = GameData.Instance.mapSet.Maps.items.ToList();
-        list.Insert(0, customMap);
-        GameData.Instance.mapSet.Maps.items = list.ToArray();
-
-        GameData.Instance.mapSet.Maps.items = GameData.Instance.mapSet.Maps.items.AddTo(new MapDetails
+        var map = new MapDetails
         {
             id = "Christmas Disaster",
             coopMapDivisionType = CoopDivision.FREE_FOR_ALL,
@@ -365,10 +361,13 @@ public class CreateMap
             mapSprite = ModContent.GetSpriteReference<XmasMod2025>("XmasMapIcon"),
             hasWater = true,
             theme = MapTheme.Snow,
-            unlockDifficulty = MapDifficulty.Beginner,
+            unlockDifficulty = MapDifficulty.Beginner
+        };
 
-        });
-
+        var list = GameData.Instance.mapSet.Maps.items.ToList();
+        list.Insert(0, customMap);
+        list.Insert(1, map);
+        GameData.Instance.mapSet.Maps.items = list.ToArray();
     }
 }
 
@@ -464,7 +463,7 @@ public class ChangeMap
 
         if (terrain != null && XmasMod2025.lastMap == "Xmas Cubism")
         {
-            terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("Map");
+            terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("map");
             var data = XmasMod2025.LoadEmbeddedJson("XmasCubismProps.json");
             List<string> lines = JsonSerializer.Deserialize<List<string>>(data);
 
