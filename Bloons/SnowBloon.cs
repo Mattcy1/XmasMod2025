@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppNinjaKiwi.Common.ResourceUtils;
 using static Il2CppAssets.Scripts.Unity.CollectionEvent.CollectionEventMapBonusSaveData;
 
 namespace XmasMod2025.Bloons
@@ -33,6 +35,12 @@ namespace XmasMod2025.Bloons
             bloonModel.AddBehavior(stun);
 
             bloonModel.disallowCosmetics = true;
+            
+            bloonModel.AddBehavior(new CreateSoundOnDamageBloonModel("CreateSoundOnDamageBloonModel_Snow", new Il2CppReferenceArray<AudioClipReference>([
+                GetAudioClipReference("SnowBloon_1"),
+                GetAudioClipReference("SnowBloon_2"),
+                GetAudioClipReference("SnowBloon_3")
+            ])));
         }
     }
 
