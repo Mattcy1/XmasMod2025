@@ -18,9 +18,8 @@ namespace XmasMod2025.Bloons
 {
     public class IceBloon : ModBloon
     {
+        public override string Icon => Name + "Icon";
         public override string BaseBloon => BloonType.sRainbow;
-
-        public override string Icon => base.Icon + "-Icon";
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
@@ -31,7 +30,6 @@ namespace XmasMod2025.Bloons
 
             bloonModel.RemoveAllChildren();
             bloonModel.AddToChildren<SnowBloon>();
-            bloonModel.icon = ModContent.GetSpriteReference<XmasMod2025>("IceBloon");
             bloonModel.disallowCosmetics = true;
 
             bloonModel.AddBehavior(new CreateSoundOnBloonDestroyedModel("CreateSoundOnBloonDestroyedModel_Ice", new SoundModel("IceShatter_1", GetAudioClipReference("IceShatter_1")), new SoundModel("IceShatter_2", GetAudioClipReference("IceShatter_2")), "IceBloon"));

@@ -36,7 +36,7 @@ public abstract class GiftShopItem : NamedModContent
 
     public override string Description => "Default description for Gift Shop Item " + Id + ".";
 
-    public virtual string Icon => Name + "-Icon";
+    public virtual string Icon => Name + "Icon";
     protected virtual bool IconIsGUID => false;
 
     public SpriteReference IconReference { get; protected set; }

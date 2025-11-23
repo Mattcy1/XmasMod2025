@@ -19,6 +19,7 @@ namespace XmasMod2025.Bloons
 {
     public class SnowBloon : ModBloon
     {
+        public override string Icon => Name + "Icon";
         public override string BaseBloon => BloonType.sWhite;
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)

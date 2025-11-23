@@ -68,7 +68,7 @@ public abstract class ModBoss : ModBloon
     }
 
     public abstract BloonModel GetBloon();
-    public virtual string Icon => Name + "-Icon";
+    public virtual string Icon => Name + "Icon";
     protected virtual bool IconIsGUID => false;
     public SpriteReference IconReference { get; protected set; }
 }
