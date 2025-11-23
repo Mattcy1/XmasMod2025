@@ -27,7 +27,7 @@ namespace XmasMod2025.Bloons
             bloonModel.maxHealth += 2;
             bloonModel.leakDamage += 5;
             bloonModel.RemoveAllChildren();
-            bloonModel.speed -= 0.3f;
+            bloonModel.speed -= 0.5f;
             bloonModel.AddToChildren(ModContent.BloonID<MiniCandyCaneBloon>(), 2);
 
             bloonModel.disallowCosmetics = true;
@@ -40,7 +40,7 @@ namespace XmasMod2025.Bloons
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            bloonModel.maxHealth += 2;
+            bloonModel.maxHealth += 1;
             bloonModel.RemoveAllChildren();
             bloonModel.speed -= 0.3f;
 

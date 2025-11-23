@@ -474,7 +474,7 @@ public class ChangeMap
 
         if (terrain != null && XmasMod2025.lastMap == "Xmas Cubism")
         {
-            terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("map");
+            terrain.GetComponent<MeshRenderer>().material.mainTexture = ModContent.GetTexture<XmasMod2025>("XmasMap");
             var data = XmasMod2025.LoadEmbeddedJson("XmasCubismProps.json");
             List<string> lines = JsonSerializer.Deserialize<List<string>>(data);
 

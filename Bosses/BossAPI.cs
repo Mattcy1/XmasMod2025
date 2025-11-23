@@ -24,7 +24,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using XmasMod2025.Assets;
 using XmasMod2025.Bosses;
+using XmasMod2025.UI;
 using Info = BTD_Mod_Helper.Api.Components.Info;
 
 namespace XmasMod2025.BossAPI;
@@ -421,8 +423,8 @@ public class BossUI : MonoBehaviour
                 CreateSkulls(bossInfo, bossPanel);
             }
 
-            var desc1 = bossPanel.AddPanel(new Info("DescriptionHolder", 0, -400, 1000, 500), VanillaSprites.MainBGPanelBlue);
-            var desc2 = bossPanel.AddPanel(new Info("DescriptionInside", 0, -400, 950, 450), VanillaSprites.BlueInsertPanel);
+            var desc1 = bossPanel.AddImage(new Info("DescriptionHolder", 0, -400, 1000, 500), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
+            var desc2 = bossPanel.AddImage(new Info("DescriptionInside", 0, -400, 950, 450), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
             var desc3 = bossPanel.AddText(new Info("Description", 0, -400, 900, 400), bossInfo.Description, 60, TextAlignmentOptions.Center);
             desc3.EnableAutoSizing();
 

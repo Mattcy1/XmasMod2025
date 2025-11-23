@@ -1,9 +1,11 @@
 ﻿using BossAPI.Bosses;
+using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
+using XmasMod2025.Bloons.Moabs;
 
 namespace XmasMod2025.Bosses
 {
@@ -19,7 +21,8 @@ namespace XmasMod2025.Bosses
         public override int SpawnsRound => 40;
         public override string BaseBloon => BloonType.sBad;
 
-        public BloonModel Bloon = null;
+        public override string Description => "The Evil Elf, Steals 5% of your cash every 30 seconds, and spawn a Ice Moab every Skull.";
+
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
@@ -30,7 +33,7 @@ namespace XmasMod2025.Bosses
 
             SpawnBloonsActionModel spawn1 = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<SpawnBloonsActionModel>().Duplicate();
             spawn1.actionId = "ModdedSkullModdedBossEvil Elf";
-            spawn1.bloonType = BloonType.sMoab;
+            spawn1.bloonType = ModContent.BloonID<IceMoab>();
             spawn1.spawnCount = 1;
             spawn1.bossName = "";
             spawn1.spawnTrackMax += 0.5f;
@@ -38,8 +41,6 @@ namespace XmasMod2025.Bosses
 
             bloonModel.AddBehavior(spawn1);
             bloonModel.AddBehavior(timeTrigger);
-
-            Bloon = bloonModel;
         }
 
         public override void OnSpawn(Bloon bloon)

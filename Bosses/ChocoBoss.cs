@@ -14,7 +14,7 @@ namespace XmasMod2025.Bosses
     internal class ChocoBoss : ModBoss
     {
         public override string BossName => "Choco Boss";
-        public override int SkullCount => 5;
+        public override int SkullCount => 4;
         public override string HealthBar => "";
         public override string IconGuid => "";
         public override int Stars => 6;
@@ -22,8 +22,8 @@ namespace XmasMod2025.Bosses
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 60;
         public override string BaseBloon => BloonType.sBad;
+        public override string Description => "All spawned bloons while the boss is alive gets x2 health, on top of that the boss stuns your towers on skull.";
 
-        public BloonModel Bloon = null;
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
@@ -34,7 +34,6 @@ namespace XmasMod2025.Bosses
             stun.actionId = "ModdedSkullModdedBossChoco Boss";
 
             bloonModel.AddBehavior(stun);
-            Bloon = bloonModel;
         }
 
         public override void OnSpawn(Bloon bloon)
