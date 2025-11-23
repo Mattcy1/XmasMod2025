@@ -528,9 +528,12 @@ public class TimeTriggerPacth
             InGame.instance.AddCash(-(InGame.instance.GetCash() * 0.05f));
         }
 
-        if(__instance.timeTriggerModel.name.Contains("ModdedSkull" + XmasMod2025.boss.bloonModel.baseId))
+        if(XmasMod2025.boss != null)
         {
-            XmasMod2025.boss.trackSpeedMultiplier += 1.2f;
+            if (__instance.timeTriggerModel.name.Contains("ModdedSkull" + XmasMod2025.boss.bloonModel.baseId))
+            {
+                XmasMod2025.boss.trackSpeedMultiplier += 1.2f;
+            }
         }
     }
 }

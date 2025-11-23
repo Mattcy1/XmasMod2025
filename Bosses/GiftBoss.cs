@@ -1,17 +1,10 @@
-﻿using XmasMod2025.ModBossContenet;
+﻿using BossAPI.Bosses;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
-using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
-using Il2CppAssets.Scripts.Models.Towers.Mods;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XmasMod2025.Bloons;
 using XmasMod2025.Bloons.Moabs;
 
@@ -46,7 +39,7 @@ namespace XmasMod2025.Bosses
             spawn.spawnTrackMin -= 0.5f;
 
             SpawnBloonsActionModel spawn1 = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<SpawnBloonsActionModel>().Duplicate();
-            spawn1.actionId = "ModdedSkull" + bloonModel.baseId;
+            spawn1.actionId = "ModdedSkullModdedBossGift Boss";
             spawn1.bloonType = ModContent.BloonID<SnowMoab.WeakSnowMoab>();
             spawn1.spawnCount = 2;
             spawn1.bossName = "";
@@ -62,8 +55,9 @@ namespace XmasMod2025.Bosses
             Bloon = bloonModel;
         }
 
-        public override string BossID => Bloon.baseId;
-
-        public override BloonModel GetBloon() => Game.instance.model.GetBloon(Id);
+        public override void OnSpawn(Bloon bloon)
+        {
+            XmasMod2025.boss = bloon;
+        }
     }
 }
