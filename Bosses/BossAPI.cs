@@ -136,9 +136,9 @@ public class Hooks
 
             if (!__instance.bloonModel.HasTag("Choco") && !__instance.bloonModel.isBoss && XmasMod2025.boss != null && XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<ChocoBoss>())
             {
-                var root = __instance.Cast<BloonModel>().Duplicate();
+                var root = __instance.bloonModel.Duplicate();
 
-                root.maxHealth *= (int)200f;
+                root.maxHealth *= 2;
 
                 __instance.UpdateRootModel(root);
                 __instance.health = __instance.bloonModel.maxHealth;
