@@ -53,6 +53,7 @@ using XmasMod2025.Towers.SubTowers;
 using XmasMod2025.UI;
 using static MelonLoader.MelonLogger;
 using static XmasMod2025.UI.Gift;
+using XmasMod2025.Bosses;
 
 [assembly: MelonInfo(typeof(XmasMod2025.XmasMod2025), ModHelperData.Name, ModHelperData.Version, ModHelperData.Author)]
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
@@ -332,6 +333,14 @@ public class XmasMod2025 : BloonsTD6Mod
             }
         }
 
+        if(@this.bloonModel.baseId == ModContent.BloonID<ElfBoss>())
+        {
+            if(tower.towerModel.baseId != ModContent.TowerID<ElfMonkey>() && tower != null)
+            {
+                @this.health += (int)totalAmount;
+            }
+        }
+
         return true;
     }
 }
@@ -513,6 +522,16 @@ public class TimeTriggerPacth
         {
             __instance.bloon.bloonModel.RemoveBehavior<TimeTriggerModel>();
         }
+
+        if(__instance.timeTriggerModel.name.Contains("ElfTax"))
+        {
+            InGame.instance.AddCash(-(InGame.instance.GetCash() * 0.05f));
+        }
+
+        if(__instance.timeTriggerModel.name.Contains("ModdedSkull" + XmasMod2025.boss.bloonModel.baseId))
+        {
+            XmasMod2025.boss.trackSpeedMultiplier += 1.2f;
+        }
     }
 }
 
@@ -544,6 +563,14 @@ public class Bloon_Destroy
             if (!bloon.baseId.Contains("Rock") && !bloon.baseId.Contains("TestBloon") && !bloon.baseId.Contains("Gold"))
             {
                 InGame.instance.SpawnBloons(bloon.id, countRand, 10);
+            }
+        }
+
+        if (__instance.bloonModel.isBoss)
+        {
+            if(BossAPI.BossUI.instance != null)
+            {
+                BossAPI.BossUI.instance.Close();
             }
         }
     }

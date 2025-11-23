@@ -1,18 +1,21 @@
-﻿using XmasMod2025.BossAPI;
-using BTD_Mod_Helper.Api;
+﻿using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Bloons;
+using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame.BloonMenu;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
 using System;
 using System.Collections.Generic;
+using XmasMod2025.BossAPI;
+using static MelonLoader.MelonLogger;
 using static XmasMod2025.BossAPI.BossAPI;
 using static XmasMod2025.BossAPI.Hooks;
-using static MelonLoader.MelonLogger;
 
 namespace XmasMod2025.ModBossContenet;
 
@@ -41,7 +44,7 @@ public abstract class ModBoss : ModBloon
         string registeredBossId = bossBloonModel.GetBossID();
 
         bossBloonModel.isBoss = true;
-        bossBloonModel.tags = new string[] { "Moabs", "Bad", "Boss" };
+        bossBloonModel.tags = new string[] { "Moabs", "Bad", "Boss", "Sandbox" };
 
         bossBloonModel.icon = IconReference;
 
@@ -68,4 +71,21 @@ public abstract class ModBoss : ModBloon
     public virtual string Icon => Name + "-Icon";
     protected virtual bool IconIsGUID => false;
     public SpriteReference IconReference { get; protected set; }
+}
+
+//Credit doombubbles
+[HarmonyPatch(typeof(BloonMenu), nameof(BloonMenu.CreateBloonButtons))]
+public class BloonMenu_CreateBloonButtons
+{
+    [HarmonyPrefix]
+    public static void Prefix(Il2CppSystem.Collections.Generic.List<BloonModel> sortedBloons)
+    {
+        foreach (var bloon in InGame.Bridge.Model.bloons)
+        {
+            if (bloon.HasTag("Sandbox") && !sortedBloons.Contains(bloon))
+            {
+                sortedBloons.Add(bloon);
+            }
+        }
+    }
 }
