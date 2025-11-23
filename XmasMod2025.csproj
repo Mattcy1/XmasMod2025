@@ -18,6 +18,11 @@
         <None Remove="Assets\XmasMapProps.json" />
         <EmbeddedResource Include="Assets\XmasMapProps.json" />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="DialogLib">
+        <HintPath>Libraries\DialogLib.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 
     <Import Project="..\btd6.targets" />
 </Project>

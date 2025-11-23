@@ -81,6 +81,8 @@ public class XmasMod2025 : BloonsTD6Mod
             InGame.instance.bridge.CreateMapEditorPropAt(propName, prop.positionalData, prop.Def().propModel, ObjectId.FromString(prop.Def().propModel.name + "_" + props.IndexOf(prop)), null);
         }
     }
+    
+    
 
     public static float PresentBloonChance = 0f;
     public static IntMinMax TreeDropRates = new(3, 5);
