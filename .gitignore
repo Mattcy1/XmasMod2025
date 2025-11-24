@@ -361,8 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/.idea/.idea.XmasMod2025/.idea/.gitignore
-/.idea/.idea.XmasMod2025/.idea/discord.xml
-/.idea/.idea.XmasMod2025/.idea/encodings.xml
-/.idea/.idea.XmasMod2025/.idea/indexLayout.xml
-/.idea/.idea.XmasMod2025/.idea/vcs.xml
+.[Ii]dea/

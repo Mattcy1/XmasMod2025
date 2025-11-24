@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
 using XmasMod2025.Bloons;
 
 namespace XmasMod2025.Bloons
@@ -31,7 +32,7 @@ namespace XmasMod2025.Bloons
             bloonModel.RemoveAllChildren();
             bloonModel.AddToChildren<SnowBloon>();
             bloonModel.disallowCosmetics = true;
-
+            
             bloonModel.AddBehavior(new CreateSoundOnBloonDestroyedModel("CreateSoundOnBloonDestroyedModel_Ice", new SoundModel("IceShatter_1", GetAudioClipReference("IceShatter_1")), new SoundModel("IceShatter_2", GetAudioClipReference("IceShatter_2")), "IceBloon"));
         }
     }

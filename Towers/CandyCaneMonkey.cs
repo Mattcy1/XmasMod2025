@@ -11,8 +11,7 @@ public class CandyCaneMonkey : ChristmasTower
 {
     public override string BaseTower => "DartMonkey";
     public override int Cost => 85;
-    public override string Icon => "CaneMonkey";
-    public override string Portrait => Icon;
+    public override string Icon => Portrait;
 
     public override void ModifyBaseTowerModel(TowerModel towerModel)
     {

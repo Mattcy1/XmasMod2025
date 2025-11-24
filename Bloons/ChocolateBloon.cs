@@ -21,6 +21,8 @@ namespace XmasMod2025.Bloons
         public override string Icon => Name + "Icon";
         public override string BaseBloon => BloonType.sPurple;
 
+        public override IEnumerable<string> DamageStates => [];
+
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.maxHealth += 2;
