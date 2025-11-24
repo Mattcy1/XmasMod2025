@@ -26,7 +26,7 @@ namespace XmasMod2025.Bosses
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 60;
         public override string BaseBloon => BloonType.sBad;
-        public override string Description => "All spawned bloons while the boss is alive gets x2 health, on top of that the boss stuns your towers on skull.";
+        public override string Description => "While the boss is alive all spawned bloons  gets x2 health, on top of that the boss stuns your towers on skull.";
 
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)

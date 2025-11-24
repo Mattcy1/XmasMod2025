@@ -23,7 +23,7 @@ using XmasMod2025.Towers;
 
 namespace XmasMod2025.Towers.Upgrades
 {
-    internal class ElfBottomPath
+    internal class CandyCaneTopPath
     {
         public class Tier1 : ChristmasUpgrade<ElfMonkey>
         {

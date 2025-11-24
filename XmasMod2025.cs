@@ -1,10 +1,12 @@
-﻿using System;
-using BTD_Mod_Helper;
+﻿using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Helpers;
 using BTD_Mod_Helper.Api.Hooks;
 using BTD_Mod_Helper.Api.Hooks.BloonHooks;
+using BTD_Mod_Helper.Api.Internal;
 using BTD_Mod_Helper.Extensions;
+using CommandLine;
+using HarmonyLib;
 using Il2Cpp;
 using Il2CppAssets.Scripts;
 using Il2CppAssets.Scripts.Data;
@@ -15,6 +17,7 @@ using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Models.ContentBrowser;
 using Il2CppAssets.Scripts.Models.Map;
+using Il2CppAssets.Scripts.Models.MapEditorBehaviors;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
@@ -22,6 +25,7 @@ using Il2CppAssets.Scripts.Simulation.Objects;
 using Il2CppAssets.Scripts.Simulation.Towers;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Simulation.Track;
+using Il2CppAssets.Scripts.SimulationTests;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Bridge;
 using Il2CppAssets.Scripts.Unity.Map;
@@ -32,28 +36,25 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame.Stats;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using Il2CppAssets.Scripts.Unity.UI_New.Utils;
 using MelonLoader;
+using MelonLoader.Utils;
+using Newtonsoft.Json.Linq;
 using Octokit;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using BTD_Mod_Helper.Api.Internal;
-using CommandLine;
-using HarmonyLib;
-using Il2CppAssets.Scripts.Models.MapEditorBehaviors;
-using MelonLoader.Utils;
-using Newtonsoft.Json.Linq;
 using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons;
+using XmasMod2025.Bosses;
 using XmasMod2025.GiftShop.BuffsItems;
 using XmasMod2025.Towers;
 using XmasMod2025.Towers.SubTowers;
 using XmasMod2025.UI;
 using static MelonLoader.MelonLogger;
 using static XmasMod2025.UI.Gift;
-using XmasMod2025.Bosses;
 
 [assembly: MelonInfo(typeof(XmasMod2025.XmasMod2025), ModHelperData.Name, ModHelperData.Version, ModHelperData.Author)]
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
@@ -335,9 +336,17 @@ public class XmasMod2025 : BloonsTD6Mod
 
         if(@this.bloonModel.baseId == ModContent.BloonID<ElfBoss>())
         {
-            if(tower.towerModel.baseId != ModContent.TowerID<ElfMonkey>() && tower != null)
+            if(tower != null && tower.towerModel.baseId != ModContent.TowerID<ElfMonkey>())
             {
                 @this.health += (int)totalAmount;
+            }
+        }
+
+        if(@this.bloonModel.HasTag("Candy"))
+        {
+            if(tower != null && tower.towerModel.baseId != ModContent.TowerID<CandyCaneMonkey>())
+            {
+                @this.health -= (int)totalAmount;
             }
         }
 

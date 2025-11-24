@@ -21,7 +21,7 @@ namespace XmasMod2025.Bosses
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 20;
         public override string BaseBloon => BloonType.sBad;
-        public override string Description => "Every 30 seconds, spawns 2 candy cane bloon, On Skull spawns a snow moab.";
+        public override string Description => "Every 30 seconds, spawn 2 candy cane bloons, On Skull spawns a snow moab.";
 
         public BloonModel Bloon = null;
 
@@ -34,7 +34,7 @@ namespace XmasMod2025.Bosses
             SpawnBloonsActionModel spawn = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<SpawnBloonsActionModel>().Duplicate();
             spawn.actionId = "SpawnsGift";
             spawn.bloonType = ModContent.BloonID<CandyCaneBloon>();
-            spawn.spawnCount = 4;
+            spawn.spawnCount = 2;
             spawn.bossName = "";
             spawn.spawnTrackMax += 0.5f;
             spawn.spawnTrackMin -= 0.5f;

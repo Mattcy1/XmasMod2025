@@ -31,6 +31,7 @@ namespace XmasMod2025.Bloons
             bloonModel.AddToChildren(ModContent.BloonID<MiniCandyCaneBloon>(), 2);
 
             bloonModel.disallowCosmetics = true;
+            bloonModel.AddTag("Candy");
         }
     }
 
@@ -46,6 +47,7 @@ namespace XmasMod2025.Bloons
 
             bloonModel.disallowCosmetics = true;
             bloonModel.dontShowInSandbox = true;
+            bloonModel.AddTag("Candy");
         }
     }
 
@@ -62,8 +64,6 @@ namespace XmasMod2025.Bloons
     public class MiniCandyCaneBloonDisplay : ModBloonDisplay<MiniCandyCaneBloon>
     {
         public override string BaseDisplay => Generic2dDisplay;
-
-        public override float Scale => 2f;
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
             Set2DTexture(node, "MiniCandyCaneBloon");
