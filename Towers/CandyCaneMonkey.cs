@@ -1,4 +1,5 @@
-﻿using BTD_Mod_Helper.Api.Display;
+﻿using BTD_Mod_Helper;
+using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
@@ -14,9 +15,11 @@ public class CandyCaneMonkey : ChristmasTower
     public override int Cost => 85;
     public override string Icon => Portrait;
     public override string Description => "Shoots, candy cane that spilt into 2 more candy cane, deals X2 damage to Candy Type Bloon";
-    public override int TopPathUpgrades => 2;
+    public override int TopPathUpgrades => 5;
     public override int MiddlePathUpgrades => 2;
     public override int BottomPathUpgrades => 2;
+    public override bool IsValidCrosspath(int[] tiers) =>
+    ModHelper.HasMod("UltimateCrosspathing") || base.IsValidCrosspath(tiers);
     public override void ModifyBaseTowerModel(TowerModel towerModel)
     {
         var weapon = towerModel.GetWeapon();

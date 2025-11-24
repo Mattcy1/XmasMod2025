@@ -82,40 +82,86 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
             }
         }
 
-        public class Tier3CaneTop : ChristmasUpgrade<CandyCaneMonkey>
+        public class DoubleShot : ChristmasUpgrade<CandyCaneMonkey>
         {
             public override int Path => TOP;
             public override int Tier => 3;
-            public override int Cost => 150;
-            public override string DisplayName => "";
-            public override string Description => "";
+            public override int Cost => 250;
+            public override string Description => "Now shoots, 2 Candy Cane Instead of one.";
+            public override string Icon => "TopPathCane3";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
+                towerModel.GetWeapon().emission = new ArcEmissionModel("ArcEmissionModel_", 2, 0, 20, null, false, false);
             }
         }
     }
 
-    public class Tier4CaneTop : ChristmasUpgrade<CandyCaneMonkey>
+    public class Return : ChristmasUpgrade<CandyCaneMonkey>
     {
         public override int Path => TOP;
         public override int Tier => 4;
-        public override int Cost => 800;
-        public override string DisplayName => "";
-        public override string Description => "";
+        public override int Cost => 550;
+        public override string DisplayName => "Candy Cane Boomerang";
+        public override string Description => "The projectile, now acts like a boomerang.";
+        public override string Icon => "TopPathCane4";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
+            var Return = Game.instance.model.GetTowerFromId("BoomerangMonkey").GetWeapon().projectile.GetBehavior<FollowPathModel>().Duplicate();
+            towerModel.GetWeapon().projectile.AddBehavior(Return);
+            towerModel.GetWeapon().projectile.GetBehavior<TravelStraitModel>().lifespan = 5;
+            towerModel.GetWeapon().projectile.GetBehavior<TravelStraitModel>().Lifespan = 5;
+            towerModel.GetWeapon().projectile.ApplyDisplay<BoomerangProj>();
         }
     }
 
-    public class Tier5CaneTop : ChristmasUpgrade<CandyCaneMonkey>
+    public class CandyCaneOverlord : ChristmasUpgrade<CandyCaneMonkey>
     {
         public override int Path => TOP;
         public override int Tier => 5;
-        public override int Cost => 2000;
-        public override string DisplayName => "";
-        public override string Description => "";
+        public override int Cost => 2500;
+        public override string Description => "Throws, 5 Boomerang at once, increased pierce and damage, projectile splits into even more shards.";
+
+        public override string Icon => "TopPathCane5";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
+            towerModel.GetWeapon().emission = new ArcEmissionModel("ArcEmissionModel_", 5, 0, 30, null, false, false);
+            towerModel.GetWeapon().projectile.RemoveBehavior<CreateProjectileOnExhaustPierceModel>();
+
+            var weapon = towerModel.GetWeapon();
+            var proj = weapon.projectile;
+
+            proj.pierce += 5;
+            proj.GetDamageModel().damage = 12;
+
+            var smallerProj = proj.Duplicate();
+            smallerProj.pierce = 4;
+            smallerProj.GetDamageModel().damage = 7;
+            smallerProj.ApplyDisplay<ShardProj>();
+            CreateProjectileOnContactModel createProjectileOnContactModel = new CreateProjectileOnContactModel("candycanebreak", smallerProj, new ArcEmissionModel("ArcEmissionModel_Split", 5, 0, 30, null, true, false), false, false, true);
+
+            proj.AddBehavior(createProjectileOnContactModel);
+            towerModel.ApplyDisplay<CandyCaneMonkey500>();
+        }
+    }
+
+    public class CandyCaneMonkey500 : ModDisplay
+    {
+        public override string BaseDisplay => Game.instance.model.GetTowerFromId("BoomerangMonkey-500").display.AssetGUID;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, Name);
+            SetMeshTexture(node, Name, 1);
+            SetMeshTexture(node, Name, 2);
+        }
+    }
+
+    public class BoomerangProj : ModDisplay
+    {
+        public override string BaseDisplay => Generic2dDisplay;
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            Set2DTexture(node, "BoomerangCandy");
         }
     }
 }
