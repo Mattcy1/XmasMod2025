@@ -20,7 +20,7 @@ namespace XmasMod2025.Bosses
         public override string BossName => "Choco Boss";
         public override int SkullCount => 4;
         public override string HealthBar => "";
-        public override string IconGuid => "";
+        public override string Icon => Name + "Icon";
         public override int Stars => 6;
         public override string CustomSkullIcon => "";
         public override string HealthBarBackground => "";

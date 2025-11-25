@@ -15,7 +15,7 @@ public abstract class ModBoss : ModBloon
 {
     public abstract int SkullCount { get; }
     public abstract string HealthBar { get; }
-    public abstract string IconGuid { get; }
+    public virtual string IconGuid => GetTextureGUID(Icon);
     public abstract int Stars { get; }
     public abstract string CustomSkullIcon { get; }
     public abstract string HealthBarBackground { get; }
@@ -56,7 +56,7 @@ public abstract class ModBoss : ModBloon
         bossBloonModel.AddBehavior(healthBarTriggerModel);
 
         bossBloonModel.disallowCosmetics = true;
-        bossBloonModel.AddInfo(SkullCount > 0, SkullCount, CustomSkullIcon, Stars, HealthBar, HealthBarBackground, BossName, IconGuid, registeredBossId, SpawnsRound, Id, Description);
+        bossBloonModel.AddInfo(SkullCount > 0, SkullCount, CustomSkullIcon, Stars, HealthBar, HealthBarBackground, BossName, Icon, registeredBossId, SpawnsRound, Id, Description);
     }
     public virtual void OnSpawn(Bloon bloon) { }
     public virtual string Icon => Name + "-Icon";
