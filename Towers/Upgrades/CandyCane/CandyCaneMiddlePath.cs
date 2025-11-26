@@ -80,6 +80,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
             public override int Cost => 225;
             public override string Description => "The candy cane is set on fire allowing it to pop Leads, and inflict dot";
             public override string Icon => "MiddlePathCane3";
+            public override string Portrait => "Candy030Portrait";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.GetWeapon().projectile.GetDamageModel().immuneBloonProperties = Il2Cpp.BloonProperties.None;
@@ -116,6 +117,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         public override int Cost => 800;
         public override string Description => "Ability: Spawns a ring of candy cane around him.";
         public override string Icon => "MiddlePathCane4";
+        public override string Portrait => "Candy040Portrait";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
             var proj = towerModel.GetWeapon().projectile;
@@ -152,8 +154,8 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         public override int Tier => 5;
         public override int Cost => 3500;
         public override string Description => "Shoots candy canes so hot they melt bloons in seconds.";
-
         public override string Icon => "MiddlePathCane5";
+        public override string Portrait => "Candy050Portrait";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
             towerModel.RemoveBehavior<AbilityModel>();

@@ -3,6 +3,8 @@ using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
+using Il2CppAssets.Scripts.Data;
+using Il2CppAssets.Scripts.Data.MapSets;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
@@ -11,8 +13,10 @@ using Il2CppAssets.Scripts.Models.Towers.Filters;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
+using Il2CppAssets.Scripts.Simulation.Towers.Weapons;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
+using Il2CppAssets.Scripts.Unity.Scenes;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.Store.LootItem;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
@@ -72,40 +76,100 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
             }
         }
 
-        public class Tier3CaneBottom : ChristmasUpgrade<CandyCaneMonkey>
+        public class LuckyCandyCane : ChristmasUpgrade<CandyCaneMonkey>
         {
             public override int Path => BOTTOM;
             public override int Tier => 3;
             public override int Cost => 150;
-            public override string DisplayName => "";
-            public override string Description => "";
+            public override string Description => "Candy cane have a small chance to grant gifts.";
+            public override string Icon => "BottomPathCane3";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
+                foreach (var weapons in towerModel.GetWeapons())
+                {
+                    weapons.projectile.GetDamageModel().damage += 1;
+                    weapons.projectile.id = "Cane003";
+                    weapons.projectile.ApplyDisplay<LuckyCandyCaneProj>();
+                }
+            }
+        }
+
+
+        public class LuckyCandyCaneProj : ModDisplay
+        {
+            public override string BaseDisplay => Generic2dDisplay;
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                Set2DTexture(node, "LuckyCandyCane");
             }
         }
     }
 
-    public class Tier4CaneBottom : ChristmasUpgrade<CandyCaneMonkey>
+    public class FocusedShots : ChristmasUpgrade<CandyCaneMonkey>
     {
         public override int Path => BOTTOM;
         public override int Tier => 4;
-        public override int Cost => 800;
-        public override string DisplayName => "";
-        public override string Description => "";
+        public override int Cost => 650;
+        public override string Description => "Slower, attack speed, less pierce, but INSANE single target damage perfect for taking down these pesky moab.";
+        public override string Icon => "BottomPathCane4";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
+            var proj = towerModel.GetWeapon().projectile;
+
+            proj.GetDamageModel().damage += 40;
+            proj.pierce = 1;
+            proj.RemoveBehavior<CreateProjectileOnExhaustPierceModel>();
+
+
+            towerModel.GetWeapon().rate += 0.3f;
+            towerModel.range += 7;
+            towerModel.GetAttackModel().range += 7;
         }
     }
 
-    public class Tier5CaneBottom : ChristmasUpgrade<CandyCaneMonkey>
+    public class ExtremlyFocusedShots : ChristmasUpgrade<CandyCaneMonkey>
     {
         public override int Path => BOTTOM;
         public override int Tier => 5;
-        public override int Cost => 2000;
-        public override string DisplayName => "";
-        public override string Description => "";
+        public override int Cost => 4250;
+        public override string Description => "With this guy in town, no boss will dare fight you.";
+        public override string Icon => "BottomPathCane5";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
+            var proj = towerModel.GetWeapon().projectile;
+
+            proj.GetDamageModel().damage += 60;
+
+            towerModel.GetWeapon().rate += 0.1f;
+            towerModel.GetWeapon().emission = new ArcEmissionModel("ArcEmissionModel_", 3, 0, 20, null, false, false);
+
+            towerModel.range += 7;
+            towerModel.GetAttackModel().range += 7;
+        }
+    }
+
+    [HarmonyLib.HarmonyPatch(typeof(Weapon), nameof(Weapon.Emit))]
+    public class DropGifts
+    {
+        [HarmonyLib.HarmonyPostfix] 
+        public static void Postfix(Weapon __instance)
+        {
+            if(__instance.weaponModel.projectile.id == "Cane003")
+            {
+                var shouldDrop = new System.Random().Next(1, 3);
+
+                if (shouldDrop >= 2)
+                {
+                    var random = new System.Random().Next(1, 4);
+                    if (InGame.instance != null || InGame.instance.bridge != null)
+                    {
+                        InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+                    }
+
+                    XmasMod2025.Gifts += random;
+                }
+            }
         }
     }
 }

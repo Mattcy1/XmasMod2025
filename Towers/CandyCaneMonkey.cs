@@ -17,7 +17,7 @@ public class CandyCaneMonkey : ChristmasTower
     public override string Description => "Shoots, candy cane that spilt into 2 more candy cane, deals X2 damage to Candy Type Bloon";
     public override int TopPathUpgrades => 5;
     public override int MiddlePathUpgrades => 5;
-    public override int BottomPathUpgrades => 2;
+    public override int BottomPathUpgrades => 5;
     public override bool IsValidCrosspath(int[] tiers) =>
     ModHelper.HasMod("UltimateCrosspathing") || base.IsValidCrosspath(tiers);
     public override void ModifyBaseTowerModel(TowerModel towerModel)
