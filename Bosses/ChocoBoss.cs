@@ -38,7 +38,6 @@ namespace XmasMod2025.Bosses
             stun.actionId = "ModdedSkullModdedBossChoco Boss";
 
             bloonModel.AddBehavior(stun);
-            bloonModel.RemoveBehavior<DamageStateModel>();
         }
 
         public override void OnSpawn(Bloon bloon)

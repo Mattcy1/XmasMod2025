@@ -89,9 +89,11 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
             public override int Cost => 250;
             public override string Description => "Now shoots, 2 Candy Cane Instead of one.";
             public override string Icon => "TopPathCane3";
+            public override string Portrait => "Candy300Portrait";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 towerModel.GetWeapon().emission = new ArcEmissionModel("ArcEmissionModel_", 2, 0, 20, null, false, false);
+                towerModel.ApplyDisplay<CandyCaneMonkey300>();
             }
         }
     }
@@ -104,6 +106,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         public override string DisplayName => "Candy Cane Boomerang";
         public override string Description => "The projectile, now acts like a boomerang.";
         public override string Icon => "TopPathCane4";
+        public override string Portrait => "Candy400Portrait";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
             var Return = Game.instance.model.GetTowerFromId("BoomerangMonkey").GetWeapon().projectile.GetBehavior<FollowPathModel>().Duplicate();
@@ -111,6 +114,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
             towerModel.GetWeapon().projectile.GetBehavior<TravelStraitModel>().lifespan = 5;
             towerModel.GetWeapon().projectile.GetBehavior<TravelStraitModel>().Lifespan = 5;
             towerModel.GetWeapon().projectile.ApplyDisplay<BoomerangProj>();
+            towerModel.ApplyDisplay<CandyCaneMonkey400>();
         }
     }
 
@@ -120,8 +124,8 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         public override int Tier => 5;
         public override int Cost => 2500;
         public override string Description => "Throws, 5 Boomerang at once, increased pierce and damage, projectile splits into even more shards.";
-
         public override string Icon => "TopPathCane5";
+        public override string Portrait => "Candy500Portrait";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
             towerModel.GetWeapon().emission = new ArcEmissionModel("ArcEmissionModel_", 5, 0, 30, null, false, false);
@@ -155,6 +159,26 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         }
     }
 
+    public class CandyCaneMonkey400 : ModDisplay
+    {
+        public override string BaseDisplay => Game.instance.model.GetTowerFromId("BoomerangMonkey").display.AssetGUID;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, "CandyCaneMonkey400");
+            SetMeshTexture(node, "CandyCaneMonkey400", 1);
+        }
+    }
+
+    public class CandyCaneMonkey300 : ModDisplay
+    {
+        public override string BaseDisplay => Game.instance.model.GetTowerFromId("DartMonkey-030").display.AssetGUID;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, "CandyCaneMonkey300");
+            SetMeshTexture(node, "CandyCaneMonkey300", 1);
+            SetMeshTexture(node, "CandyCaneMonkey300", 2); 
+        }
+    }
     public class BoomerangProj : ModDisplay
     {
         public override string BaseDisplay => Generic2dDisplay;

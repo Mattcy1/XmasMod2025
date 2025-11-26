@@ -10,6 +10,7 @@ using Il2Cpp;
 using Il2CppAssets.Scripts.Data;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Rounds;
+using Il2CppAssets.Scripts.Simulation;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Towers;
@@ -25,8 +26,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using XmasMod2025.Assets;
-using XmasMod2025.Bosses;
 using XmasMod2025.UI;
+using static XmasMod2025.BossAPI.BossAPI;
 using Info = BTD_Mod_Helper.Api.Components.Info;
 
 namespace XmasMod2025.BossAPI;
@@ -55,6 +56,14 @@ public class BossAPI
     }
 
     public static List<BossInfo> BossInfos = new List<BossInfo>();
+
+    public static Dictionary<int, BossInfo> roundsSpawn = new Dictionary<int, BossInfo>();
+
+    public static int RoundsUntilNextBoss = 0;
+
+    public static int NearestBoss = 0;
+
+    public static BossInfo diedTo;
 }
 public class Hooks
 {
@@ -95,6 +104,19 @@ public class Hooks
             {
                 var r = __instance.bridge.GetCurrentRound();
 
+                var upcoming = BossAPI.BossInfos
+                    .Where(b => b.SpawnRound > r)
+                    .Select(b => b.SpawnRound);
+
+                if (!upcoming.Any())
+                    return;
+
+                int nearestBoss = upcoming.Min();
+
+                BossAPI.RoundsUntilNextBoss = nearestBoss - r - 1;
+
+                RoundBossUI.UpdateRoundsUI();
+
                 if (r == bossInfo.SpawnRound - 1)
                 {
                     InGame.instance.SpawnBloons(bossInfo.BossToSpawn, 1, 0);
@@ -102,6 +124,76 @@ public class Hooks
             }
         }
     }
+
+    //Create Round UI
+    [HarmonyPatch(typeof(InGame), nameof(InGame.StartMatch))]
+    public class RoundUIHandler
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix(InGame __instance)
+        {
+            foreach (var bossInfo in BossAPI.BossInfos)
+            {
+                if (!BossAPI.roundsSpawn.ContainsKey(bossInfo.SpawnRound))
+                {
+                    BossAPI.roundsSpawn.Add(bossInfo.SpawnRound, bossInfo);
+                }
+            }
+
+            if (BossAPI.roundsSpawn.Count == 0)
+            {
+                MelonLogger.Warning("RoundSpawn dictionary is empty!");
+                return;
+            }
+
+
+            int lowestRound = BossAPI.roundsSpawn.Keys.Min();
+            BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
+
+            if (RoundBossUI.instance != null)
+                RoundBossUI.instance.Close();
+
+            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+            NearestBoss = lowestRound;
+        }
+    }
+
+    //Create Round UI
+    [HarmonyPatch(typeof(InGame), nameof(InGame.Restart))]
+    public class Restart
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix(InGame __instance)
+        {
+            foreach (var bossInfo in BossAPI.BossInfos)
+            {
+                if (!BossAPI.roundsSpawn.ContainsKey(bossInfo.SpawnRound))
+                {
+                    BossAPI.roundsSpawn.Add(bossInfo.SpawnRound, bossInfo);
+                }
+            }
+
+            if (BossAPI.roundsSpawn.Count == 0)
+            {
+                MelonLogger.Warning("RoundSpawn dictionary is empty!");
+                return;
+            }
+
+
+            int lowestRound = BossAPI.roundsSpawn.Keys.Min();
+            BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
+
+            if (RoundBossUI.instance != null)
+                RoundBossUI.instance.Close();
+
+            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+            NearestBoss = lowestRound;
+        }
+    }
+
+
 
     //Runs on boss spawn function and create the ui
     [HarmonyPatch(typeof(Bloon), nameof(Bloon.OnSpawn))]
@@ -124,6 +216,9 @@ public class Hooks
 
                     BossUI.CreateBossBar(bossInfo);
 
+                    if (RoundBossUI.instance != null)
+                        RoundBossUI.instance.Close();
+
                     break;
                 }
             }
@@ -134,20 +229,6 @@ public class Hooks
                 {
                     boss.OnSpawn(__instance);
                 }
-            }
-
-            if (!__instance.bloonModel.HasTag("Choco") && !__instance.bloonModel.isBoss && XmasMod2025.boss != null && XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<ChocoBoss>())
-            {
-                var root = __instance.bloonModel.Duplicate();
-
-                root.maxHealth *= 2;
-
-                __instance.UpdateRootModel(root);
-                __instance.health = __instance.bloonModel.maxHealth;
-
-                MelonLogger.Msg(__instance.health);
-
-                __instance.bloonModel.AddTag("Choco");
             }
         }
     }
@@ -181,12 +262,31 @@ public class Hooks
             {
                 if (__instance.bloonModel.IsModdedBoss())
                 {
+                    bossInfo.Boss = __instance;
+
                     if (BossUI.instance != null)
                     {
                         BossUI.instance.Close();
                     }
 
-                    XmasMod2025.boss = null;
+                    if (BossAPI.roundsSpawn.Count > 0)
+                    {
+                        int lowestRound = BossAPI.roundsSpawn.Keys.Min();
+
+                        if (RoundBossUI.instance != null)
+                            RoundBossUI.instance.Close();
+
+                        BossAPI.roundsSpawn.Remove(lowestRound);
+
+                        if (BossAPI.roundsSpawn.Count > 0)
+                        {
+                            int nextLowest = BossAPI.roundsSpawn.Keys.Min();
+
+                            BossInfo nextBoss = BossAPI.roundsSpawn[nextLowest];
+                            RoundBossUI.CreateRoundsUI(nextBoss);
+                            NearestBoss = nextLowest;
+                        }
+                    }
 
                     break;
                 }
@@ -215,10 +315,28 @@ public class Hooks
                             {
                                 BossUI.instance.Close();
                             }
+
+                            diedTo = BossInfo;
                             break;
                         }
                     }
                 }
+            }
+        }
+    }
+
+    //Continue
+    [HarmonyPatch(typeof(InGame), nameof(InGame.Continue))]
+    public class HandleContinue
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix(Bloon __instance)
+        {
+            if (diedTo != null)
+            {
+                InGame.instance.SpawnBloons(diedTo.BossToSpawn, 1, 0);
+                diedTo = null;
             }
         }
     }
@@ -372,6 +490,46 @@ public static class Ext
 }
 
 [RegisterTypeInIl2Cpp(false)]
+public class RoundBossUI : MonoBehaviour
+{
+    public static RoundBossUI? instance;
+    public static ModHelperText roundText;
+    public void Close()
+    {
+        if (gameObject)
+        {
+            gameObject.Destroy();
+        }
+    }
+
+    public static void CreateRoundsUI(BossAPI.BossInfo bossInfo)
+    {
+        if (InGame.instance != null)
+        {
+            RectTransform rect = InGame.instance.uiRect;
+            var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1125, 1000, 200), AssetHelper.GetSprite("ChristmasPanel").ToString());
+            var panelInside = panel.AddImage(new Info("PanelInside_", 0, 0, 950, 150), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
+            roundText = panelInside.AddText(new Info("Text_", 100, 0, 800, 125), "Boss Appears In: " + bossInfo.SpawnRound + " Rounds");
+            roundText.EnableAutoSizing();
+
+            var leftBg = panel.AddImage(new Info("LeftBackground", -400, 0f, 300, 300), ModContent.GetTextureGUID<XmasMod2025>("IconHolder"));
+            var icon = leftBg.AddImage(new Info("leftIcon", 0, 0f, 200, 200), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossIcon));
+            RoundsUntilNextBoss = bossInfo.SpawnRound;
+
+            instance = panel.AddComponent<RoundBossUI>();
+        }
+    }
+
+    public static void UpdateRoundsUI()
+    {
+        if (roundText != null)
+        {
+            roundText.SetText("Boss Appears In: " + RoundsUntilNextBoss + " Rounds");
+        }
+    }
+}
+
+[RegisterTypeInIl2Cpp(false)]
 public class BossUI : MonoBehaviour
 {
     public static BossUI? instance;
@@ -402,7 +560,7 @@ public class BossUI : MonoBehaviour
             }
             bossPanel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1150, 1250, 100), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.HealthBarBackground));
             instance = bossPanel.AddComponent<BossUI>();
-            bossLeftBackground = bossPanel.AddImage(new Info("LeftBackground", -725, 0f, 250, 250), VanillaSprites.BossTiersIconSmall);
+            bossLeftBackground = bossPanel.AddImage(new Info("LeftBackground", -725, 0f, 250, 250), ModContent.GetTextureGUID<XmasMod2025>("IconHolder"));
             bossStars = bossPanel.AddImage(new Info("stars", -400, 100, 400, 80), ModContent.GetTextureGUID<XmasMod2025>($"Tier{bossInfo.StarsCount}Boss"));
             bossHealth = bossPanel.AddText(new Info("HealthText_", 450, 80, 500, 250), bossInfo.Boss.health + "/" + bossInfo.Boss.bloonModel.maxHealth, 50);
             bossIcon = bossLeftBackground.AddImage(new Info("leftIcon", 0, 0f, 250, 250), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossIcon));
