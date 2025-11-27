@@ -48,6 +48,8 @@ using System.Text.Json;
 using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons;
+using XmasMod2025.Bloons.Moabs;
+using XmasMod2025.BossAPI;
 using XmasMod2025.Bosses;
 using XmasMod2025.GiftShop.BuffsItems;
 using XmasMod2025.Towers;
@@ -60,7 +62,6 @@ using static XmasMod2025.UI.Gift;
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
 
 namespace XmasMod2025;
-
 public class XmasMod2025 : BloonsTD6Mod
 {
     public static Assembly ModAssembly => Assembly.GetExecutingAssembly();
@@ -544,9 +545,26 @@ public class TimeTriggerPacth
                 XmasMod2025.boss.trackSpeedMultiplier += 1.2f;
             }
         }
+
+        if (__instance.timeTriggerModel.name.Contains("SpawnsBloonCoal"))
+        {
+            System.Random rnd = new System.Random();
+
+            switch(rnd.Next(3))
+            {
+                case 0:
+                    InGame.instance.SpawnBloons(ModContent.BloonID<IceMoab>(), 1, 0); // Swicth To ZOMG when added
+                    break;
+                case 1:
+                    InGame.instance.SpawnBloons(ModContent.BloonID<ChocoMoab>(), 1, 0); // Swicth To ZOMG when added
+                    break;
+                case 2:
+                    InGame.instance.SpawnBloons(ModContent.BloonID<SnowMoab>(), 1, 0); // Swicth To ZOMG when added
+                    break;
+            }
+        }
     }
 }
-
 
 [HarmonyLib.HarmonyPatch(typeof(Bloon), nameof(Bloon.OnDestroy))]
 public class Bloon_Destroy

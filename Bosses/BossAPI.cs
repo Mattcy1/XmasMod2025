@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using XmasMod2025.Assets;
+using XmasMod2025.Bosses;
 using XmasMod2025.UI;
 using static XmasMod2025.BossAPI.BossAPI;
 using Info = BTD_Mod_Helper.Api.Components.Info;
@@ -62,6 +63,8 @@ public class BossAPI
     public static int RoundsUntilNextBoss = 0;
 
     public static int NearestBoss = 0;
+
+    public static int elaspedRound = 0;
 
     public static BossInfo diedTo;
 }
@@ -154,8 +157,10 @@ public class Hooks
             if (RoundBossUI.instance != null)
                 RoundBossUI.instance.Close();
 
+            elaspedRound = __instance.bridge.GetCurrentRound();
+
             RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
-            NearestBoss = lowestRound;
+            NearestBoss = lowestRound - elaspedRound;
         }
     }
 
@@ -188,8 +193,10 @@ public class Hooks
             if (RoundBossUI.instance != null)
                 RoundBossUI.instance.Close();
 
+            elaspedRound = __instance.bridge.GetCurrentRound();
+
             RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
-            NearestBoss = lowestRound;
+            NearestBoss = lowestRound - elaspedRound;
         }
     }
 
@@ -348,6 +355,10 @@ public class Hooks
         [HarmonyPostfix]
         public static void Postfix(HealthPercentTrigger __instance)
         {
+            if (__instance.modl.actionIds.Contains("ModdedSkullModdedBossCoal Boss"))
+            {
+                InGame.instance.SpawnBloons(ModContent.BloonID<CoalTotem>(), 1, 0);
+            }
 
             if (BossAPI.skullUIs.Count > 0 && __instance.bloon.bloonModel.IsModdedBoss() && __instance.modl.actionIds.Contains("ModdedSkull" + __instance.bloon.bloonModel.GetBossID()))
             {
@@ -507,7 +518,8 @@ public class RoundBossUI : MonoBehaviour
         if (InGame.instance != null)
         {
             RectTransform rect = InGame.instance.uiRect;
-            var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1125, 1000, 200), AssetHelper.GetSprite("ChristmasPanel").ToString());
+            var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1125, 0, 0), VanillaSprites.MainBGPanelBlue);
+            var fakePanel = panel.AddImage(new Info("PanelInside_", 0, 0, 1000, 200), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
             var panelInside = panel.AddImage(new Info("PanelInside_", 0, 0, 950, 150), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
             roundText = panelInside.AddText(new Info("Text_", 100, 0, 800, 125), "Boss Appears In: " + bossInfo.SpawnRound + " Rounds");
             roundText.EnableAutoSizing();
