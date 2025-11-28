@@ -2,8 +2,10 @@
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
+using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation;
 using Il2CppAssets.Scripts.Unity.Achievements.List;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame.RightMenu;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.StoreMenu;
 using UnityEngine;
 
@@ -20,22 +22,22 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
     private GameObject ShopButton { get; set; }
 
     #region Unlock Tower Patches
-    [HarmonyPatch(typeof(TowerPurchaseButton), nameof(TowerPurchaseButton.Awake))]
+    [HarmonyPatch(typeof(ShopMenu), nameof(ShopMenu.CreateTowerButton))]
     private static class ShopButton_Start
     {
-        public static void Postfix(TowerPurchaseButton __instance)
+        public static void Postfix(TowerModel model, ITowerPurchaseButton __result)
         {
-            if (__instance.towerModel.GetModTower() is ChristmasTower cTower && cTower.UnlockRound != 0)
+            if (model.GetModTower() is ChristmasTower cTower && cTower.UnlockRound != 0)
             {
-                cTower.ShopButton = __instance.gameObject;
-                __instance.gameObject.SetActive(false);
+                cTower.ShopButton = __result.GameObject;
+                __result.GameObject.SetActive(false);
                 if (ButtonsToUnlock.TryGetValue(cTower.UnlockRound, out var buttons))
                 {
-                    buttons.Add(__instance.gameObject);
+                    buttons.Add(__result.GameObject);
                 }
                 else
                 {
-                    ButtonsToUnlock.Add(cTower.UnlockRound, [__instance.gameObject]);
+                    ButtonsToUnlock.Add(cTower.UnlockRound, [__result.GameObject]);
                 }
             }
         }

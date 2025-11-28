@@ -50,12 +50,14 @@ namespace XmasMod2025.Towers.Upgrades
             public override string Description => "The elf monkey wear special glasses to see camo, and increased range.";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
-                foreach(var attackModel in towerModel.GetAttackModels())
-                {
-                    attackModel.range += 10;
-                }
+                towerModel.IncreaseRange(10);
 
-                towerModel.range += 10;
+                if (towerModel.tiers[1] >= 2)
+                {
+                    towerModel.GetBehavior<RateSupportModel>("RateSupportModel_BuildersSpirit").customRadius += 12f;
+                    towerModel.GetBehavior<RangeSupportModel>("RangeSupportModel_BuildersSpirit").customRadius += 12f;
+                }
+                
                 towerModel.GetDescendants<FilterInvisibleModel>().ForEach(model => model.isActive = false);
             }
         }
