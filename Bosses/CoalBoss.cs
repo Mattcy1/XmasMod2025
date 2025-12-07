@@ -4,6 +4,7 @@ using BTD_Mod_Helper.Api.Bloons;
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
+using Il2CppAssets.Scripts.Models.Bloons.Behaviors.Actions;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Unity;
@@ -33,11 +34,19 @@ namespace XmasMod2025.Bosses
         public override string Description => "";
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            bloonModel.maxHealth = 3500;
+            bloonModel.maxHealth = 550000;
             bloonModel.RemoveAllChildren();
             bloonModel.speed /= 2;
 
             //"ModdedSkullModdedBossCoal Boss"
+
+            ReflectProjectilesInRadiusActionModel shield = Game.instance.model.GetBloon("Vortex1").GetBehavior<ReflectProjectilesInRadiusActionModel>().Duplicate();
+            CreateEffectActionModel effect = Game.instance.model.GetBloon("Vortex1").GetBehavior<CreateEffectActionModel>().Duplicate();
+            shield.actionId = "ModdedSkullModdedBossCoal Boss";
+            effect.actionId = shield.actionId;
+
+            bloonModel.AddBehavior(effect);
+            bloonModel.AddBehavior(shield);
         }
         public override void OnSpawn(Bloon bloon)
         {

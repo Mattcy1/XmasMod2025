@@ -8,6 +8,7 @@ using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
 using Il2Cpp;
 using Il2CppAssets.Scripts.Data;
+using Il2CppAssets.Scripts.Data.Legends;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Rounds;
 using Il2CppAssets.Scripts.Simulation;
@@ -19,6 +20,7 @@ using Il2CppAssets.Scripts.Unity.Scenes;
 using Il2CppAssets.Scripts.Unity.UI_New.Achievements;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.BloonMenu;
+using Il2CppAssets.Scripts.Unity.UI_New.Legends;
 using Il2CppTMPro;
 using MelonLoader;
 using System.Collections;
@@ -118,7 +120,10 @@ public class Hooks
 
                 BossAPI.RoundsUntilNextBoss = nearestBoss - r - 1;
 
-                RoundBossUI.UpdateRoundsUI();
+                if(!__instance.bridge.IsSandboxMode())
+                {
+                    RoundBossUI.UpdateRoundsUI();
+                }
 
                 if (r == bossInfo.SpawnRound - 1)
                 {
@@ -150,17 +155,19 @@ public class Hooks
                 return;
             }
 
+            if (!__instance.bridge.IsSandboxMode())
+            {
+                int lowestRound = BossAPI.roundsSpawn.Keys.Min();
+                BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
 
-            int lowestRound = BossAPI.roundsSpawn.Keys.Min();
-            BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
+                if (RoundBossUI.instance != null)
+                    RoundBossUI.instance.Close();
 
-            if (RoundBossUI.instance != null)
-                RoundBossUI.instance.Close();
+                elaspedRound = __instance.bridge.GetCurrentRound();
 
-            elaspedRound = __instance.bridge.GetCurrentRound();
-
-            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
-            NearestBoss = lowestRound - elaspedRound;
+                RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+                NearestBoss = lowestRound - elaspedRound;
+            }
         }
     }
 
@@ -186,17 +193,19 @@ public class Hooks
                 return;
             }
 
+            if(!__instance.bridge.IsSandboxMode())
+            {
+                int lowestRound = BossAPI.roundsSpawn.Keys.Min();
+                BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
 
-            int lowestRound = BossAPI.roundsSpawn.Keys.Min();
-            BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
+                if (RoundBossUI.instance != null)
+                    RoundBossUI.instance.Close();
 
-            if (RoundBossUI.instance != null)
-                RoundBossUI.instance.Close();
+                elaspedRound = __instance.bridge.GetCurrentRound();
 
-            elaspedRound = __instance.bridge.GetCurrentRound();
-
-            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
-            NearestBoss = lowestRound - elaspedRound;
+                RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+                NearestBoss = lowestRound - elaspedRound;
+            }
         }
     }
 
@@ -237,6 +246,16 @@ public class Hooks
                     boss.OnSpawn(__instance);
                 }
             }
+
+            if (!__instance.bloonModel.HasTag("Choco") && !__instance.bloonModel.isBoss && XmasMod2025.boss != null && (XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<ChocoBoss>() || XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<GrinchBoss>()))
+            {
+                var root = __instance.bloonModel.Duplicate();
+
+                root.maxHealth *= 2;
+
+                __instance.UpdateRootModel(root);
+                __instance.health = __instance.bloonModel.maxHealth;
+            }
         }
     }
 
@@ -249,7 +268,7 @@ public class Hooks
         {
             foreach (var bloon in InGame.Bridge.Model.bloons)
             {
-                if (bloon.HasTag("Sandbox") && !sortedBloons.Contains(bloon))
+                if (bloon.HasTag("Sandbox") && !sortedBloons.Contains(bloon) && bloon.legendsType == LegendsType.None)
                 {
                     sortedBloons.Add(bloon);
                 }
@@ -355,7 +374,7 @@ public class Hooks
         [HarmonyPostfix]
         public static void Postfix(HealthPercentTrigger __instance)
         {
-            if (__instance.modl.actionIds.Contains("ModdedSkullModdedBossCoal Boss"))
+            if (__instance.modl.actionIds.Contains("ModdedSkullModdedBossCoal Boss") || __instance.modl.actionIds.Contains("ModdedSkullModdedBossThe Grinch"))
             {
                 InGame.instance.SpawnBloons(ModContent.BloonID<CoalTotem>(), 1, 0);
             }

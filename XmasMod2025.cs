@@ -538,19 +538,16 @@ public class TimeTriggerPacth
             InGame.instance.AddCash(-(InGame.instance.GetCash() * 0.05f));
         }
 
-        if(XmasMod2025.boss != null)
+        if (__instance.timeTriggerModel.name.Contains("GrinchHeal"))
         {
-            if (__instance.timeTriggerModel.name.Contains("ModdedSkull" + XmasMod2025.boss.bloonModel.baseId))
-            {
-                XmasMod2025.boss.trackSpeedMultiplier += 1.2f;
-            }
+            XmasMod2025.boss.health += (int)(XmasMod2025.boss.health * 0.05f);
         }
 
-        if (__instance.timeTriggerModel.name.Contains("SpawnsBloonCoal"))
+        if (__instance.bloon.bloonModel.baseId == ModContent.BloonID<CoalTotem>()) 
         {
             System.Random rnd = new System.Random();
 
-            switch(rnd.Next(3))
+            switch (rnd.Next(3))
             {
                 case 0:
                     InGame.instance.SpawnBloons(ModContent.BloonID<IceMoab>(), 1, 0); // Swicth To ZOMG when added

@@ -34,7 +34,7 @@ namespace XmasMod2025.Bloons.Moabs
 
             StunTowersInRadiusActionModel stunTowersInRadiusActionModel = new("StunTowersInRadiusActionModel", "freeze", 50, 1, 1, CreatePrefabReference<IceCubeOverlay>(), true);
 
-            HealthPercentTriggerModel healthPercentTriggerModel = new("HealthPercentTriggerModel", false, new([0.8f, 0.6f, 0.4f, 0.2f, 0]), new(["freeze"]), false);
+            HealthPercentTriggerModel healthPercentTriggerModel = new("HealthPercentTriggerModel", false, new([0.1f]), new(["freeze"]), false);
 
             bloonModel.AddBehavior(healthPercentTriggerModel);
             bloonModel.AddBehavior(stunTowersInRadiusActionModel);

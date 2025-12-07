@@ -198,4 +198,18 @@ namespace XmasMod2025.Towers
             ((Component)((Il2CppArrayBase<Renderer>)node.genericRenderers)[2]).GetComponent<ParticleSystem>().startSpeed *= 0.2f;
         }
     }
+
+    public class GiftEffectButBig : ModDisplay
+    {
+        public override string BaseDisplay => "6d84b13b7622d2744b8e8369565bc058";
+        public override float Scale => 100;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[0], ModContent.GetTexture<XmasMod2025>("blank"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[3], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[2], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[1], ModContent.GetTexture<XmasMod2025>("blank"));
+            ((Component)((Il2CppArrayBase<Renderer>)node.genericRenderers)[2]).GetComponent<ParticleSystem>().startSpeed *= 0.2f;
+        }
+    }
 }

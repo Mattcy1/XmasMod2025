@@ -45,7 +45,7 @@ public abstract class ModBoss : ModBloon
             float[] skullPercentageValues = Hooks.CalculateHealthTriggerPercentages(SkullCount);
             HealthPercentTriggerModel skullTriggerModel = Game.instance.model.GetBloon("Bloonarius1").GetBehavior<HealthPercentTriggerModel>().Duplicate();
             skullTriggerModel.percentageValues = skullPercentageValues;
-            skullTriggerModel.actionIds = new string[] { "ModdedSkull" + bossBloonModel.GetBossID()};
+            skullTriggerModel.actionIds = new string[] { "ModdedSkull" + bossBloonModel.GetBossID() };
             bossBloonModel.AddBehavior(skullTriggerModel);
         }
 
