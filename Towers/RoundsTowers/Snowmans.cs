@@ -1,0 +1,220 @@
+﻿using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
+using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
+using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
+using Il2CppAssets.Scripts.Models.TowerSets;
+using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
+using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppNinjaKiwi.Common.ResourceUtils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace XmasMod2025.Towers.RoundsTowers
+{
+    internal class Snowmans 
+    {
+        public class R20 : ChristmasTower
+        {
+            public override string BaseTower => TowerType.BananaFarm;
+            public override int Cost => 35;
+            protected override int Order => 1;
+            public override int ShopTowerCount => 3;
+            public override string DisplayName => "Beginner Snowman";
+            public override string Description => "Slowy, generates gifts.";
+            public override int UnlockRound => 24;
+            public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
+            {
+                return towerSet.First(model => model.towerId == Game.instance.model.GetTowerFromId(ModContent.TowerID<XmasTree>()).baseId).towerIndex + 1;
+            }
+            public override void ModifyBaseTowerModel(TowerModel towerModel)
+            {
+                towerModel.dontDisplayUpgrades = true;
+
+                var proj = towerModel.GetWeapon().projectile;
+
+                proj.GetBehavior<CashModel>().maximum = 0;
+                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+
+                proj.RemoveBehavior<AgeModel>();
+                proj.RemoveBehavior<CreateEffectOnExpireModel>();
+
+                proj.ApplyDisplay<Gift1>();
+                proj.AddBehavior(new RandomDisplayModel("RandomDisplayModel_", new Il2CppReferenceArray<PrefabReference>([new PrefabReference(GetDisplayGUID<Gift1>()), new PrefabReference(GetDisplayGUID<Gift2>()), new PrefabReference(GetDisplayGUID<Gift3>()), new PrefabReference(GetDisplayGUID<Gift4>()), new PrefabReference(GetDisplayGUID<Gift5>()), new PrefabReference(GetDisplayGUID<Gift6>())]), true));
+
+                proj.id = "SnowmanT1";
+
+                towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
+            }
+        }
+
+        public class R40 : ChristmasTower
+        {
+            public override string BaseTower => TowerType.BananaFarm;
+            public override int Cost => 70;
+            public override int ShopTowerCount => 3;
+            protected override int Order => 1;
+            public override string DisplayName => "Novice Snowman";
+            public override string Description => "Generates gifts a bit faster then the old tier.";
+            public override int UnlockRound => 44;
+            public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
+            {
+                return towerSet.First(model => model.towerId == Game.instance.model.GetTowerFromId(ModContent.TowerID<XmasTree>()).baseId).towerIndex + 1;
+            }
+            public override void ModifyBaseTowerModel(TowerModel towerModel)
+            {
+                towerModel.dontDisplayUpgrades = true;
+
+                var proj = towerModel.GetWeapon().projectile;
+
+                proj.GetBehavior<CashModel>().maximum = 0;
+                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+
+                proj.RemoveBehavior<AgeModel>();
+                proj.RemoveBehavior<CreateEffectOnExpireModel>();
+
+                proj.ApplyDisplay<Gift1>();
+                proj.AddBehavior(new RandomDisplayModel("RandomDisplayModel_", new Il2CppReferenceArray<PrefabReference>([new PrefabReference(GetDisplayGUID<Gift1>()), new PrefabReference(GetDisplayGUID<Gift2>()), new PrefabReference(GetDisplayGUID<Gift3>()), new PrefabReference(GetDisplayGUID<Gift4>()), new PrefabReference(GetDisplayGUID<Gift5>()), new PrefabReference(GetDisplayGUID<Gift6>())]), true));
+
+                proj.id = "SnowmanT2";
+
+                towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
+            }
+        }
+
+        public class R60 : ChristmasTower
+        {
+            public override string BaseTower => TowerType.BananaFarm;
+            public override int Cost => 120;
+            protected override int Order => 1;
+            public override string DisplayName => "Pro Snowman";
+            public override int ShopTowerCount => 3;
+            public override string Description => "Generates gifts at a medium rate.";
+            public override int UnlockRound => 64;
+            public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
+            {
+                return towerSet.First(model => model.towerId == Game.instance.model.GetTowerFromId(ModContent.TowerID<XmasTree>()).baseId).towerIndex + 1;
+            }
+            public override void ModifyBaseTowerModel(TowerModel towerModel)
+            {
+                towerModel.dontDisplayUpgrades = true;
+
+                var proj = towerModel.GetWeapon().projectile;
+
+                proj.GetBehavior<CashModel>().maximum = 0;
+                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+
+                proj.RemoveBehavior<AgeModel>();
+                proj.RemoveBehavior<CreateEffectOnExpireModel>();
+
+                proj.ApplyDisplay<Gift1>();
+                proj.AddBehavior(new RandomDisplayModel("RandomDisplayModel_", new Il2CppReferenceArray<PrefabReference>([new PrefabReference(GetDisplayGUID<Gift1>()), new PrefabReference(GetDisplayGUID<Gift2>()), new PrefabReference(GetDisplayGUID<Gift3>()), new PrefabReference(GetDisplayGUID<Gift4>()), new PrefabReference(GetDisplayGUID<Gift5>()), new PrefabReference(GetDisplayGUID<Gift6>())]), true));
+
+                proj.id = "SnowmanT3";
+
+                towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
+            }
+        }
+
+        public class R80 : ChristmasTower
+        {
+            public override string BaseTower => TowerType.BananaFarm;
+            public override int Cost => 250;
+            protected override int Order => 1;
+            public override string DisplayName => "Elite Snowman";
+            public override int ShopTowerCount => 3;
+            public override string Description => "Generates gifts at a max speeds for snowmans.";
+            public override int UnlockRound => 84;
+            public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
+            {
+                return towerSet.First(model => model.towerId == Game.instance.model.GetTowerFromId(ModContent.TowerID<XmasTree>()).baseId).towerIndex + 1;
+            }
+            public override void ModifyBaseTowerModel(TowerModel towerModel)
+            {
+                towerModel.dontDisplayUpgrades = true;
+
+                var proj = towerModel.GetWeapon().projectile;
+
+                proj.GetBehavior<CashModel>().maximum = 0;
+                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+
+                proj.RemoveBehavior<AgeModel>();
+                proj.RemoveBehavior<CreateEffectOnExpireModel>();
+
+                proj.ApplyDisplay<Gift1>();
+                proj.AddBehavior(new RandomDisplayModel("RandomDisplayModel_", new Il2CppReferenceArray<PrefabReference>([new PrefabReference(GetDisplayGUID<Gift1>()), new PrefabReference(GetDisplayGUID<Gift2>()), new PrefabReference(GetDisplayGUID<Gift3>()), new PrefabReference(GetDisplayGUID<Gift4>()), new PrefabReference(GetDisplayGUID<Gift5>()), new PrefabReference(GetDisplayGUID<Gift6>())]), true));
+
+                proj.id = "SnowmanT4";
+
+                towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Projectile), nameof(Projectile.Pickup))]
+    public class HandlePickup
+    {
+        [HarmonyPostfix]
+
+        public static void Prefix(Projectile __instance)
+        {
+            if (__instance.projectileModel.id == "SnowmanT1")
+            {
+                var random = new System.Random().Next(1, 2);
+
+                if (InGame.instance != null || InGame.instance.bridge != null)
+                {
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+                }
+
+                XmasMod2025.Gifts += random;
+            }
+
+            if (__instance.projectileModel.id == "SnowmanT2")
+            {
+                var random = new System.Random().Next(2, 4);
+
+                if (InGame.instance != null || InGame.instance.bridge != null)
+                {
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+                }
+
+                XmasMod2025.Gifts += random;
+            }
+
+            if (__instance.projectileModel.id == "SnowmanT3")
+            {
+                var random = new System.Random().Next(4, 5);
+
+                if (InGame.instance != null || InGame.instance.bridge != null)
+                {
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+                }
+
+                XmasMod2025.Gifts += random;
+            }
+
+            if (__instance.projectileModel.id == "SnowmanT4")
+            {
+                var random = new System.Random().Next(6, 8);
+
+                if (InGame.instance != null || InGame.instance.bridge != null)
+                {
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+                }
+
+                XmasMod2025.Gifts += random;
+            }
+        }
+    }
+}
