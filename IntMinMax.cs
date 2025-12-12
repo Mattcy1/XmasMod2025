@@ -39,7 +39,6 @@ public struct IntMinMax : IEquatable<IntMinMax>
     public static IntMinMax operator -(IntMinMax a, (int, int) b) => new(a.Min - b.Item1, a.Max - b.Item2);
     public static IntMinMax operator *(IntMinMax a, (int, int) b) => new(a.Min * b.Item1, a.Max * b.Item2);
     public static IntMinMax operator /(IntMinMax a, (int, int) b) => new(a.Min / b.Item1, a.Max / b.Item2);
-    
     public bool Equals(IntMinMax other)
     {
         return Min == other.Min && Max == other.Max;

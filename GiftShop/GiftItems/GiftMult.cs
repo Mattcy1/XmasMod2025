@@ -3,20 +3,20 @@ using XmasMod2025.UI;
 
 namespace XmasMod2025.GiftShop.GiftItems;
 
-public class PresentBloonChance : GiftShopItem
+public class GiftMultiplier : GiftShopItem
 {
     public override ShopType Shop => ShopType.Gift;
     public override double BaseCost => 0;
-    public override string Description => "Increase the chances of present bloons spawning.";
+    public override string Description => "Increase the total Multiplier of gifts.";
     public override void Buy(InGame game)
     {
-        XmasMod2025.PresentBloonChance += 5;
+        XmasMod2025.GiftMult += 0.2;
     }
 
     public override void Reset()
     {
         base.Reset();
-        XmasMod2025.PresentBloonChance = 0;
+        XmasMod2025.GiftMult = 1;
     }
 
     public override int MaxUpgrades => 5;
@@ -25,11 +25,11 @@ public class PresentBloonChance : GiftShopItem
     {
         return upgrade switch
         {
-            1 => 500,
-            2 => 750,
-            3 => 1500,
-            4 => 3500,
-            5 => 7000,
+            1 => 750,
+            2 => 1500,
+            3 => 3500,
+            4 => 7000,
+            5 => 14000,
             _ => base.GetCostForUpgradeNumber(upgrade)
         };
     }

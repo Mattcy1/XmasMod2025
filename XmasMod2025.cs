@@ -1,5 +1,6 @@
 ﻿using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Helpers;
 using BTD_Mod_Helper.Api.Hooks;
 using BTD_Mod_Helper.Api.Hooks.BloonHooks;
@@ -40,6 +41,7 @@ using MelonLoader.Utils;
 using Newtonsoft.Json.Linq;
 using Octokit;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -48,10 +50,14 @@ using System.Text.Json;
 using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons;
+using XmasMod2025.Bloons.Bfbs;
 using XmasMod2025.Bloons.Moabs;
+using XmasMod2025.Bloons.Zomgs;
 using XmasMod2025.BossAPI;
 using XmasMod2025.Bosses;
+using XmasMod2025.GiftShop;
 using XmasMod2025.GiftShop.BuffsItems;
+using XmasMod2025.GiftShop.GiftItems;
 using XmasMod2025.Towers;
 using XmasMod2025.Towers.SubTowers;
 using XmasMod2025.UI;
@@ -91,9 +97,11 @@ public class XmasMod2025 : BloonsTD6Mod
     public static IntMinMax TreeDropRates = new(3, 5);
     public static int FestiveSpritActiveRounds = 0;
     public static bool FestiveSpiritActive = false;
+    public static double GiftMult = 1;
     public static Tower FestiveSpiritTower = null;
     public static List<TowerModel> GiftOfGivingTowersIds = new List<TowerModel>();
     public static Bloon boss = null;
+    public static int UpgradeCount = 0;
     public static List<MapEditorProp> MapEditorProps => GameData.Instance.mapEditorData.mapEditorProps.ToList();
 
 
@@ -179,7 +187,7 @@ public class XmasMod2025 : BloonsTD6Mod
         get => gifts;
         set
         {
-            double increase = value - gifts;
+            double increase = value - gifts * GiftMult;
             gifts = value;
 
             OnGiftsUpdated?.Invoke(value);
@@ -220,6 +228,27 @@ public class XmasMod2025 : BloonsTD6Mod
         {
             XmasMod2025.SetCurrency(CurrencyType.Gift, 25);
             XmasMod2025.totalGifts = 25;
+        }
+
+        foreach(var item in ModContent.GetContent<GiftShopItem>())
+        {
+            item.Reset();
+        }
+    }
+
+    public override void OnNewGameModel(GameModel result)
+    {
+        foreach (var item in ModContent.GetContent<GiftShopItem>())
+        {
+            item.Reset();
+        }
+    }
+
+    public override void OnMainMenu()
+    {
+        foreach (var item in ModContent.GetContent<GiftShopItem>())
+        {
+            item.Reset();
         }
     }
 
@@ -312,6 +341,18 @@ public class XmasMod2025 : BloonsTD6Mod
         }
     }*/
 
+    public static IEnumerator HandleGPS()
+    {
+        while (UpgradeCount >= 1)
+        {
+            double gps = totalGifts * (UpgradeCount / 1000f);
+
+            AddCurrency(CurrencyType.Gift, gps);
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
     [HookTarget(typeof(BloonDamageHook), HookTargetAttribute.EHookType.Postfix)]
     [HookPriority(HookPriorityAttribute.Low)]
     public static bool BloonDamagePostfix(Bloon @this, ref float totalAmount, Projectile projectile, ref bool distributeToChildren, ref bool overrideDistributeBlocker, ref bool createEffect, Tower tower, BloonProperties immuneBloonProperties, BloonProperties originalImmuneBloonProperties, ref bool canDestroyProjectile, ref bool ignoreNonTargetable, ref bool blockSpawnChildren, HookNullable<int> powerActivatedByPlayerId)
@@ -374,26 +415,13 @@ public class CreateMap
             unlockDifficulty = MapDifficulty.Beginner
         };
 
-        var map = new MapDetails
-        {
-            id = "Christmas Disaster",
-            coopMapDivisionType = CoopDivision.FREE_FOR_ALL,
-            difficulty = MapDifficulty.Intermediate,
-            mapSprite = ModContent.GetSpriteReference<XmasMod2025>("XmasMapIcon"),
-            hasWater = true,
-            theme = MapTheme.Snow,
-            unlockDifficulty = MapDifficulty.Beginner
-        };
-
         var list = GameData.Instance.mapSet.Maps.items.ToList();
         list.Insert(0, customMap);
-        list.Insert(1, map);
         GameData.Instance.mapSet.Maps.items = list.ToArray();
     }
 }
 
 //Credit goes to Timotheeee: https://github.com/Timotheeee/btd6_mods/blob/master/custom_maps_v2/Main.cs#L406
-
 [HarmonyLib.HarmonyPatch(typeof(MapLoader), nameof(MapLoader.LoadScene))]
 public class LoadMap
 {
@@ -405,50 +433,8 @@ public class LoadMap
         {
             __instance.currentMapName = "Cubism";
         }
-        else if (XmasMod2025.lastMap == "Christmas Disaster")
-        {
-            __instance.currentMapName = "Tutorial";
-        }
 
         return true;
-    }
-}
-
-// Credits: Timotheeee, https://github.com/Timotheeee/btd6_mods/blob/master/custom_maps_v2/Main.cs#L427
-[HarmonyPatch(typeof(UnityToSimulation), nameof(UnityToSimulation.InitMap))]
-public class UnityToSimulation_InitMap
-{
-    public static readonly string ExportPath =
-        System.IO.Path.Combine(MelonEnvironment.UserDataDirectory, "Exported Maps");
-    public static void Prefix(UnityToSimulation __instance, ref MapModel map)
-    {
-        if (XmasMod2025.lastMap == "Christmas Disaster")
-        {
-            /*foreach (var ob in UnityEngine.Object.FindObjectsOfType<GameObject>())
-            {
-                if (ob.name.Contains("Festive") || ob.name.Contains("Rocket") || ob.name.Contains("Firework") || ob.name.Contains("Box") || ob.name.Contains("Candy") || ob.name.Contains("Gift") || ob.name.Contains("Snow") || ob.name.Contains("Ripples") || ob.name.Contains("Grass") || ob.name.Contains("Christmas") || ob.name.Contains("WhiteFlower") || ob.name.Contains("Tree") || ob.name.Contains("Rock") || ob.name.Contains("Shadow") || ob.name.Contains("WaterSplashes"))// || ob.name.Contains("Body")   || ob.name.Contains("Ouch") || ob.name.Contains("Statue")|| ob.name.Contains("Chute")  || ob.name.Contains("Jump") || ob.name.Contains("Timer") || ob.name.Contains("Wheel") || ob.name.Contains("Body") || ob.name.Contains("Axle") || ob.name.Contains("Leg") || ob.name.Contains("Clock") ||
-                    if (ob.name != "TutorialTerrain")
-                        ob.transform.position = new Vector3(1000, 1000, 1000);
-            }
-            
-            UnityEngine.Object.FindObjectsOfType<MeshRenderer>().First(mr => mr.name.EndsWith("Terrain")).material.mainTexture = ModContent.GetTexture<XmasMod2025>("ChristmasDisasterMap");*/
-            var props = XmasMod2025.GetEmbeddedObjectFromJson<JArray>("XmasMapProps.json").ToObject<List<MapEditorPropData>>();
-            
-            XmasMod2025.PlacePropsFromEditorData(props);
-            
-            var map2 = XmasMod2025.GetEmbeddedModelFromJson<MapModel>("XmasMap.json");
-
-            foreach (var point in map2.paths[0].points)
-            {
-                point.id = map2.paths[0].points.IndexOf(point).ToString();
-            }
-            
-            map.areas = map2.areas;
-            map.paths = map2.paths;
-            map.name = map2.name;
-            map2.mapName = map2.mapName;
-            map.spawner = map2.spawner;
-        }
     }
 }
 
@@ -550,7 +536,7 @@ public class TimeTriggerPacth
             switch (rnd.Next(3))
             {
                 case 0:
-                    InGame.instance.SpawnBloons(ModContent.BloonID<IceMoab>(), 1, 0); // Swicth To ZOMG when added
+                    InGame.instance.SpawnBloons(ModContent.BloonID<IceZomg>(), 1, 0); // Swicth To ZOMG when added
                     break;
                 case 1:
                     InGame.instance.SpawnBloons(ModContent.BloonID<ChocoMoab>(), 1, 0); // Swicth To ZOMG when added
@@ -563,13 +549,38 @@ public class TimeTriggerPacth
     }
 }
 
+[HarmonyLib.HarmonyPatch(typeof(Bloon), nameof(Bloon.OnSpawn))]
+public class Bloon_Spawn
+{
+    [HarmonyLib.HarmonyPostfix]
+    public static void Postfix(Bloon __instance)
+    {
+        int chance = 100 / (int)XmasMod2025.PresentBloonChance;
+
+        var random = new System.Random().Next(1, chance + 1);
+
+        if (random == chance)
+        {
+            var moab = new System.Random().Next(1, 100);
+            if(moab == 1)
+            {
+                InGame.instance.SpawnBloons(ModContent.BloonID<GiftMoab>(), 1, 0);
+            }
+            else
+            {
+                InGame.instance.SpawnBloons(ModContent.BloonID<GiftBloon>(), 1, 0);
+            }
+        }
+    }
+}
+
 [HarmonyLib.HarmonyPatch(typeof(Bloon), nameof(Bloon.OnDestroy))]
 public class Bloon_Destroy
 {
     [HarmonyLib.HarmonyPostfix]
     public static void Postfix(Bloon __instance)
     {
-        if(__instance.bloonModel.baseId == ModContent.BloonID<GiftBloon>())
+        if (__instance.bloonModel.baseId == ModContent.BloonID<GiftBloon>())
         {
             var random = new System.Random().Next(1, 25);
 
@@ -580,7 +591,7 @@ public class Bloon_Destroy
 
             XmasMod2025.Gifts += random;
 
-            var bloons = Game.instance.model.bloons.ToList().FindAll(bloon => !bloon.isMoab && !bloon.isBoss);
+            var bloons = Game.instance.model.bloons.ToList().FindAll(bloon => !bloon.isMoab && !bloon.isBoss && !bloon.IsExclusiveToLegends);
             System.Random rand = new();
 
             var bloon = bloons[rand.Next(bloons.Count)];
@@ -588,6 +599,43 @@ public class Bloon_Destroy
 
 
             if (!bloon.baseId.Contains("Rock") && !bloon.baseId.Contains("TestBloon") && !bloon.baseId.Contains("Gold"))
+            {
+                InGame.instance.SpawnBloons(bloon.id, countRand, 10);
+            }
+        }
+
+        if (__instance.bloonModel.baseId == ModContent.BloonID<GiftMoab>())
+        {
+            var bloons = Game.instance.model.bloons.ToList().FindAll(bloon => bloon.isMoab && !bloon.isBoss);
+            System.Random rand = new();
+
+            var bloon = bloons[rand.Next(bloons.Count)];
+            var countRand = rand.Next(1, 4);
+
+            string[] unallowedIds = [];
+
+            int rnd = InGame.instance.bridge.GetCurrentRound();
+
+            if (rnd < 49)
+            {
+                unallowedIds = ["Bfb", "Zomg", "Ddt", "Bad", ModContent.BloonID<ChocoBfb>(), ModContent.BloonID<SnowBfb>(), ModContent.BloonID<IceBfb>(), ModContent.BloonID<IceZomg>()];
+            }
+            else if (rnd < 59)
+            {
+                unallowedIds = ["Zomg", "Ddt", "Bad", ModContent.BloonID<IceZomg>()];
+            }
+            else if (rnd < 69)
+            {
+                unallowedIds = ["Zomg", "Bad", ModContent.BloonID<IceZomg>()];
+            }
+            else if (rnd < 93)
+            {
+                unallowedIds = ["Bad"];
+            }
+
+            string[] BossID = ["Lych", "Phayze", "Bloonarius", "Dreadbloon", "Blastapopoulos", "Vortex", "Test"];
+
+            if (!unallowedIds.Contains(bloon.baseId) && !BossID.Contains(bloon.id))
             {
                 InGame.instance.SpawnBloons(bloon.id, countRand, 10);
             }

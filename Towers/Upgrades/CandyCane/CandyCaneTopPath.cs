@@ -166,6 +166,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         {
             SetMeshTexture(node, "CandyCaneMonkey400");
             SetMeshTexture(node, "CandyCaneMonkey400", 1);
+            node.Dump();
         }
     }
 
@@ -176,7 +177,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         {
             SetMeshTexture(node, "CandyCaneMonkey300");
             SetMeshTexture(node, "CandyCaneMonkey300", 1);
-            SetMeshTexture(node, "CandyCaneMonkey300", 2); 
+            SetMeshTexture(node, "CandyCaneMonkey300", 2);
         }
     }
     public class BoomerangProj : ModDisplay
