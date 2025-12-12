@@ -2,17 +2,24 @@
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
 using Il2Cpp;
+using Il2CppAssets.Scripts;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.TowerFilters;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
 using Il2CppAssets.Scripts.Models.TowerSets;
+using Il2CppAssets.Scripts.Simulation.Towers;
+using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppInterop.Runtime.Attributes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using System;
 using MelonLoader;
 using UnityEngine;
 
@@ -50,7 +57,7 @@ public class BuildersAtmosphere : ChristmasUpgrade<ElfMonkey>
     {
         List<TowerFilterModel> filters =
         [
-            new FilterInBaseTowerIdModel("SubTowerFilterModel_BuildersSpirit", new(["Sentry", GetTowerModel<ToyMortar.ToyMortarTower>().baseId]))
+            new FilterInBaseTowerIdModel("SubTowerFilterModel_BuildersSpirit", new(["Sentry", GetTowerModel<ToyMorter.ToyMorterTower>().baseId]))
         ];
 
         var rateSupportModel = towerModel.GetBehavior<RateSupportModel>("RateSupportModel_BuildersSpirit");
@@ -71,21 +78,34 @@ public class BuildersAtmosphere : ChristmasUpgrade<ElfMonkey>
     public override int Cost => 45;
 }
 
-public class ToyMortar : ChristmasUpgrade<ElfMonkey>
+public class ToyMorter : ChristmasUpgrade<ElfMonkey>
 {
-    public class ToyMortarTower : ModSubTower
+    public class ToyMorterTower : ModSubTower
     {
+        public override string Portrait => "ToyMorter-Portrait";
+
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
-            towerModel.GetBehavior<TowerExpireModel>().lifespan = 99999999;
-            towerModel.GetBehavior<TowerExpireModel>().rounds = 1;
-            
             towerModel.range = 40f;
             towerModel.GetAttackModel().range = 40f;
+            towerModel.GetAttackModel().ApplyDisplay<ToyMorterAttackDisplay>();
 
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-200").GetWeapon().projectile.Duplicate());
             weapon.projectile.ApplyDisplay<ToyBomb>();
+        }
+
+        public class ToyMorterTowerDisplay : ModTowerCustomDisplay<ToyMorterTower>
+        {
+            public override bool UseForTower(params int[] tiers) => true;
+
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => "ToyTurretLegs";
+        }
+        public class ToyMorterAttackDisplay : ModCustomDisplay
+        {
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => "ToyTurretBody";
         }
 
         public class ToyBomb : ModDisplay2D
@@ -106,18 +126,70 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
     
     public override void ApplyUpgrade(TowerModel towerModel)
     {
-        var toyMortarAttack = Game.instance.model.GetTowerFromId("EngineerMonkey-100").GetAttackModel(1).Duplicate();
-        var toyMortarWeapon = toyMortarAttack.weapons[0];
-        toyMortarAttack.name = "ToyMortar";
-        toyMortarWeapon.name = "ToyMortar";
-        toyMortarWeapon.projectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMortarTower>();
-        toyMortarWeapon.AddBehavior(new EmissionsPerRoundFilterModel("EmissionsPerRoundFilterModel", 2));
-        //toyMortarAttack.weapons[0].projectile.ApplyDisplay<ToyBox>(); // Display doesn't exist yet.
+        var toyMorterAttack = Game.instance.model.GetTowerFromId("EngineerMonkey-100").GetAttackModel(1).Duplicate();
+        var toyMorterWeapon = toyMorterAttack.weapons[0];
+        toyMorterAttack.name = "ToyMorter";
+        toyMorterWeapon.name = "ToyMorter";
+        toyMorterWeapon.projectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMorterTower>();
+        toyMorterWeapon.AddBehavior(new EmissionsPerRoundFilterModel("EmissionsPerRoundFilterModel", 2));
+        //toyMorterAttack.weapons[0].projectile.ApplyDisplay<ToyBox>(); // Display doesn't exist yet.
         
-        towerModel.AddBehavior(toyMortarAttack);
+        towerModel.AddBehavior(toyMorterAttack);
     }
 
     public override int Path => Middle;
     public override int Tier => 3;
     public override int Cost => 55;
+}
+
+public class ToyCart : ModUpgrade<ElfMonkey>
+{
+    public class ToyCartTower : ModSubTower
+    {
+        public override void ModifyBaseTowerModel(TowerModel towerModel)
+        {
+        }
+
+        public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
+        public override string BaseTower => TowerType.DartMonkey;
+    }
+
+    public override void ApplyUpgrade(TowerModel towerModel)
+    {
+        var newWep = towerModel.GetWeapon().Duplicate();
+        newWep.SetEmission(new EmissionAtClosestPathSegmentModel("EmissionAtClosestPathSegmentModel_", 1, 0, null));
+        newWep.AddBehavior(new TravelAlongPathModel("TravelAlongPathModel_", 30, 9999, true, false, 0));
+        newWep.projectile.name = "ToyCart_Low";
+    }
+
+    [HarmonyPatch(typeof(Projectile), nameof(Projectile.Initialise))]
+    private static class Projectile_Initialize
+    {
+        public static Dictionary<ObjectId, Tower> TowerForProjectile = new Dictionary<ObjectId, Tower>();
+        public static int ToyCartCounter = 0;
+        public static void Postfix(Projectile __instance)
+        {
+            if (__instance.projectileModel.name == "ToyCart_Low")
+            {
+                ObjectId towerId = ObjectId.FromString("ToyCartTower" + ToyCartCounter++);
+                InGame.instance.bridge.CreateTowerAt(__instance.Position.ToVector2().ToUnity(), GetTowerModel<ToyCartTower>(), towerId, false, new Action<bool>(suc =>
+                {
+                    if (suc)
+                    {
+                        TowerForProjectile.Add(__instance.Id, InGame.instance.bridge.GetTowerFromId(towerId));
+                    }
+                }));
+            }
+        }
+    }
+
+    /*[HarmonyPatch(typeof(Projectile), nameof(Il2CppAssets.Scripts.Unity.Towers.Projectiles.Projectile.U))]
+    private static class Projectile_Update
+    {
+        
+    }*/
+
+    public override int Path => Middle;
+    public override int Tier => 4;
+    public override int Cost => 225;
 }
