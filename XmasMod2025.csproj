@@ -15,8 +15,6 @@
     <ItemGroup>
         <EmbeddedResource Include="Assets\XmasMap.json" />
         <EmbeddedResource Include="XmasCubismProps.json" />
-        <None Remove="Assets\XmasMapProps.json" />
-        <EmbeddedResource Include="Assets\XmasMapProps.json" />
     </ItemGroup>
     <ItemGroup>
       <Reference Include="DialogLib">
