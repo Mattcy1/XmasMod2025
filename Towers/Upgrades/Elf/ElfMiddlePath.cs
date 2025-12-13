@@ -20,6 +20,10 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppInterop.Runtime.Attributes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System;
+using System.Linq;
+using BTD_Mod_Helper;
+using Il2CppAssets.Scripts.Simulation.Track;
+using Il2CppAssets.Scripts.Unity.Bridge;
 using MelonLoader;
 using UnityEngine;
 
@@ -144,6 +148,8 @@ public class ToyMorter : ChristmasUpgrade<ElfMonkey>
 
 public class ToyCart : ModUpgrade<ElfMonkey>
 {
+    public static Dictionary<ObjectId, Tower> TowerForProjectile = new Dictionary<ObjectId, Tower>();
+    
     public class ToyCartTower : ModSubTower
     {
         public override void ModifyBaseTowerModel(TowerModel towerModel)
@@ -156,23 +162,32 @@ public class ToyCart : ModUpgrade<ElfMonkey>
 
     public override void ApplyUpgrade(TowerModel towerModel)
     {
-        var newWep = towerModel.GetWeapon().Duplicate();
-        newWep.SetEmission(new EmissionAtClosestPathSegmentModel("EmissionAtClosestPathSegmentModel_", 1, 0, null));
-        newWep.AddBehavior(new TravelAlongPathModel("TravelAlongPathModel_", 30, 9999, true, false, 0));
-        newWep.projectile.name = "ToyCart_Low";
+        var newAtk = towerModel.GetAttackModel().Duplicate();
+        newAtk.fireWithoutTarget = true;
+        var newWep = newAtk.weapons[0];
+        newWep.SetEmission(new EmissionAtClosestPathSegmentModel("EmissionAtClosestPathSegmentModel_", 1, 0, new Il2CppReferenceArray<EmissionBehaviorModel>(0)));
+        newWep.projectile.AddBehavior(new TravelAlongPathModel("TravelAlongPathModel_", 30, 9999, true, false, 0));
+        newWep.projectile.RemoveBehavior<TravelStraitModel>();
+        newWep.projectile.id = "ToyCart_Low";
+        newWep.projectile.pierce = Single.MaxValue;
+        newWep.projectile.canCollideWithBloons = false;
+        newWep.fireWithoutTarget = true;
+        
+        towerModel.AddBehavior(newAtk);
     }
 
     [HarmonyPatch(typeof(Projectile), nameof(Projectile.Initialise))]
     private static class Projectile_Initialize
     {
-        public static Dictionary<ObjectId, Tower> TowerForProjectile = new Dictionary<ObjectId, Tower>();
         public static int ToyCartCounter = 0;
         public static void Postfix(Projectile __instance)
         {
-            if (__instance.projectileModel.name == "ToyCart_Low")
+            if (__instance.projectileModel.id == "ToyCart_Low")
             {
+                //ModHelper.Log<XmasMod2025>("Create toy cart tower");
+                
                 ObjectId towerId = ObjectId.FromString("ToyCartTower" + ToyCartCounter++);
-                InGame.instance.bridge.CreateTowerAt(__instance.Position.ToVector2().ToUnity(), GetTowerModel<ToyCartTower>(), towerId, false, new Action<bool>(suc =>
+                InGame.instance.bridge.CreateTowerAt(__instance.Position.ToUnity(), GetTowerModel<ToyCartTower>(), towerId, false,new Action<bool>(suc =>
                 {
                     if (suc)
                     {
@@ -181,13 +196,48 @@ public class ToyCart : ModUpgrade<ElfMonkey>
                 }));
             }
         }
+    }[HarmonyPatch(typeof(Map), nameof(Map.ZoneAllowsPlacement))]
+    private static class Map_ZoneAllowsPlacement
+    {
+        public static int ToyCartCounter = 0;
+        public static bool Prefix(Map __instance, IPlaceableEntity pe, ref bool __result)
+        {
+            Tower? tower = pe.TryCast<Tower>();
+            if (tower == null)
+            {
+                return true;
+            }
+            
+            if (tower.towerModel.baseId == TowerID<ToyCartTower>())
+            {
+                __result = true;
+                return false;
+            }
+            
+            return true;
+        }
     }
 
-    /*[HarmonyPatch(typeof(Projectile), nameof(Il2CppAssets.Scripts.Unity.Towers.Projectiles.Projectile.U))]
-    private static class Projectile_Update
+    [HarmonyPatch(typeof(InGame), nameof(InGame.Update))]
+    private static class InGame_Update
     {
-        
-    }*/
+        public static void Postfix(InGame __instance)
+        {
+            if (!__instance.IsInGame())
+            {
+                return;
+            }
+            
+            var validProjectiles = __instance.GetProjectiles().Where(proj => TowerForProjectile.ContainsKey(proj.Id));
+            foreach (var projectile in validProjectiles)
+            {
+                var tower = TowerForProjectile[projectile.Id];
+                
+                tower.PositionTower(projectile.Position.ToVector2());
+                tower.Rotation = projectile.Rotation;
+            }
+        }
+    }
 
     public override int Path => Middle;
     public override int Tier => 4;

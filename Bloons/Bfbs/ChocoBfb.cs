@@ -20,9 +20,9 @@ public class ChocoBfb : ModBloon
 
     public override string BaseBloon => BloonType.sBfb;
 
-    public class ChocoMoabDisplay : ModBloonDisplay<ChocoBfb>
+    public class ChocoBfbDisplay : ModBloonDisplay<ChocoBfb>
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sMoab);
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
 
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
@@ -48,7 +48,7 @@ public class ChocoBfb : ModBloon
             }
         }
     }
-    public class ChocoBfbDamage2Display : ModBloonDisplay<ChocoMoab>
+    public class ChocoBfbDamage2Display : ModBloonDisplay<ChocoBfb>
     {
         public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
 
@@ -78,7 +78,7 @@ public class ChocoBfb : ModBloon
             }
         }
     }
-    public class ChocoBfbDamage4Display : ModBloonDisplay<ChocoMoab>
+    public class ChocoBfbDamage4Display : ModBloonDisplay<ChocoBfb>
     {
         public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
 

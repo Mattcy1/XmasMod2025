@@ -28,9 +28,10 @@ namespace XmasMod2025.UI
     [RegisterTypeInIl2Cpp(false)]
     public class GiftMenu : MonoBehaviour
     {
+        private static ModHelperText giftMultiplierText;
         public static GiftMenu instance = null;
         public static ModHelperText? giftText;
-        public static ModHelperText? TotalgiftText;
+        public static ModHelperText? totalGiftText;
         public static int page = 0;
         public static ModHelperButton leftArrow;
         public static ModHelperButton rightArrow;
@@ -49,7 +50,7 @@ namespace XmasMod2025.UI
             }
 
             giftText = null;
-            TotalgiftText = null;
+            totalGiftText = null;
             leftArrow = null;
             rightArrow = null;
             section = null;
@@ -59,30 +60,6 @@ namespace XmasMod2025.UI
         }
 
         public static ShopType CurrentPage = ShopType.Buffs;
-        
-        public static string FormatNumber(double num)
-        {
-            if (num < 1000)
-            {
-                return num.ToString("###");
-            }
-            int zeros = (int)Math.Log10(num);
-            if (num >= 50)
-            {
-                double newNum = Math.Round(num / (10 ^ zeros), 2);
-                return newNum.ToString("#.##") + $"e{zeros}";
-            }
-            
-            int index = (zeros - 3 ) / 3; // 1000 = 0, 10000 = 0.33 (0), 100000 = 0.67 (0), 1000000 = 1 (1)... 
-            if (index < 0)
-            {
-                return num.ToString("###");
-            }
-
-            string[] suffixes = ["K", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No", "De", "UDe", "DDe"];
-            
-            return (num / (10 ^ (zeros - 3))).ToString("#.##") + suffixes[index]; // 10,134,560,000,000 > 10.13T
-        }
 
         private static ModHelperPanel ShopPanel(GiftShopItem item)
         {
@@ -134,10 +111,12 @@ namespace XmasMod2025.UI
             if (InGame.instance == null) return;
 
             RectTransform rect = InGame.instance.uiRect;
-            var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 0, 0, 0), VanillaSprites.MainBGPanelBlue);
+            var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 0, 0, 0), VanillaSprites.MainBGPanelBlue); // you setting the size to 0 lwk pmo
             instance = panel.AddComponent<GiftMenu>();
+            
+            CreateSidePanel(panel);
 
-            panel.AddImage(new("Image_", 0, 0, 2000, 1500), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
+            panel.AddPanel(new("Panel_", 0, 0, 2000, 1500), "").Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
 
             panel.AddText(new("Text_", -700, 750, 700, 150), "GIFTS MENU", 100);
             section = panel.AddText(new("Text_", 0, 750, 700, 150), "BUFFS", 100);
@@ -166,12 +145,24 @@ namespace XmasMod2025.UI
             UpdatePage();
         }
 
+        public static void CreateSidePanel(ModHelperPanel mainPanel)
+        {
+            var panel = mainPanel.AddPanel(new("SidePanel_", -1400, 0, 700, 750), "");
+            panel.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
+            giftText = panel.AddText(new Info("GiftsText", -75, 200, 400, 225), "Gifts: " + XmasMod2025.Gifts.FormatNumber(), 36, TextAlignmentOptions.Left);
+            giftText.EnableAutoSizing(50);
+            totalGiftText = panel.AddText(new Info("TotalGiftsText",-75, 0, 400, 225), "Total Gifts: " + XmasMod2025.TotalGifts.FormatNumber(), 36, TextAlignmentOptions.Left);
+            totalGiftText.EnableAutoSizing(50);
+            giftMultiplierText = panel.AddText(new Info("GiftMultiplierText", 150, -200, 850, 225),  "Gift Multi: " +XmasMod2025.GiftMult.FormatNumber() + "x", 36, TextAlignmentOptions.Left);
+            giftMultiplierText.EnableAutoSizing(50);
+        }
+        
         private static IEnumerator UpdateLayouts()
         {
             GridLayoutGroup normalGroup = normal.AddComponent<GridLayoutGroup>();
             normalGroup.cellSize = new Vector2(575, 1300);
             normalGroup.spacing = new(35, 50);
-            normalGroup.padding = new RectOffset { bottom = 50, left = 17, right = 18, top = 50 };
+            normalGroup.padding = new RectOffset { bottom = 50, left = 35, right = 35, top = 50 };
             normalGroup.startCorner = GridLayoutGroup.Corner.UpperLeft;
             yield return new WaitForEndOfFrame();
             scroll.ScrollContent.RemoveComponent<LayoutGroup>();
@@ -227,18 +218,9 @@ namespace XmasMod2025.UI
 
         public static void UpdateText()
         {
-            if (giftText != null) giftText.SetText(": Gifts " + FormatNumber(XmasMod2025.Gifts));
-            if (TotalgiftText != null) TotalgiftText.SetText(": Total Gifts " + FormatNumber(XmasMod2025.TotalGifts));
-        }
-    }
-
-    public static class ModHelperImageExtensions
-    {
-        public static ModHelperImage UseCustomScaling(this ModHelperImage img)
-        {
-            img.Image.type = Image.Type.Sliced;
-            img.Image.pixelsPerUnitMultiplier = 1;
-            return img;
+            if (giftText != null) giftText.SetText("Gifts: " + XmasMod2025.Gifts.FormatNumber());
+            if (totalGiftText != null) totalGiftText.SetText("Total Gifts: " + XmasMod2025.TotalGifts.FormatNumber());
+            if (giftMultiplierText != null) totalGiftText.SetText("Gift Multi: " + XmasMod2025.TotalGifts.FormatNumber() + "x");
         }
     }
 }

@@ -187,8 +187,8 @@ public class XmasMod2025 : BloonsTD6Mod
         get => gifts;
         set
         {
-            double increase = value - gifts * GiftMult;
-            gifts = value;
+            double increase = (value - gifts) * GiftMult;
+            gifts += increase;
 
             OnGiftsUpdated?.Invoke(value);
 
@@ -555,7 +555,11 @@ public class Bloon_Spawn
     [HarmonyLib.HarmonyPostfix]
     public static void Postfix(Bloon __instance)
     {
-        int chance = 100 / (int)XmasMod2025.PresentBloonChance;
+        int chance = XmasMod2025.PresentBloonChance == 0 ? 0 : 100 / (int)XmasMod2025.PresentBloonChance;
+        if (chance == 0)
+        {
+            return;
+        }
 
         var random = new System.Random().Next(1, chance + 1);
 

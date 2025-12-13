@@ -7,22 +7,22 @@ using UnityEngine;
 
 namespace XmasMod2025.Bloons.Moabs;
 
-public class ChocoBfb : ModBloon
+public class ChocoZomg : ModBloon
 {
     public override void ModifyBaseBloonModel(BloonModel bloonModel)
     {
-        bloonModel.maxHealth = 900;
-        bloonModel.speed *= 1.25f;
+        bloonModel.maxHealth *= (int)1.5f;
+        bloonModel.speed *= 1.15f;
         
         bloonModel.RemoveAllChildren();
-        bloonModel.AddToChildren<ChocoMoab>(4);
+        bloonModel.AddToChildren<ChocoBfb>(4);
     }
 
-    public override string BaseBloon => BloonType.sBfb;
+    public override string BaseBloon => BloonType.sZomg;
 
-    public class ChocoMoabDisplay : ModBloonDisplay<ChocoBfb>
+    public class ChocoZomgDisplay : ModBloonDisplay<ChocoZomg>
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sMoab);
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
 
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
@@ -33,9 +33,9 @@ public class ChocoBfb : ModBloon
             }
         }
     }
-    public class ChocoBfbDamage1Display : ModBloonDisplay<ChocoBfb>
+    public class ChocoZomgDamage1Display : ModBloonDisplay<ChocoZomg>
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
 
         public override int Damage => 1;
 
@@ -48,9 +48,9 @@ public class ChocoBfb : ModBloon
             }
         }
     }
-    public class ChocoBfbDamage2Display : ModBloonDisplay<ChocoMoab>
+    public class ChocoZomgDamage2Display : ModBloonDisplay<ChocoZomg>
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
 
         public override int Damage => 2;
 
@@ -63,9 +63,9 @@ public class ChocoBfb : ModBloon
             }
         }
     }
-    public class ChocoBfbDamage3Display : ModBloonDisplay<ChocoBfb>
+    public class ChocoZomgDamage3Display : ModBloonDisplay<ChocoZomg>
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
 
         public override int Damage => 3;
 
@@ -78,9 +78,9 @@ public class ChocoBfb : ModBloon
             }
         }
     }
-    public class ChocoBfbDamage4Display : ModBloonDisplay<ChocoMoab>
+    public class ChocoZomgDamage4Display : ModBloonDisplay<ChocoZomg>
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
 
         public override int Damage => 4;
 
