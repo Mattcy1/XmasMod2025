@@ -57,7 +57,7 @@ public class GiftCounterUI : MonoBehaviour
             instance = panel.AddComponent<GiftCounterUI>();
 
             var Claim = panel.AddImage(new("Button_", 225, -90, 175), ModContent.GetTextureGUID<XmasMod2025>("PresentIcon"));
-            giftText = Claim.AddText(new("Text_", 460, 0, 700, 240), XmasMod2025.Gifts.ToString("#,###"), 100);
+            giftText = Claim.AddText(new("Text_", 460, 0, 700, 240), XmasMod2025.Gifts.FormatNumber(), 100);
             giftText.Text.alignment = Il2CppTMPro.TextAlignmentOptions.Left;
 
             var textButton = giftText.gameObject.AddComponent<Button>();
@@ -71,7 +71,7 @@ public class GiftCounterUI : MonoBehaviour
     }
     public static void UpdateText(double gifts)
     {
-        giftText.SetText(gifts.ToString("#,###.##"));
+        giftText.SetText(XmasMod2025.Gifts.FormatNumber());
     }
     public static void SetGift()
     {

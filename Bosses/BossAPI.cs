@@ -538,8 +538,10 @@ public class RoundBossUI : MonoBehaviour
         {
             RectTransform rect = InGame.instance.uiRect;
             var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1125, 0, 0), VanillaSprites.MainBGPanelBlue);
-            var fakePanel = panel.AddImage(new Info("PanelInside_", 0, 0, 1000, 200), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
-            var panelInside = panel.AddImage(new Info("PanelInside_", 0, 0, 950, 150), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
+            var fakePanel = panel.AddPanel(new Info("PanelInside_", 0, 0, 1000, 200), "");
+            fakePanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
+            var panelInside = panel.AddPanel(new Info("PanelInside_", 0, 0, 950, 150), "");
+            panelInside.Background.SetSprite(AssetHelper.GetSprite("ChristmasInsertPanel"));
             roundText = panelInside.AddText(new Info("Text_", 100, 0, 800, 125), "Boss Appears In: " + bossInfo.SpawnRound + " Rounds");
             roundText.EnableAutoSizing();
 
@@ -612,8 +614,10 @@ public class BossUI : MonoBehaviour
                 CreateSkulls(bossInfo, bossPanel);
             }
 
-            var desc1 = bossPanel.AddImage(new Info("DescriptionHolder", 0, -400, 1000, 500), AssetHelper.GetSprite("ChristmasPanel")).UseCustomScaling();
-            var desc2 = bossPanel.AddImage(new Info("DescriptionInside", 0, -400, 950, 450), AssetHelper.GetSprite("ChristmasInsertPanel")).UseCustomScaling();
+            var desc1 = bossPanel.AddPanel(new Info("DescriptionHolder", 0, -400, 1000, 500), "");
+            desc1.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
+            var desc2 = bossPanel.AddPanel(new Info("DescriptionInside", 0, -400, 950, 450), "");
+            desc2.Background.SetSprite(AssetHelper.GetSprite("ChristmasInsertPanel"));
             var desc3 = bossPanel.AddText(new Info("Description", 0, -400, 900, 400), bossInfo.Description, 60, TextAlignmentOptions.Center);
             desc3.EnableAutoSizing();
 
