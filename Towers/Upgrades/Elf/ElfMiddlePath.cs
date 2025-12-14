@@ -151,11 +151,6 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
 {
     public static Dictionary<Projectile, Tower> TowerForProjectile = new Dictionary<Projectile, Tower>();
     public static Dictionary<Tower, Projectile> ProjectileForTower = new Dictionary<Tower, Projectile>();
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
     public class ToyCartTower : ModTower
     {
         public override void ModifyBaseTowerModel(TowerModel towerModel)
@@ -203,13 +198,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         projectile.RemoveBehavior<RandomDisplayModel>();
         weapon.fireWithoutTarget = true;
         weapon.rate = 5;
-<<<<<<< HEAD
 
-
-=======
-        
-        
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
         towerModel.AddBehavior(newAtk);
     }
 
@@ -223,22 +212,13 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         {
             public Vector3 axis = new(0, 0, 1); // Multiplier for x, y, z
 
-            public float rotationSpeed = 5;// Degrees/Update
-<<<<<<< HEAD
+            public float rotationSpeed = 5; // Degrees/Update
 
-=======
-            
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
             private void FixedUpdate() // 20 fps
             {
                 transform.Rotate(axis, 5);
             }
         }
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
             foreach (var renderer in node.GetMeshRenderers())
@@ -248,21 +228,13 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
                     renderer.transform.rotation = Quaternion.Euler(0, 90, 0);
                     var rot = renderer.gameObject.AddComponent<SimpleRotation>();
                 }
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
                 renderer.ApplyOutlineShader();
                 renderer.SetOutlineColor(new Color32(59, 35, 13, 255));
             }
         }
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
     // Credits to grahamkracker https://github.com/GrahamKracker/BloonsClicker/blob/a2bc8512d11d99bfdd2394b64c030e9f7e18cb90/Main.cs#L127
     [HarmonyPatch(typeof(TowerInventory), nameof(TowerInventory.GetTowerInventoryCount))]
     [HarmonyPrefix]
@@ -283,18 +255,9 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         {
             if (__instance.projectileModel.id == "ToyCart_Low")
             {
-                ModHelper.Log<XmasMod2025>("Create toy cart tower");
-<<<<<<< HEAD
-
                 ObjectId towerId = ObjectId.Create(9999 + ToyCartCounter++);
                 LastProjectile = __instance;
                 InGame.instance.bridge.CreateTowerAt(__instance.Position.ToUnity(), GetTowerModel<ToyCartTower>(), towerId, false, new Action<bool>(suc => { }), true, true, false, 0, false);
-=======
-                
-                ObjectId towerId = ObjectId.Create(9999 + ToyCartCounter++);
-                LastProjectile = __instance;
-                InGame.instance.bridge.CreateTowerAt(__instance.Position.ToUnity(), GetTowerModel<ToyCartTower>(), towerId, false,new Action<bool>(suc => {}), true, true, false, 0, false);
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
             }
         }
     }
@@ -356,8 +319,4 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
 
     public override string Description =>
         "Elf monkey can now create carts which run over bloons for <b>three</b> damage and have fast shooting turrets that only do <b>one</b> damage each shot.";
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> ce160f1cf7530bd8df329b68067fa1fa3b3230c4
