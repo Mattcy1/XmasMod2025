@@ -8,6 +8,7 @@ using Il2CppAssets.Scripts.Unity.Achievements.List;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.RightMenu;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.StoreMenu;
 using UnityEngine;
+using XmasMod2025.Towers.Upgrades;
 
 namespace XmasMod2025.Towers;
 
@@ -25,19 +26,25 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
     [HarmonyPatch(typeof(ShopMenu), nameof(ShopMenu.CreateTowerButton))]
     private static class ShopButton_Start
     {
+        
         public static void Postfix(TowerModel model, ITowerPurchaseButton __result)
         {
+            if (model.baseId == TowerID<ToyCart.ToyCartTower>())
+            {
+                __result.GameObject.transform.parent.gameObject.Destroy();
+            }
+            
             if (model.GetModTower() is ChristmasTower cTower && cTower.UnlockRound != 0)
             {
-                cTower.ShopButton = __result.GameObject;
-                __result.GameObject.SetActive(false);
+                cTower.ShopButton = __result.GameObject.transform.parent.gameObject;
+                __result.GameObject.transform.parent.gameObject.SetActive(false);
                 if (ButtonsToUnlock.TryGetValue(cTower.UnlockRound, out var buttons))
                 {
-                    buttons.Add(__result.GameObject);
+                    buttons.Add(__result.GameObject.transform.parent.gameObject);
                 }
                 else
                 {
-                    ButtonsToUnlock.Add(cTower.UnlockRound, [__result.GameObject]);
+                    ButtonsToUnlock.Add(cTower.UnlockRound, [__result.GameObject.transform.parent.gameObject]);
                 }
             }
         }
