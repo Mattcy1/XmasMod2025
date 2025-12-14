@@ -289,6 +289,7 @@ public class Hooks
                 if (__instance.bloonModel.IsModdedBoss())
                 {
                     bossInfo.Boss = __instance;
+                    XmasMod2025.AddCurrency(CurrencyType.Gift, 1000);
 
                     if (BossUI.instance != null)
                     {

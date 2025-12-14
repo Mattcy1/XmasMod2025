@@ -25,7 +25,7 @@ namespace XmasMod2025.Bloons
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.speed /= 4;
-            bloonModel.maxHealth = 40;
+            bloonModel.maxHealth = 30;
             bloonModel.danger += 2;
             bloonModel.bloonProperties = Il2Cpp.BloonProperties.White | Il2Cpp.BloonProperties.Frozen;
 

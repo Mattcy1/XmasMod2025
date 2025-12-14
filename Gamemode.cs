@@ -40,17 +40,15 @@ internal class ChristmasRouds : ModRoundSet
                 break;
             case 13:
                 roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 1, 0, 0);
-                roundModel.AddBloonGroup(ModContent.BloonID<IceBloon>(), 2, 0, 10);
                 roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 5, 0, 40);
                 break;
             case 19:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 5, 0, 25);
+                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 2, 0, 25);
                 roundModel.AddBloonGroup(ModContent.BloonID<ChocolateBloon>(), 2, 0, 20);
                 roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 5, 0, 30);
                 break;
             case 24:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 3, 0, 10);
-                roundModel.AddBloonGroup(ModContent.BloonID<IceBloon>(), 2, 0, 10);
+                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 2, 0, 10);
                 roundModel.AddBloonGroup(ModContent.BloonID<ChocolateBloon>(), 5, 0, 40);
                 roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 5, 0, 30);
                 break;
@@ -178,13 +176,12 @@ public class ChristmasGameMode : ModGameMode
 
     public override string Difficulty => DifficultyType.Hard;
     public override string BaseGameMode => GameModeType.Hard;
-    public override string Icon => "Icon";
-
+    public override string Icon => "XmasTowerSet-Button";
     public override string DisplayName => "Christmas Gamemode";
 
     public override void ModifyBaseGameModeModel(ModModel gameModeModel)
     {
         gameModeModel.UseRoundSet<ChristmasRouds>();
-        gameModeModel.SetEndingRound(99);
+        gameModeModel.SetEndingRound(100);
     }
 }

@@ -60,6 +60,7 @@ using XmasMod2025.GiftShop.BuffsItems;
 using XmasMod2025.GiftShop.GiftItems;
 using XmasMod2025.Towers;
 using XmasMod2025.Towers.SubTowers;
+using XmasMod2025.Towers.Upgrades;
 using XmasMod2025.UI;
 using static MelonLoader.MelonLogger;
 using static XmasMod2025.UI.Gift;
@@ -93,7 +94,7 @@ public class XmasMod2025 : BloonsTD6Mod
     
     
 
-    public static float PresentBloonChance = 0f;
+    public static float PresentBloonChance = 1f;
     public static IntMinMax TreeDropRates = new(3, 5);
     public static int FestiveSpritActiveRounds = 0;
     public static bool FestiveSpiritActive = false;
@@ -376,15 +377,18 @@ public class XmasMod2025 : BloonsTD6Mod
             }
         }
 
-        if(@this.bloonModel.baseId == ModContent.BloonID<ElfBoss>())
+        if (@this.bloonModel.baseId == ModContent.BloonID<ElfBoss>() && tower != null)
         {
-            if(tower != null && tower.towerModel.baseId != ModContent.TowerID<ElfMonkey>())
+            string[] allowed = [ModContent.TowerID<ElfMonkey>(), ModContent.TowerID<ToyCart.ToyCartTower>(), ModContent.TowerID<ToyMorter.ToyMorterTower>()];
+
+            if (!allowed.Contains(tower.towerModel.baseId))
             {
                 @this.health += (int)totalAmount;
             }
         }
 
-        if(@this.bloonModel.HasTag("Candy"))
+
+        if (@this.bloonModel.HasTag("Candy"))
         {
             if(tower != null && tower.towerModel.baseId != ModContent.TowerID<CandyCaneMonkey>())
             {
@@ -417,6 +421,7 @@ public class CreateMap
 
         var list = GameData.Instance.mapSet.Maps.items.ToList();
         list.Insert(0, customMap);
+
         GameData.Instance.mapSet.Maps.items = list.ToArray();
     }
 }
@@ -536,13 +541,13 @@ public class TimeTriggerPacth
             switch (rnd.Next(3))
             {
                 case 0:
-                    InGame.instance.SpawnBloons(ModContent.BloonID<IceZomg>(), 1, 0); // Swicth To ZOMG when added
+                    InGame.instance.SpawnBloons(ModContent.BloonID<IceZomg>(), 1, 0); 
                     break;
                 case 1:
-                    InGame.instance.SpawnBloons(ModContent.BloonID<ChocoMoab>(), 1, 0); // Swicth To ZOMG when added
+                    InGame.instance.SpawnBloons(ModContent.BloonID<ChocoZomg>(), 1, 0);
                     break;
                 case 2:
-                    InGame.instance.SpawnBloons(ModContent.BloonID<SnowMoab>(), 1, 0); // Swicth To ZOMG when added
+                    InGame.instance.SpawnBloons(ModContent.BloonID<SnowZomg>(), 1, 0); 
                     break;
             }
         }
@@ -602,7 +607,7 @@ public class Bloon_Destroy
             var countRand = rand.Next(1, 5);
 
 
-            if (!bloon.baseId.Contains("Rock") && !bloon.baseId.Contains("TestBloon") && !bloon.baseId.Contains("Gold"))
+            if (!bloon.baseId.Contains("Rock") && !bloon.baseId.Contains("TestBloon") && !bloon.baseId.Contains("Gold") && !bloon.baseId.Contains(ModContent.BloonID<CoalTotem>()) && !bloon.IsRegrowBloon() && !bloon.IsCamoBloon())
             {
                 InGame.instance.SpawnBloons(bloon.id, countRand, 10);
             }
@@ -614,7 +619,7 @@ public class Bloon_Destroy
             System.Random rand = new();
 
             var bloon = bloons[rand.Next(bloons.Count)];
-            var countRand = rand.Next(1, 4);
+            var countRand = rand.Next(1, 3);
 
             string[] unallowedIds = [];
 
@@ -622,15 +627,15 @@ public class Bloon_Destroy
 
             if (rnd < 49)
             {
-                unallowedIds = ["Bfb", "Zomg", "Ddt", "Bad", ModContent.BloonID<ChocoBfb>(), ModContent.BloonID<SnowBfb>(), ModContent.BloonID<IceBfb>(), ModContent.BloonID<IceZomg>()];
+                unallowedIds = ["Bfb", "Zomg", "Ddt", "Bad", ModContent.BloonID<ChocoBfb>(), ModContent.BloonID<SnowBfb>(), ModContent.BloonID<IceBfb>(), ModContent.BloonID<IceZomg>(), ModContent.BloonID<SnowZomg>(), ModContent.BloonID<ChocoZomg>()];
             }
             else if (rnd < 59)
             {
-                unallowedIds = ["Zomg", "Ddt", "Bad", ModContent.BloonID<IceZomg>()];
+                unallowedIds = ["Zomg", "Ddt", "Bad", ModContent.BloonID<IceZomg>(), ModContent.BloonID<SnowZomg>(), ModContent.BloonID<ChocoZomg>()];
             }
             else if (rnd < 69)
             {
-                unallowedIds = ["Zomg", "Bad", ModContent.BloonID<IceZomg>()];
+                unallowedIds = ["Zomg", "Bad", ModContent.BloonID<IceZomg>(), ModContent.BloonID<SnowZomg>(), ModContent.BloonID<ChocoZomg>()];
             }
             else if (rnd < 93)
             {
@@ -639,17 +644,9 @@ public class Bloon_Destroy
 
             string[] BossID = ["Lych", "Phayze", "Bloonarius", "Dreadbloon", "Blastapopoulos", "Vortex", "Test"];
 
-            if (!unallowedIds.Contains(bloon.baseId) && !BossID.Contains(bloon.id))
+            if (!unallowedIds.Contains(bloon.baseId) && !BossID.Contains(bloon.id) && !bloon.HasTag("Sandbox") && !bloon.isBoss) 
             {
                 InGame.instance.SpawnBloons(bloon.id, countRand, 10);
-            }
-        }
-
-        if (__instance.bloonModel.isBoss)
-        {
-            if(BossAPI.BossUI.instance != null)
-            {
-                BossAPI.BossUI.instance.Close();
             }
         }
     }

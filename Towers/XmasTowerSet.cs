@@ -71,10 +71,21 @@ public class XmasTowerSet : ModTowerSet
                 tower.sim.AddCash(tower.tower.worth, (Simulation.CashSource)12);
                 XmasMod2025.AddCurrency(cTower.Currency, -cTower.Cost);
                 tower.tower.worth = cTower.Cost;
+            }
+        }
+    }
 
+    [HarmonyPatch(typeof(Tower), nameof(Tower.OnPlace))]
+    private static class Tower_OnPlace
+    {
+        public static void Postfix(Tower __instance)
+        {
+            var modTower = __instance.towerModel.GetModTower();
+            if (modTower is ChristmasTower cTower && cTower.Currency != CurrencyType.Cash && __instance.worth > 0)
+            {
                 if (InGame.instance != null && InGame.instance.bridge != null)
                 {
-                    InGame.instance.bridge.simulation.CreateTextEffect(tower.position.ToSMathVector(), ModContent.CreatePrefabReference<CollectText>(), 2f, $"-{cTower.Cost} {cTower.Currency}", true); 
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"-{cTower.Cost} {cTower.Currency}", true);
                 }
             }
         }

@@ -35,8 +35,8 @@ namespace XmasMod2025.Bosses
         public override string Description => "";
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            //bloonModel.maxHealth = 55000000;
-            bloonModel.maxHealth = 10000;
+            bloonModel.maxHealth = 45000000;
+            //bloonModel.maxHealth = 10000;
             bloonModel.RemoveAllChildren();
             bloonModel.speed /= 3f;
 

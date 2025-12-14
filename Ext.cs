@@ -9,7 +9,7 @@ public static class Ext
     {
         if (num < 1000)
         {
-            return num.ToString("###.##");
+            return num.ToString("#.###");
         }
         int zeros = (int)Math.Log10(num);
         if (zeros >= 50)

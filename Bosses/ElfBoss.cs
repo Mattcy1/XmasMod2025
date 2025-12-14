@@ -26,7 +26,7 @@ namespace XmasMod2025.Bosses
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            bloonModel.maxHealth = 25000;
+            bloonModel.maxHealth = 4000;
             bloonModel.RemoveAllChildren();
 
             TimeTriggerModel timeTrigger = new TimeTriggerModel("ElfTax", 30, false, new string[] { "ElfTax" });

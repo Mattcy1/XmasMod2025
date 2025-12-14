@@ -147,7 +147,7 @@ public class ToyMorter : ChristmasUpgrade<ElfMonkey>
     public override int Cost => 55;
 }
 
-public class ToyCart : ModUpgrade<ElfMonkey>
+public class ToyCart : ChristmasUpgrade<ElfMonkey>
 {
     public static Dictionary<Projectile, Tower> TowerForProjectile = new Dictionary<Projectile, Tower>();
     public static Dictionary<Tower, Projectile> ProjectileForTower = new Dictionary<Tower, Projectile>();
