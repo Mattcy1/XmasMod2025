@@ -27,6 +27,6 @@ public static class Ext
 
         string[] suffixes = ["K", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No", "De", "UDe", "DDe"];
             
-        return (num / (int)Math.Pow(10, (zeros/3) * 3 + 1)).ToString("#.##") + suffixes[index]; // 10,134,560,000,000 > 10.13T
+        return (num / (int)Math.Pow(10, (zeros/3) * 3)).ToString("#.##") + suffixes[index]; // 10,134,560,000,000 > 10.13T
     }
 }

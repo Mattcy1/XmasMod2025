@@ -57,7 +57,7 @@ public class BuildersSpirit : ChristmasUpgrade<ElfMonkey>
     public override string Description =>
         "All sub-towers within range created by engineer monkeys and elf monkeys attack faster and get more range.";
 
-    public override int Path => Middle;
+    public override int Path => Top;
     public override int Tier => 1;
     public override int Cost => 25;
 }
@@ -78,7 +78,7 @@ public class BuildersAtmosphere : ChristmasUpgrade<ElfMonkey>
     public override string Description =>
         "Builder's spirit has more range, and provides an extra 5% range.";
 
-    public override int Path => Middle;
+    public override int Path => Top;
     public override int Tier => 2;
     public override int Cost => 45;
 }
@@ -142,7 +142,7 @@ public class ToyMorter : ChristmasUpgrade<ElfMonkey>
         towerModel.AddBehavior(toyMorterAttack);
     }
 
-    public override int Path => Middle;
+    public override int Path => Top;
     public override int Tier => 3;
     public override int Cost => 55;
 }
@@ -168,10 +168,8 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
             towerModel.IncreaseRange(15);
 
             var weapon = towerModel.GetWeapon();
-            var projectile = weapon.projectile;
-
-            weapon.rate = 0.05f;
-            projectile.pierce = 0;
+            weapon.SetProjectile(Game.instance.model.GetTower(TowerType.BoomerangMonkey, 0, 0, 0).GetWeapon().projectile.Duplicate());
+            weapon.rate = 0.175f; // Just under 6/s (~5.88)
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
@@ -313,7 +311,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         }
     }
 
-    public override int Path => Middle;
+    public override int Path => Top;
     public override int Tier => 4;
     public override int Cost => 225;
 
