@@ -120,10 +120,7 @@ public class Hooks
 
                 BossAPI.RoundsUntilNextBoss = nearestBoss - r - 1;
 
-                if(!__instance.bridge.IsSandboxMode())
-                {
-                    RoundBossUI.UpdateRoundsUI();
-                }
+                RoundBossUI.UpdateRoundsUI();
 
                 if (r == bossInfo.SpawnRound - 1)
                 {
@@ -155,19 +152,17 @@ public class Hooks
                 return;
             }
 
-            if (!__instance.bridge.IsSandboxMode())
-            {
-                int lowestRound = BossAPI.roundsSpawn.Keys.Min();
-                BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
+            int lowestRound = BossAPI.roundsSpawn.Keys.Min();
+            BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
 
-                if (RoundBossUI.instance != null)
-                    RoundBossUI.instance.Close();
+            if (RoundBossUI.instance != null)
+                RoundBossUI.instance.Close();
 
-                elaspedRound = __instance.bridge.GetCurrentRound();
+            elaspedRound = __instance.bridge.GetCurrentRound();
 
-                RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
-                NearestBoss = lowestRound - elaspedRound;
-            }
+            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+
+            NearestBoss = lowestRound - elaspedRound;
         }
     }
 
@@ -193,19 +188,17 @@ public class Hooks
                 return;
             }
 
-            if(!__instance.bridge.IsSandboxMode())
-            {
-                int lowestRound = BossAPI.roundsSpawn.Keys.Min();
-                BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
+            int lowestRound = BossAPI.roundsSpawn.Keys.Min();
+            BossInfo FirstBossToSpawn = BossAPI.roundsSpawn[lowestRound];
 
-                if (RoundBossUI.instance != null)
-                    RoundBossUI.instance.Close();
+            if (RoundBossUI.instance != null)
+                RoundBossUI.instance.Close();
 
-                elaspedRound = __instance.bridge.GetCurrentRound();
+            elaspedRound = __instance.bridge.GetCurrentRound();
 
-                RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
-                NearestBoss = lowestRound - elaspedRound;
-            }
+            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+
+            NearestBoss = lowestRound - elaspedRound;
         }
     }
 
@@ -311,6 +304,7 @@ public class Hooks
 
                             BossInfo nextBoss = BossAPI.roundsSpawn[nextLowest];
                             RoundBossUI.CreateRoundsUI(nextBoss);
+
                             NearestBoss = nextLowest;
                         }
                     }
@@ -332,20 +326,17 @@ public class Hooks
         {
             foreach (var bossInfo in BossAPI.BossInfos)
             {
-                if (__instance.bloonModel.IsModdedBoss())
+                foreach (var bloon in InGame.instance.GetBloons())
                 {
-                    foreach (var BossInfo in BossAPI.BossInfos)
+                    if (BossUI.instance != null)
                     {
-                        if (BossInfo.BossID == __instance.bloonModel.GetBossID())
-                        {
-                            if (BossUI.instance != null)
-                            {
-                                BossUI.instance.Close();
-                            }
+                        BossUI.instance.Close();
+                    }
 
-                            diedTo = BossInfo;
-                            break;
-                        }
+                    if (bloon.bloonModel.IsModdedBoss())
+                    {
+                        diedTo = bossInfo;
+                        break;
                     }
                 }
             }
@@ -539,16 +530,46 @@ public class RoundBossUI : MonoBehaviour
         {
             RectTransform rect = InGame.instance.uiRect;
             var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1125, 0, 0), VanillaSprites.MainBGPanelBlue);
+
             var fakePanel = panel.AddPanel(new Info("PanelInside_", 0, 0, 1000, 200), "");
             fakePanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
+
             var panelInside = panel.AddPanel(new Info("PanelInside_", 0, 0, 950, 150), "");
             panelInside.Background.SetSprite(AssetHelper.GetSprite("ChristmasInsertPanel"));
+
             roundText = panelInside.AddText(new Info("Text_", 100, 0, 800, 125), "Boss Appears In: " + bossInfo.SpawnRound + " Rounds");
             roundText.EnableAutoSizing();
 
             var leftBg = panel.AddImage(new Info("LeftBackground", -400, 0f, 300, 300), ModContent.GetTextureGUID<XmasMod2025>("IconHolder"));
             var icon = leftBg.AddImage(new Info("leftIcon", 0, 0f, 200, 200), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossIcon));
             RoundsUntilNextBoss = bossInfo.SpawnRound;
+
+            var desc1 = panel.AddPanel(new Info("DescriptionHolder", 0, -400, 1000, 500), "");
+            desc1.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
+            var desc2 = panel.AddPanel(new Info("DescriptionInside", 0, -400, 950, 450), "");
+            desc2.Background.SetSprite(AssetHelper.GetSprite("ChristmasInsertPanel"));
+            var desc3 = panel.AddText(new Info("Description", 0, -400, 900, 400), bossInfo.Description, 60, TextAlignmentOptions.Center);
+            desc3.EnableAutoSizing();
+
+            desc1.Hide();
+            desc2.Hide();
+            desc3.Hide();
+
+            panel.AddButton(new Info("DescriptionButton", 700, 0, 120), VanillaSprites.InfoBtn2, new System.Action(() =>
+            {
+                if (desc1.transform.localScale == Vector3.zero)
+                {
+                    desc1.Show();
+                    desc2.Show();
+                    desc3.Show();
+                }
+                else
+                {
+                    desc1.Hide();
+                    desc2.Hide();
+                    desc3.Hide();
+                }
+            }));
 
             instance = panel.AddComponent<RoundBossUI>();
         }
