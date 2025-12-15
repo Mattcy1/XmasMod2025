@@ -65,6 +65,9 @@ internal static class PostProcessing
         {
             XmasVolume = GameObject.Instantiate(VolumePrefab).GetComponent<Volume>();
             XmasVolumeProfile = XmasVolume.profile;
+            Bloom bloom = XmasVolumeProfile.components[1].Cast<Bloom>();
+            bloom.intensity.value = 0.7f;
+            bloom.threshold.value = 0.8f;
         }
         else if (!XmasVolumeProfile)
         {
