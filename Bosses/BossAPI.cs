@@ -535,6 +535,7 @@ public class RoundBossUI : MonoBehaviour
     {
         if (InGame.instance != null)
         {
+
             RectTransform rect = InGame.instance.uiRect;
             var panel = rect.gameObject.AddModHelperPanel(new("Panel_", 0, 1125, 0, 0), VanillaSprites.MainBGPanelBlue);
 
@@ -546,22 +547,6 @@ public class RoundBossUI : MonoBehaviour
 
             roundText = panelInside.AddText(new Info("Text_", 100, 0, 800, 125), "Boss Appears In: " + bossInfo.SpawnRound + " Rounds");
             roundText.EnableAutoSizing();
-            descriptionPanel = rect.gameObject.AddModHelperPanel(new Info("BossHint", 1000, 500));
-            descriptionPanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
-            var insideDescPanel = descriptionPanel.AddPanel(new Info("Inside", 950, 450));
-            insideDescPanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasInsertPanel"));
-            descriptionText = insideDescPanel.AddText(new Info("Text_", 900, 400), "yaya");
-            descriptionPanel.AddButton(new Info("CloseBtn", 500, 250, 50), VanillaSprites.CloseBtn, new Action(() =>
-            {
-                descriptionPanel.SetActive(false);
-            }));
-            descriptionPanel.gameObject.SetActive(false);
-            
-            hintButton = fakePanel.AddButton(new Info("HintBtn", 550, 100, 50), VanillaSprites.InfoBtn, new Action(() =>
-            {
-                descriptionText.SetText(bossInfo.Description);
-                descriptionPanel.gameObject.SetActive(true);
-            }));
 
             var leftBg = panel.AddImage(new Info("LeftBackground", -400, 0f, 300, 300), ModContent.GetTextureGUID<XmasMod2025>("IconHolder"));
             var icon = leftBg.AddImage(new Info("leftIcon", 0, 0f, 200, 200), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossIcon));
