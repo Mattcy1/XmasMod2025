@@ -166,7 +166,6 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         {
             SetMeshTexture(node, "CandyCaneMonkey400");
             SetMeshTexture(node, "CandyCaneMonkey400", 1);
-            node.Dump();
         }
     }
 

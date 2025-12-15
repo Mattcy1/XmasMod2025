@@ -563,7 +563,7 @@ public class RoundBossUI : MonoBehaviour
             desc2.Hide();
             desc3.Hide();
 
-            panel.AddButton(new Info("DescriptionButton", 700, 0, 120), VanillaSprites.InfoBtn2, new System.Action(() =>
+            panel.AddButton(new Info("DescriptionButton", 575, 0, 120), VanillaSprites.InfoBtn2, new System.Action(() =>
             {
                 if (desc1.transform.localScale == Vector3.zero)
                 {
