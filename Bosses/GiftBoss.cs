@@ -1,10 +1,14 @@
 ﻿using BossAPI.Bosses;
 using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Extensions;
+using Il2Cpp;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.Display;
+using UnityEngine;
 using XmasMod2025.Bloons;
 using XmasMod2025.Bloons.Moabs;
 
@@ -12,6 +16,33 @@ namespace XmasMod2025.Bosses
 {
     internal class GiftBoss : ModBoss
     {
+        public class GiftDisplay : ModBloonCustomDisplay<GiftBoss>
+        {
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => "PresentBoss";
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+
+                    if (renderer.name == "Propeller")
+                    {
+                        renderer.gameObject.AddComponent<CustomRotationSimple>();
+                    }
+                    
+                    if (renderer.name.StartsWith("Green"))
+                    {
+                        renderer.SetOutlineColor(new Color32(2, 90, 0, 255));
+                    }
+                    else
+                    {
+                        renderer.SetOutlineColor(new Color(0.5f, 0, 0));
+                    }
+                }
+            }
+        }
         public override string BossName => "Gift Boss";
         public override int SkullCount => 3;
         public override string HealthBar => "";
@@ -53,6 +84,8 @@ namespace XmasMod2025.Bosses
             bloonModel.AddBehavior(spawn1);
             bloonModel.AddBehavior(timeTrigger);
 
+            bloonModel.ApplyDisplay<GiftDisplay>();
+            mod.LoggerInstance.Msg("Gift guid: " + bloonModel.display.AssetGUID);
             Bloon = bloonModel;
         }
 

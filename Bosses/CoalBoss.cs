@@ -13,15 +13,42 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
+using BTD_Mod_Helper.Api.Display;
+using Il2Cpp;
+using Il2CppAssets.Scripts.Unity.Display;
 using UnityEngine;
 using XmasMod2025.Bloons;
 using XmasMod2025.Bloons.Moabs;
 using XmasMod2025.BossAPI;
+using Color = UnityEngine.Color;
 
 namespace XmasMod2025.Bosses
 {
     internal class CoalBoss : ModBoss
     {
+        public class CoalDisplay : ModBloonCustomDisplay<CoalBoss>
+        {
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => "CoalBoss";
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+                    if (renderer.name == "propeller")
+                    {
+                        renderer.gameObject.AddComponent<CustomRotationSimple>();
+                        renderer.SetOutlineColor(new Color(0.1f, 0.1f, 0.1f));
+                    }
+                    else if (renderer.name != "coal")
+                    {
+                        renderer.SetOutlineColor(new Color32(125, 30, 30, 255));
+                    }
+                }
+            }
+        }
+
         public override string BossName => "Coal Boss";
         public override int SkullCount => 5;
         public override string HealthBar => "";
@@ -52,6 +79,8 @@ namespace XmasMod2025.Bosses
         {
             XmasMod2025.boss = bloon;
             Hooks.StartMonobehavior<HandleTotem>();
+            
+            
         }
     }
 

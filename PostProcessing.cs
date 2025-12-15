@@ -78,7 +78,7 @@ internal static class PostProcessing
     public static void EnableNight()
     {
         if(isNight) return;
-        if(possibleNullReference) PrepareVolume();
+        PrepareVolume();
         
         isNight = true;
         XmasVolumeProfile.components[0].active = true;
@@ -88,7 +88,7 @@ internal static class PostProcessing
     public static void DisableNight()
     {
         if(!isNight) return;
-        if(possibleNullReference) PrepareVolume();
+        PrepareVolume();
         
         isNight = false;
         
