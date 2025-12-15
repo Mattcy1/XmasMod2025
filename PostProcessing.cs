@@ -46,16 +46,16 @@ internal static class PostProcessing
         VolumePrefab = AssetHelper.GetObject("XmasVolume");
         VignettePulse = VolumePrefab.AddComponent<PulseVignette>();
         VignettePulse.speed = 4;
-        Camera.main.gameObject.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
     }
 
     [HarmonyPatch(typeof(InGame), nameof(InGame.StartMatch))]
     private static class InGame_StartMatch
     {
-        public static void Postfix()
+        public static void Postfix(InGame __instance)
         {
             PrepareVolume();
             DisableNight();
+            __instance.sceneCamera.GetUniversalAdditionalCameraData().renderPostProcessing = true;
         }
     }
     
