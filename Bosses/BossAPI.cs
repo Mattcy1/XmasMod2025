@@ -1,4 +1,5 @@
-﻿using BossAPI.Bosses;
+﻿using System;
+using BossAPI.Bosses;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
@@ -26,6 +27,7 @@ using MelonLoader;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using UnityEngine;
 using XmasMod2025.Assets;
 using XmasMod2025.Bosses;
@@ -240,7 +242,7 @@ public class Hooks
                 }
             }
 
-            if (!__instance.bloonModel.HasTag("Choco") && !__instance.bloonModel.isBoss && XmasMod2025.boss != null && (XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<ChocoBoss>() || XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<GrinchBoss>()))
+            if (!__instance.bloonModel.HasTag("Choco") && !__instance.bloonModel.isBoss && XmasMod2025.boss != null && (XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<ChocoBoss>() || XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<KrampusBoss>()))
             {
                 var root = __instance.bloonModel.Duplicate();
 
@@ -516,6 +518,11 @@ public class RoundBossUI : MonoBehaviour
 {
     public static RoundBossUI? instance;
     public static ModHelperText roundText;
+    public static ModHelperButton hintButton;
+
+    public static ModHelperPanel descriptionPanel;
+    public static ModHelperText descriptionText;
+    
     public void Close()
     {
         if (gameObject)
@@ -539,6 +546,22 @@ public class RoundBossUI : MonoBehaviour
 
             roundText = panelInside.AddText(new Info("Text_", 100, 0, 800, 125), "Boss Appears In: " + bossInfo.SpawnRound + " Rounds");
             roundText.EnableAutoSizing();
+            descriptionPanel = rect.gameObject.AddModHelperPanel(new Info("BossHint", 1000, 500));
+            descriptionPanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasPanel"));
+            var insideDescPanel = descriptionPanel.AddPanel(new Info("Inside", 950, 450));
+            insideDescPanel.Background.SetSprite(AssetHelper.GetSprite("ChristmasInsertPanel"));
+            descriptionText = insideDescPanel.AddText(new Info("Text_", 900, 400), "yaya");
+            descriptionPanel.AddButton(new Info("CloseBtn", 500, 250, 50), VanillaSprites.CloseBtn, new Action(() =>
+            {
+                descriptionPanel.SetActive(false);
+            }));
+            descriptionPanel.gameObject.SetActive(false);
+            
+            hintButton = fakePanel.AddButton(new Info("HintBtn", 550, 100, 50), VanillaSprites.InfoBtn, new Action(() =>
+            {
+                descriptionText.SetText(bossInfo.Description);
+                descriptionPanel.gameObject.SetActive(true);
+            }));
 
             var leftBg = panel.AddImage(new Info("LeftBackground", -400, 0f, 300, 300), ModContent.GetTextureGUID<XmasMod2025>("IconHolder"));
             var icon = leftBg.AddImage(new Info("leftIcon", 0, 0f, 200, 200), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossIcon));

@@ -91,8 +91,11 @@ public class XmasMod2025 : BloonsTD6Mod
             InGame.instance.bridge.CreateMapEditorPropAt(propName, prop.positionalData, prop.Def().propModel, ObjectId.FromString(prop.Def().propModel.name + "_" + props.IndexOf(prop)), null);
         }
     }
-    
-    
+
+    public static void PlaySound(string name)
+    {
+        ModContent.GetAudioClip<XmasMod2025>(name).Play();
+    }
 
     public static float PresentBloonChance = 1f;
     public static IntMinMax TreeDropRates = new(3, 5);
@@ -113,6 +116,11 @@ public class XmasMod2025 : BloonsTD6Mod
 
     private static double gifts;
 
+    public override void OnTitleScreen()
+    {
+        PostProcessing.Load();
+    }
+    
     public static double GetCurrency(CurrencyType currency)
     {
         switch (currency)
@@ -612,8 +620,7 @@ public class Bloon_Destroy
                 InGame.instance.SpawnBloons(bloon.id, countRand, 10);
             }
         }
-
-        if (__instance.bloonModel.baseId == ModContent.BloonID<GiftMoab>())
+        else if (__instance.bloonModel.baseId == ModContent.BloonID<GiftMoab>())
         {
             var bloons = Game.instance.model.bloons.ToList().FindAll(bloon => bloon.isMoab && !bloon.isBoss);
             System.Random rand = new();
@@ -648,6 +655,10 @@ public class Bloon_Destroy
             {
                 InGame.instance.SpawnBloons(bloon.id, countRand, 10);
             }
+        }
+        else if (__instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
+        {
+            PostProcessing.DisableNight();
         }
     }
 }
