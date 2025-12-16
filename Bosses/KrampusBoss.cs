@@ -94,10 +94,11 @@ namespace XmasMod2025.Bosses
         public override string HealthBar => "";
         public override string IconGuid => "";
         public override int Stars => 6;
-        public override string CustomSkullIcon => "";
+        public override string CustomSkullIcon => "Krampus";
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 100;
         public override string BaseBloon => BloonType.sBad;
+        public override string PreviewIcon => Icon + "Preview";
         public override string Description => "Most know of good ol' Saint. Nicolas. But not as many know of the much more sinister Krampus, who punishes anyone who's been bad throughout the year, in fact, his sacks are already carrying some bloons right now. Let's just say, when you hear his screech, you know that this will be a horrible night...";
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {

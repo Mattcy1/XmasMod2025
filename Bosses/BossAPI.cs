@@ -53,6 +53,8 @@ public class BossAPI
         public string HealthBarBackground { get; set; }
         public string DisplayName { get; set; }
         public string BossIcon { get; set; }
+        
+        public string BossPreviewIcon { get; set; }
         public string BossID { get; set; }
         public int SpawnRound { get; set; }
         public string BossToSpawn { get; set; }
@@ -481,7 +483,7 @@ public static class Ext
     }
 
 
-    public static bool AddInfo(this BloonModel bloon, bool hasSkull, int skullsCount, string customSkullIcon, int starsCount, string healthBarIcon, string healthBarBackground, string displayName, string bossIcon, string bossID, int round, string ToSpawn, string description)
+    public static bool AddInfo(this BloonModel bloon, bool hasSkull, int skullsCount, string customSkullIcon, int starsCount, string healthBarIcon, string healthBarBackground, string displayName, string bossIcon, string bossID, int round, string ToSpawn, string description, string previewIcon = null)
     {
         BossAPI.BossInfos.Add(new BossAPI.BossInfo
         {
@@ -497,7 +499,8 @@ public static class Ext
             BossID = bossID,
             SpawnRound = round,
             BossToSpawn = ToSpawn,
-            Description = description
+            Description = description,
+            BossPreviewIcon = string.IsNullOrEmpty(previewIcon) ? bossIcon : previewIcon,
         });
 
 
@@ -549,7 +552,7 @@ public class RoundBossUI : MonoBehaviour
             roundText.EnableAutoSizing();
 
             var leftBg = panel.AddImage(new Info("LeftBackground", -400, 0f, 300, 300), ModContent.GetTextureGUID<XmasMod2025>("IconHolder"));
-            var icon = leftBg.AddImage(new Info("leftIcon", 0, 0f, 200, 200), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossIcon));
+            var icon = leftBg.AddImage(new Info("leftIcon", 0, 0f, 200, 200), ModContent.GetTextureGUID<XmasMod2025>(bossInfo.BossPreviewIcon));
             RoundsUntilNextBoss = bossInfo.SpawnRound;
 
             var desc1 = panel.AddPanel(new Info("DescriptionHolder", 0, -400, 1000, 500), "");
