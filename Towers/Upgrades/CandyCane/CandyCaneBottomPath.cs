@@ -91,6 +91,8 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
                     weapons.projectile.id = "Cane003";
                     weapons.projectile.ApplyDisplay<LuckyCandyCaneProj>();
                 }
+
+                towerModel.ApplyDisplay<CandyCaneMonkey003>();
             }
         }
 
@@ -117,7 +119,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         {
             var proj = towerModel.GetWeapon().projectile;
 
-            proj.GetDamageModel().damage += 40;
+            proj.GetDamageModel().damage += 30;
             proj.pierce = 1;
             proj.RemoveBehavior<CreateProjectileOnExhaustPierceModel>();
 
@@ -125,6 +127,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
             towerModel.GetWeapon().rate += 0.3f;
             towerModel.range += 7;
             towerModel.GetAttackModel().range += 7;
+            towerModel.ApplyDisplay<CandyCaneMonkey004>();
         }
     }
 
@@ -139,13 +142,52 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         {
             var proj = towerModel.GetWeapon().projectile;
 
-            proj.GetDamageModel().damage += 60;
+            proj.GetDamageModel().damage += 5;
 
             towerModel.GetWeapon().rate += 0.1f;
             towerModel.GetWeapon().emission = new ArcEmissionModel("ArcEmissionModel_", 3, 0, 20, null, false, false);
 
             towerModel.range += 7;
             towerModel.GetAttackModel().range += 7;
+            towerModel.ApplyDisplay<CandyCaneMonkey005>();
+        }
+    }
+
+    public class CandyCaneMonkey003 : ModDisplay
+    {
+        public override string BaseDisplay => Game.instance.model.GetTowerFromId("Alchemist-004").display.AssetGUID;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, Name);
+            SetMeshTexture(node, Name, 1);
+            SetMeshTexture(node, Name, 2);
+            node.RemoveBone("AlchemistRig:Propjectile_R");
+        }
+    }
+
+
+    public class CandyCaneMonkey004 : ModDisplay
+    {
+        public override string BaseDisplay => Game.instance.model.GetTowerFromId("DartMonkey-004").display.AssetGUID;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, Name);
+            SetMeshTexture(node, Name, 1);
+            SetMeshTexture(node, Name, 2);
+            SetMeshTexture(node, Name, 3);
+            SetMeshTexture(node, Name, 4);
+        }
+    }
+
+
+    public class CandyCaneMonkey005 : ModDisplay
+    {
+        public override string BaseDisplay => Game.instance.model.GetTowerFromId("SniperMonkey-013").display.AssetGUID;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            //SetMeshTexture(node, Name);
+            //SetMeshTexture(node, Name, 1);
+            node.Dump();
         }
     }
 

@@ -106,6 +106,7 @@ public class XmasMod2025 : BloonsTD6Mod
     public static List<TowerModel> GiftOfGivingTowersIds = new List<TowerModel>();
     public static Bloon boss = null;
     public static int UpgradeCount = 0;
+    public static bool KrampusAlive = false;
     public static List<MapEditorProp> MapEditorProps => GameData.Instance.mapEditorData.mapEditorProps.ToList();
 
 

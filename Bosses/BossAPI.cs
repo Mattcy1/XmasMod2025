@@ -81,9 +81,16 @@ public class Hooks
     [HookPriority(HookPriorityAttribute.Higher)]
     public static bool BloonDamagePostfix(Bloon @this, ref float totalAmount, Projectile projectile, ref bool distributeToChildren, ref bool overrideDistributeBlocker, ref bool createEffect, Tower tower, BloonProperties immuneBloonProperties, BloonProperties originalImmuneBloonProperties, ref bool canDestroyProjectile, ref bool ignoreNonTargetable, ref bool blockSpawnChildren, HookNullable<int> powerActivatedByPlayerId)
     {
-        foreach (var tag in @this.bloonModel.tags)
+        foreach (var bossInfo in BossAPI.BossInfos)
         {
-            foreach (var bossInfo in BossAPI.BossInfos)
+            if (XmasMod2025.KrampusAlive)
+            {
+                if (@this.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
+                {
+                    BossUI.HandleUI(@this);
+                }
+            }
+            else
             {
                 if (@this.bloonModel.IsModdedBoss())
                 {
@@ -222,12 +229,26 @@ public class Hooks
                 {
                     bossInfo.Boss = __instance;
 
-                    if (BossUI.instance != null)
+                    if(XmasMod2025.KrampusAlive && __instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
                     {
-                        BossUI.instance.Close();
+                        if (BossUI.instance != null)
+                        {
+                            BossUI.instance.Close();
+                        }
+
+                        BossUI.CreateBossBar(bossInfo);
+                    }
+                    else if(!XmasMod2025.KrampusAlive)
+                    {
+                        if (BossUI.instance != null)
+                        {
+                            BossUI.instance.Close();
+                        }
+
+                        BossUI.CreateBossBar(bossInfo);
                     }
 
-                    BossUI.CreateBossBar(bossInfo);
+
 
                     if (RoundBossUI.instance != null)
                         RoundBossUI.instance.Close();
@@ -288,9 +309,20 @@ public class Hooks
                     bossInfo.Boss = __instance;
                     XmasMod2025.AddCurrency(CurrencyType.Gift, 1000);
 
-                    if (BossUI.instance != null)
+
+                    if(XmasMod2025.KrampusAlive && __instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
                     {
-                        BossUI.instance.Close();
+                        if (BossUI.instance != null)
+                        {
+                            BossUI.instance.Close();
+                        }
+                    }
+                    else if(!XmasMod2025.KrampusAlive)
+                    {
+                        if (BossUI.instance != null)
+                        {
+                            BossUI.instance.Close();
+                        }
                     }
 
                     if (BossAPI.roundsSpawn.Count > 0)
@@ -337,7 +369,12 @@ public class Hooks
                         BossUI.instance.Close();
                     }
 
-                    if (bloon.bloonModel.IsModdedBoss())
+                    if (XmasMod2025.KrampusAlive && __instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
+                    {
+                        diedTo = __instance.GetInfo();
+                        break;
+                    }
+                    else if(!XmasMod2025.KrampusAlive && bloon.bloonModel.IsModdedBoss())
                     {
                         diedTo = bossInfo;
                         break;
@@ -370,15 +407,23 @@ public class Hooks
         [HarmonyPostfix]
         public static void Postfix(HealthPercentTrigger __instance)
         {
-            if (__instance.modl.actionIds.Contains("ModdedSkullModdedBossCoal Boss") || __instance.modl.actionIds.Contains("ModdedSkullModdedBossThe Grinch"))
+            if (__instance.modl.actionIds.Contains("ModdedSkullModdedBossCoal Boss") || __instance.modl.actionIds.Contains("ModdedSkullModdedBossKrampus"))
             {
                 InGame.instance.SpawnBloons(ModContent.BloonID<CoalTotem>(), 1, 0);
             }
 
             if (BossAPI.skullUIs.Count > 0 && __instance.bloon.bloonModel.IsModdedBoss() && __instance.modl.actionIds.Contains("ModdedSkull" + __instance.bloon.bloonModel.GetBossID()))
             {
-                int lastIndex = BossAPI.skullUIs.Count - 1;
-                MelonCoroutines.Start(BossUI.HandeSkull(BossAPI.skullUIs[lastIndex], __instance.bloon.GetInfo().SkullIcon));
+                if(XmasMod2025.KrampusAlive && __instance.bloon.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
+                {
+                    int lastIndex = BossAPI.skullUIs.Count - 1;
+                    MelonCoroutines.Start(BossUI.HandeSkull(BossAPI.skullUIs[lastIndex], __instance.bloon.GetInfo().SkullIcon));
+                }
+                else if(!XmasMod2025.KrampusAlive)
+                {
+                    int lastIndex = BossAPI.skullUIs.Count - 1;
+                    MelonCoroutines.Start(BossUI.HandeSkull(BossAPI.skullUIs[lastIndex], __instance.bloon.GetInfo().SkullIcon));
+                }
             }
 
             if (BossUI.bossPanelInside != null && __instance.modl.actionIds.Contains("HealthBar" + __instance.bloon.bloonModel.GetBossID()))
@@ -389,51 +434,100 @@ public class Hooks
                 {
                     if (bossInfo.BossID == __instance.bloon.bloonModel.GetBossID())
                     {
-                        if (string.IsNullOrEmpty(bossInfo.HealthBarIcon))
+                        if (XmasMod2025.KrampusAlive && __instance.bloon.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
                         {
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("90");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("80");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("70");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("60");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("50");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("40");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("30");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("20");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("10");
+                            if (string.IsNullOrEmpty(bossInfo.HealthBarIcon))
+                            {
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("90");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("80");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("70");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("60");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("50");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("40");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("30");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("20");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("10");
 
+                            }
+                            else
+                            {
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "90");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "80");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "70");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "60");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "50");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "40");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "30");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "20");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "10");
+                            }
                         }
-                        else
+                        else if (!XmasMod2025.KrampusAlive)
                         {
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "90");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "80");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "70");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "60");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "50");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "40");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "30");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "20");
-                            if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
-                                BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "10");
-                        }
+                            if (string.IsNullOrEmpty(bossInfo.HealthBarIcon))
+                            {
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("90");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("80");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("70");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("60");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("50");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("40");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("30");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("20");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>("10");
 
-                        break;
+                            }
+                            else
+                            {
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.9f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "90");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.8f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "80");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.7f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "70");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.6f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "60");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.5f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "50");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.4f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "40");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.3f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "30");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.2f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "20");
+                                if (boss.health <= boss.bloonModel.maxHealth * 0.1f)
+                                    BossUI.bossPanelInside.Image.sprite = ModContent.GetSprite<XmasMod2025>(bossInfo.HealthBarIcon + "10");
+                            }
+
+                            break;
+                        }
                     }
                 }
             }

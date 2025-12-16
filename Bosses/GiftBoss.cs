@@ -49,6 +49,7 @@ namespace XmasMod2025.Bosses
         public override string IconGuid => "";
         public override int Stars => 6;
         public override string CustomSkullIcon => "";
+        public override string Icon => "GiftBossIcon";
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 20;
         public override string BaseBloon => BloonType.sBad;
@@ -91,7 +92,10 @@ namespace XmasMod2025.Bosses
 
         public override void OnSpawn(Bloon bloon)
         {
-            XmasMod2025.boss = bloon;
+            if (!XmasMod2025.KrampusAlive)
+            {
+                XmasMod2025.boss = bloon;
+            }
         }
     }
 }

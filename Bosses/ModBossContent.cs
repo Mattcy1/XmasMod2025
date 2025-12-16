@@ -29,7 +29,6 @@ public abstract class ModBoss : ModBloon
     public override void Register()
     {
         base.Register();
-        IconReference = GetSpriteReferenceOrDefault(mod, Icon);
 
         BloonModel bossBloonModel = Game.instance.model.GetBloon(Id);
 
@@ -38,8 +37,6 @@ public abstract class ModBoss : ModBloon
 
         bossBloonModel.BecomeModdedBoss(BossName);
         string registeredBossId = bossBloonModel.GetBossID();
-
-        bossBloonModel.icon = IconReference;
 
         if (SkullCount > 0)
         {
@@ -62,7 +59,5 @@ public abstract class ModBoss : ModBloon
     public virtual void OnSpawn(Bloon bloon) { }
     public override string Icon => Name + "-Icon";
     public virtual string PreviewIcon => Icon;
-    protected virtual bool IconIsGUID => false;
     public override string Description => "Default description for Boss " + Id + ".";
-    public SpriteReference IconReference { get; protected set; }
 }

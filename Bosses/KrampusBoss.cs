@@ -21,6 +21,8 @@ using XmasMod2025.Bloons;
 using XmasMod2025.Bloons.Moabs;
 using XmasMod2025.BossAPI;
 using XmasMod2025.Towers;
+using Il2CppAssets.Scripts.Simulation.SMath;
+using Il2CppAssets.Scripts.Simulation.Towers;
 
 namespace XmasMod2025.Bosses
 {
@@ -31,8 +33,8 @@ namespace XmasMod2025.Bosses
             [RegisterTypeInIl2Cpp]
             public class Shake : MonoBehaviour
             {
-                public Vector3 ShakeAmount = new Vector3(1f, 0.4f, 0);
-                public Vector3 originalPos;
+                public UnityEngine.Vector3 ShakeAmount = new UnityEngine.Vector3(1f, 0.4f, 0);
+                public UnityEngine.Vector3 originalPos;
                 public float ShakeTime = 0.2f;
                 private float nextMoveTime = 0f;
 
@@ -89,11 +91,13 @@ namespace XmasMod2025.Bosses
             }
         }
         
+        public static Dictionary<Tower, Vector3Boxed> kidnapTowers = new Dictionary<Tower, Vector3Boxed>();
         public override string BossName => "Krampus";
         public override int SkullCount => 10;
         public override string HealthBar => "";
         public override string IconGuid => "";
         public override int Stars => 6;
+        public override string Icon => "KrampusIcon";
         public override string CustomSkullIcon => "Krampus";
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 100;
@@ -102,15 +106,16 @@ namespace XmasMod2025.Bosses
         public override string Description => "Most know of good ol' Saint. Nicolas. But not as many know of the much more sinister Krampus, who punishes anyone who's been bad throughout the year, in fact, his sacks are already carrying some bloons right now. Let's just say, when you hear his screech, you know that this will be a horrible night...";
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            bloonModel.maxHealth = 45000000; // 45,000,000 why mattcy
-            //bloonModel.maxHealth = 10000;
+            //bloonModel.maxHealth = 20000000;
+            bloonModel.maxHealth = 10000;
             bloonModel.RemoveAllChildren();
             bloonModel.speed /= 3f;
 
             StunTowersInRadiusActionModel shield = Game.instance.model.GetBloon("Vortex1").GetBehavior<StunTowersInRadiusActionModel>().Duplicate();
             CreateEffectActionModel effect = Game.instance.model.GetBloon("Vortex1").GetBehavior<CreateEffectActionModel>().Duplicate();
-            shield.actionId = "ModdedSkullModdedBossThe Grinch";
+            shield.actionId = "ModdedSkullModdedBossKrampus";
             shield.radius *= 2;
+            shield.Mutator.id = "KrampusStun";
 
             effect.actionId = shield.actionId;
 
@@ -123,8 +128,32 @@ namespace XmasMod2025.Bosses
             XmasMod2025.boss = bloon;
             Hooks.StartMonobehavior<HandleTotem>();
             Hooks.StartMonobehavior<KrampusHandler>();
+            XmasMod2025.KrampusAlive = true;
             BossUI.UpdateNameColor(new Color32(21, 23, 22, 255), null);
             PostProcessing.EnableNight();
+        }
+
+        public static void KidnapTower()
+        {
+            foreach(var tower in InGame.instance.GetTowers())
+            {
+                if(tower.IsMutatedBy("TowerStun") && !kidnapTowers.ContainsKey(tower) && XmasMod2025.KrampusAlive)
+                {
+                    kidnapTowers.Add(tower, tower.Scale);
+                    tower.Scale = Vector3Boxed.zero;
+                }
+                else
+                {
+                    foreach(var kidnap in kidnapTowers)
+                    {
+                        if(kidnap.Key == tower)
+                        {
+                            tower.Scale = kidnap.Value;
+                            kidnapTowers.Remove(tower);
+                        }
+                    }
+                }
+            }
         }
 
         [RegisterTypeInIl2Cpp]
@@ -140,6 +169,7 @@ namespace XmasMod2025.Bosses
             {
                 if (XmasMod2025.boss == null)
                 {
+                    XmasMod2025.KrampusAlive = false;
                     this.Destroy();
                     return;
                 }
@@ -149,6 +179,8 @@ namespace XmasMod2025.Bosses
                 
                 float totalSpeedMultiplier = 1 / (healthPercent * 10  / 1 + 1 / ( 1 - trackPercent < 0.1f ? 0.1f : 1 - trackPercent) / 2); // 1 - 0.1
                 PostProcessing.SetPulseSpeed(totalSpeedMultiplier);
+
+                KidnapTower();
                 
                 if (healthPercent <= 0.5f && !half)
                 {
@@ -172,9 +204,9 @@ namespace XmasMod2025.Bosses
 
                 if (healthPercent <= 0.25f && !nextHalf)
                 {
-                    foreach(var boss in ModContent.GetContent<ModBoss>())
+                    foreach (var boss in ModContent.GetContent<ModBoss>())
                     {
-                        if(boss.Id != ModContent.BloonID<KrampusBoss>())
+                        if (boss.Id != ModContent.BloonID<KrampusBoss>())
                         {
                             InGame.instance.SpawnBloons(boss.Id, 1, 0);
                         }

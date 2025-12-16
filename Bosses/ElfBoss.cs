@@ -45,7 +45,10 @@ namespace XmasMod2025.Bosses
 
         public override void OnSpawn(Bloon bloon)
         {
-            XmasMod2025.boss = bloon;
+            if (!XmasMod2025.KrampusAlive)
+            {
+                XmasMod2025.boss = bloon;
+            }
         }
     }
 }

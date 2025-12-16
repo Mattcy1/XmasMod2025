@@ -54,6 +54,7 @@ namespace XmasMod2025.Bosses
         public override string HealthBar => "";
         public override string IconGuid => "";
         public override int Stars => 6;
+        public override string Icon => "CoalBossIcon";
         public override string CustomSkullIcon => "";
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 80;
@@ -77,10 +78,11 @@ namespace XmasMod2025.Bosses
         }
         public override void OnSpawn(Bloon bloon)
         {
-            XmasMod2025.boss = bloon;
-            Hooks.StartMonobehavior<HandleTotem>();
-            
-            
+            if (!XmasMod2025.KrampusAlive)
+            {
+                XmasMod2025.boss = bloon;
+                Hooks.StartMonobehavior<HandleTotem>();
+            }
         }
     }
 
