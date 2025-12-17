@@ -1,16 +1,39 @@
 ﻿using BossAPI.Bosses;
 using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Extensions;
+using Il2Cpp;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.Display;
+using UnityEngine;
 using XmasMod2025.Bloons.Moabs;
 
 namespace XmasMod2025.Bosses
 {
     internal class ElfBoss : ModBoss
     {
+        public class ElfBossDisplay : ModBloonCustomDisplay<ElfBoss>
+        {
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => "ElfBoss";
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+                    renderer.SetOutlineColor(new Color32(102, 163, 73, 255));
+
+                    if (renderer.name == "Propeller")
+                    {
+                        renderer.gameObject.AddComponent<CustomRotationSimple>();
+                    }
+                }
+            }
+        }
         public override string BossName => "Evil Elf";
         public override int SkullCount => 3;
         public override string HealthBar => "";

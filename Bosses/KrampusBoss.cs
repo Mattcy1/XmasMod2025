@@ -135,6 +135,8 @@ namespace XmasMod2025.Bosses
 
         public static void KidnapTower()
         {
+            if(!InGame.instance) return;
+            
             foreach(var tower in InGame.instance.GetTowers())
             {
                 if(tower.IsMutatedBy("TowerStun") && !kidnapTowers.ContainsKey(tower) && XmasMod2025.KrampusAlive)

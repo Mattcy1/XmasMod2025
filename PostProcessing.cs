@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Il2CppAssets.Scripts.Unity.Render;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
 using UnityEngine;
@@ -26,6 +27,8 @@ public class PulseVignette : MonoBehaviour
     
     private void Update()
     {
+        if(!vignette.active) return;
+        
         vignette.intensity.value = curve.Evaluate(Time.time % speed / speed); // so doing % speed / speed (lets say speed = 2) would be 0-1.9999 / 2 or 0 - 0.99995, just getting there at half the rate
     }
 }
@@ -73,6 +76,12 @@ internal static class PostProcessing
         {
             XmasVolumeProfile = XmasVolume.profile;
         }
+        
+        isNight = false;
+        
+        XmasVolumeProfile.components[0].active = false;
+        XmasVolumeProfile.components[2].active = false;
+        XmasVolumeProfile.components[3].active = false;
     }
 
     public static void EnableNight()
@@ -84,6 +93,7 @@ internal static class PostProcessing
         XmasVolumeProfile.components[0].active = true;
         XmasVolumeProfile.components[2].active = true;
         XmasVolumeProfile.components[3].active = true;
+        Object.FindObjectOfType<NightModeSettings>().gameObject.SetActive(true);
     }
     public static void DisableNight()
     {
@@ -95,6 +105,7 @@ internal static class PostProcessing
         XmasVolumeProfile.components[0].active = false;
         XmasVolumeProfile.components[2].active = false;
         XmasVolumeProfile.components[3].active = false;
+        Object.FindObjectOfType<NightModeSettings>().gameObject.SetActive(false);
     }
 
     public static void SetPulseSpeed(float totalSpeedMultiplier)

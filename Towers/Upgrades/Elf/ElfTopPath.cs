@@ -186,7 +186,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         var weapon = newAtk.weapons[0];
         var projectile = weapon.projectile;
         weapon.SetEmission(new EmissionAtClosestPathSegmentModel("EmissionAtClosestPathSegmentModel_", 1, 0, new Il2CppReferenceArray<EmissionBehaviorModel>(0)));
-        projectile.AddBehavior(new TravelAlongPathModel("TravelAlongPathModel_", 30, 9999, true, false, 0));
+        projectile.AddBehavior(new TravelAlongPathModel("TravelAlongPathModel_ToyCart", 30, 9999, true, false, 0));
         projectile.RemoveBehavior<TravelStraitModel>();
         projectile.id = "ToyCart_Low";
         projectile.pierce = Single.MaxValue;
@@ -304,8 +304,15 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     {
         public static void Postfix(TravelAlongPath __instance)
         {
+            if(!__instance.travelAlongPathModel.name.EndsWith("ToyCart")) return;
+            
             var projectile = __instance.projectile;
             var tower = TowerForProjectile[projectile];
+            if (tower == null)
+            {
+                projectile.Destroy();
+                return;
+            }
             tower.PositionTower(projectile.Position.ToVector2());
             tower.Rotation = projectile.Rotation;
         }
