@@ -83,6 +83,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
             public override int Cost => 150;
             public override string Description => "Candy cane have a small chance to grant gifts.";
             public override string Icon => "BottomPathCane3";
+            public override string Portrait => "Candy003Portrait";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
                 foreach (var weapons in towerModel.GetWeapons())
@@ -115,6 +116,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         public override int Cost => 650;
         public override string Description => "Slower, attack speed, less pierce, but INSANE single target damage perfect for taking down these pesky moab.";
         public override string Icon => "BottomPathCane4";
+        public override string Portrait => "Candy004Portrait";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
             var proj = towerModel.GetWeapon().projectile;
@@ -138,6 +140,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         public override int Cost => 4250;
         public override string Description => "With this guy in town, no boss will dare fight you.";
         public override string Icon => "BottomPathCane5";
+        public override string Portrait => "Candy005Portrait";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
             var proj = towerModel.GetWeapon().projectile;
@@ -185,9 +188,10 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
         public override string BaseDisplay => Game.instance.model.GetTowerFromId("SniperMonkey-013").display.AssetGUID;
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
-            //SetMeshTexture(node, Name);
-            //SetMeshTexture(node, Name, 1);
-            node.Dump();
+            SetMeshTexture(node, Name);
+            SetMeshTexture(node, Name, 1);
+            SetMeshOutlineColor(node, UnityEngine.Color.green);
+            SetMeshOutlineColor(node, UnityEngine.Color.green, 1);
         }
     }
 
