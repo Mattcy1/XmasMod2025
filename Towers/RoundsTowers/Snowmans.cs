@@ -1,4 +1,6 @@
 ﻿using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Display;
+using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Towers;
@@ -23,12 +25,13 @@ namespace XmasMod2025.Towers.RoundsTowers
         public class R20 : ChristmasTower
         {
             public override string BaseTower => TowerType.BananaFarm;
-            public override int Cost => 35;
             protected override int Order => 1;
             public override int ShopTowerCount => 3;
+            public override int Cost => 35;
             public override string DisplayName => "Beginner Snowman";
             public override string Description => "Slowy, generates gifts.";
-            public override int UnlockRound => 24;
+            public override string Icon => VanillaSprites.SnowMonkey;
+            public override string Portrait => Icon;
             public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
             {
                 return towerSet.First(model => model.towerId == Game.instance.model.GetTowerFromId(ModContent.TowerID<XmasTree>()).baseId).towerIndex + 1;
@@ -157,6 +160,17 @@ namespace XmasMod2025.Towers.RoundsTowers
 
                 towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
                 proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
+            }
+        }
+
+        public class R20Display : ModTowerDisplay<R20>
+        {
+            public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
+            public override float Scale => 0.5f;
+
+            public override bool UseForTower(params int[] tiers)
+            {
+                return tiers.Sum() == 0;
             }
         }
     }
