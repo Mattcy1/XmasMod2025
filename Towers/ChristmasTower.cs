@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
@@ -37,14 +38,14 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
             if (model.GetModTower() is ChristmasTower cTower && cTower.UnlockRound != 0)
             {
                 cTower.ShopButton = __result.GameObject.transform.parent.gameObject;
-                __result.GameObject.transform.parent.gameObject.SetActive(false);
+                cTower.ShopButton.SetActive(false);
                 if (ButtonsToUnlock.TryGetValue(cTower.UnlockRound, out var buttons))
                 {
-                    buttons.Add(__result.GameObject.transform.parent.gameObject);
+                    buttons.Add(cTower.ShopButton);
                 }
                 else
                 {
-                    ButtonsToUnlock.Add(cTower.UnlockRound, [__result.GameObject.transform.parent.gameObject]);
+                    ButtonsToUnlock.Add(cTower.UnlockRound, [cTower.ShopButton]);
                 }
             }
         }
@@ -59,6 +60,11 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
             {
                 foreach (var button in buttons)
                 {
+                    if (!button)
+                    {
+                        ModHelper.Warning<XmasMod2025>("An unlock button is null?");
+                        return;
+                    }
                     button.SetActive(true);
                 }
             }

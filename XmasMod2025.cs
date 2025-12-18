@@ -388,7 +388,7 @@ public class XmasMod2025 : BloonsTD6Mod
 
         if (@this.bloonModel.baseId == ModContent.BloonID<ElfBoss>() && tower != null)
         {
-            string[] allowed = [ModContent.TowerID<ElfMonkey>(), ModContent.TowerID<ToyCart.ToyCartTower>(), ModContent.TowerID<ToyMorter.ToyMorterTower>()];
+            string[] allowed = [ModContent.TowerID<ElfMonkey>(), ModContent.TowerID<ToyCart.ToyCartTower>(), ModContent.TowerID<ToyMortar.ToyMortarTower>()];
 
             if (!allowed.Contains(tower.towerModel.baseId))
             {

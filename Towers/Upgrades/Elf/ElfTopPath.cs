@@ -41,7 +41,7 @@ public class BuildersSpirit : ChristmasUpgrade<ElfMonkey>
     {
         List<TowerFilterModel> filters =
         [
-            new FilterInBaseTowerIdModel("SubTowerFilterModel_BuildersSpirit", new(["Sentry", TowerID<ToyMorter.ToyMorterTower>(), TowerID<ToyCart.ToyCartTower>()]))
+            new FilterInBaseTowerIdModel("SubTowerFilterModel_BuildersSpirit", new(["Sentry", TowerID<ToyMortar.ToyMortarTower>(), TowerID<ToyCart.ToyCartTower>()]))
         ];
 
         var rateSupportModel = new RateSupportModel("RateSupportModel_BuildersSpirit", 0.85f, true, "Rate:BuildersSpirit", false, 1, new Il2CppReferenceArray<TowerFilterModel>(filters.ToArray()), "", "");
@@ -83,31 +83,31 @@ public class BuildersAtmosphere : ChristmasUpgrade<ElfMonkey>
     public override int Cost => 45;
 }
 
-public class ToyMorter : ChristmasUpgrade<ElfMonkey>
+public class ToyMortar : ChristmasUpgrade<ElfMonkey>
 {
-    public class ToyMorterTower : ModSubTower
+    public class ToyMortarTower : ModSubTower
     {
-        public override string Portrait => "ToyMorter-Portrait";
+        public override string Portrait => "ToyMortar-Portrait";
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
             towerModel.range = 40f;
             towerModel.GetAttackModel().range = 40f;
-            towerModel.GetAttackModel().ApplyDisplay<ToyMorterAttackDisplay>();
+            towerModel.GetAttackModel().ApplyDisplay<ToyMortarAttackDisplay>();
 
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-200").GetWeapon().projectile.Duplicate());
             weapon.projectile.ApplyDisplay<ToyBomb>();
         }
 
-        public class ToyMorterTowerDisplay : ModTowerCustomDisplay<ToyMorterTower>
+        public class ToyMortarTowerDisplay : ModTowerCustomDisplay<ToyMortarTower>
         {
             public override bool UseForTower(params int[] tiers) => true;
 
             public override string AssetBundleName => "xmas";
             public override string PrefabName => "ToyTurretLegs";
         }
-        public class ToyMorterAttackDisplay : ModCustomDisplay
+        public class ToyMortarAttackDisplay : ModCustomDisplay
         {
             public override string AssetBundleName => "xmas";
             public override string PrefabName => "ToyTurretBody";
@@ -131,15 +131,15 @@ public class ToyMorter : ChristmasUpgrade<ElfMonkey>
 
     public override void ApplyUpgrade(TowerModel towerModel)
     {
-        var toyMorterAttack = Game.instance.model.GetTowerFromId("EngineerMonkey-100").GetAttackModel(1).Duplicate();
-        var toyMorterWeapon = toyMorterAttack.weapons[0];
-        toyMorterAttack.name = "ToyMorter";
-        toyMorterWeapon.name = "ToyMorter";
-        toyMorterWeapon.projectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMorterTower>();
-        toyMorterWeapon.AddBehavior(new EmissionsPerRoundFilterModel("EmissionsPerRoundFilterModel", 2));
-        //toyMorterAttack.weapons[0].projectile.ApplyDisplay<ToyBox>(); // Display doesn't exist yet.
+        var toyMortarAttack = Game.instance.model.GetTowerFromId("EngineerMonkey-100").GetAttackModel(1).Duplicate();
+        var toyMortarWeapon = toyMortarAttack.weapons[0];
+        toyMortarAttack.name = "ToyMortar";
+        toyMortarWeapon.name = "ToyMortar";
+        toyMortarWeapon.projectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMortarTower>();
+        toyMortarWeapon.AddBehavior(new EmissionsPerRoundFilterModel("EmissionsPerRoundFilterModel", 2));
+        //toyMortarAttack.weapons[0].projectile.ApplyDisplay<ToyBox>(); // Display doesn't exist yet.
 
-        towerModel.AddBehavior(toyMorterAttack);
+        towerModel.AddBehavior(toyMortarAttack);
     }
 
     public override int Path => Top;
@@ -153,6 +153,8 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     public static Dictionary<Tower, Projectile> ProjectileForTower = new Dictionary<Tower, Projectile>();
     public class ToyCartTower : ModTower
     {
+        public override int MiddlePathUpgrades => 1;
+
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
             towerModel.areaTypes = new Il2CppStructArray<AreaType>([
@@ -170,6 +172,8 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTower(TowerType.BoomerangMonkey, 0, 0, 0).GetWeapon().projectile.Duplicate());
             weapon.rate = 0.175f; // Just under 6/s (~5.88)
+
+            towerModel.dontDisplayUpgrades = true;
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
@@ -194,6 +198,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         projectile.GetDamageModel().damage = 3;
         projectile.ApplyDisplay<ToyCartProjectile>();
         projectile.RemoveBehavior<RandomDisplayModel>();
+        projectile.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel_MoabImmunity", "Moabs", 0, 0, false, false));
         weapon.fireWithoutTarget = true;
         weapon.rate = 5;
 
@@ -323,5 +328,68 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     public override int Cost => 225;
 
     public override string Description =>
-        "Elf monkey can now create carts which run over bloons for <b>three</b> damage and have fast shooting turrets that only do <b>one</b> damage each shot.";
+        "Elf monkey can now create carts which run over bloons for <b>three</b> damage (MOABs are immune) and have fast shooting turrets that only do <b>one</b> damage each shot.";
+}
+
+public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
+{
+    public class ToyCart2 : ModUpgrade<ToyCart.ToyCartTower>
+    {
+        public class MetalBoomerang : ModDisplay2D
+        {
+            protected override string TextureName => Name;
+        }
+        public override void ApplyUpgrade(TowerModel towerModel)
+        {
+            var weapon = towerModel.GetWeapon();
+            var projectile = weapon.projectile;
+            
+            projectile.ApplyDisplay<MetalBoomerang>();
+            projectile.GetDamageModel().damage = 15;
+            projectile.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel_Moabs", "Moabs", 3, 0, false, true));
+            projectile.AddBehavior(new KnockbackModel("KnockbackModel_ToyCart", 0.02f, 0.05f, 0.1f, 1, "KB:ToyCart"));
+        }
+
+        public override int Path => Middle;
+        public override int Tier => 1;
+        public override int Cost => 0;
+    }
+    
+    public class ToyMortar2 : ModSubTower
+    {
+        public override void ModifyBaseTowerModel(TowerModel towerModel)
+        {
+            towerModel.baseId = TowerID<ToyMortar.ToyMortarTower>();
+            towerModel.name = TowerID<ToyMortar.ToyMortarTower>(0, 1);
+        }
+
+        public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
+        public override string BaseTower => TowerID<ToyMortar.ToyMortarTower>();
+    }
+    
+    public override void ApplyUpgrade(TowerModel towerModel)
+    {
+        var toyMortarWeapon = towerModel.GetWeapon(1);
+        var toyMortarProjectile = toyMortarWeapon.projectile;
+        var toyCartWeapon = towerModel.GetWeapon(2);
+        var toyCartProjectile = toyCartWeapon.projectile;
+        
+        toyMortarWeapon.RemoveBehavior<EmissionsPerRoundFilterModel>();
+        toyMortarWeapon.rate *= 0.25f;
+
+        toyMortarProjectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMortar2>();
+        
+        toyCartWeapon.rate *= 0.25f;
+        
+        toyCartProjectile.id = "ToyCart_High";
+        toyCartProjectile.GetDamageModel().damage = 99999;
+    }
+
+
+    public override int Path => Top;
+    public override int Tier => 4;
+    public override int Cost => 225;
+
+    public override string Description =>
+        "Creates newly enhanced toy carts and mortars and a much faster rate!";
 }
