@@ -1,6 +1,7 @@
 ﻿using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Components;
+using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Helpers;
 using BTD_Mod_Helper.Api.Hooks;
 using BTD_Mod_Helper.Api.Hooks.BloonHooks;
@@ -29,6 +30,7 @@ using Il2CppAssets.Scripts.Simulation.Track;
 using Il2CppAssets.Scripts.SimulationTests;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Bridge;
+using Il2CppAssets.Scripts.Unity.Display;
 using Il2CppAssets.Scripts.Unity.Map;
 using Il2CppAssets.Scripts.Unity.Scenes;
 using Il2CppAssets.Scripts.Unity.UI_New;
@@ -36,6 +38,7 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.Stats;
 using Il2CppAssets.Scripts.Unity.UI_New.Popups;
 using Il2CppAssets.Scripts.Unity.UI_New.Utils;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MelonLoader;
 using MelonLoader.Utils;
 using Newtonsoft.Json.Linq;
@@ -360,6 +363,34 @@ public class XmasMod2025 : BloonsTD6Mod
             AddCurrency(CurrencyType.Gift, gps);
 
             yield return new WaitForSeconds(1f);
+        }
+    }
+
+    public class GiftEffect : ModDisplay
+    {
+        public override string BaseDisplay => "6d84b13b7622d2744b8e8369565bc058";
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[0], ModContent.GetTexture<XmasMod2025>("blank"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[3], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[2], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[1], ModContent.GetTexture<XmasMod2025>("blank"));
+            ((Component)((Il2CppArrayBase<Renderer>)node.genericRenderers)[2]).GetComponent<ParticleSystem>().startSpeed *= 0.2f;
+        }
+    }
+
+    public class GiftEffectButBig : ModDisplay
+    {
+        public override string BaseDisplay => "6d84b13b7622d2744b8e8369565bc058";
+        public override float Scale => 100;
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[0], ModContent.GetTexture<XmasMod2025>("blank"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[3], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[2], ModContent.GetTexture<XmasMod2025>("Gift1"));
+            RendererExt.SetMainTexture(((Il2CppArrayBase<Renderer>)node.genericRenderers)[1], ModContent.GetTexture<XmasMod2025>("blank"));
+            ((Component)((Il2CppArrayBase<Renderer>)node.genericRenderers)[2]).GetComponent<ParticleSystem>().startSpeed *= 0.2f;
         }
     }
 

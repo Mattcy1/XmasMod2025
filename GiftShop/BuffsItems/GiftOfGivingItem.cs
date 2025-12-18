@@ -23,8 +23,7 @@ public class GiftOfGiving : GiftShopItem
 
         var validTowers = InGame.instance.GetTowers().Where(t =>
             !t.towerModel.isSubTower &&                                
-            t.towerModel.baseId != ModContent.TowerID<XmasTree>() &&   
-            t.towerModel.baseId != ModContent.TowerID<GiftMonkey>()    
+            t.towerModel.baseId != ModContent.TowerID<XmasTree>()    
         ).ToList();
 
         var random = new System.Random();

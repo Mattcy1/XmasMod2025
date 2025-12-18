@@ -23,6 +23,7 @@ using XmasMod2025.BossAPI;
 using XmasMod2025.Towers;
 using Il2CppAssets.Scripts.Simulation.SMath;
 using Il2CppAssets.Scripts.Simulation.Towers;
+using static XmasMod2025.XmasMod2025;
 
 namespace XmasMod2025.Bosses
 {

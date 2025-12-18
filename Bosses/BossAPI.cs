@@ -34,6 +34,7 @@ using XmasMod2025.Bosses;
 using XmasMod2025.UI;
 using static XmasMod2025.BossAPI.BossAPI;
 using Info = BTD_Mod_Helper.Api.Components.Info;
+using Il2CppAssets.Scripts.Unity;
 
 namespace XmasMod2025.BossAPI;
 public class BossAPI
@@ -72,7 +73,7 @@ public class BossAPI
 
     public static int elaspedRound = 0;
 
-    public static BossInfo diedTo;
+    public static BossInfo diedTo = null;
 }
 public class Hooks
 {
@@ -316,6 +317,10 @@ public class Hooks
                         {
                             BossUI.instance.Close();
                         }
+
+
+                        Game.instance.audioFactory.StopMusic();
+                        Game.instance.audioFactory.musicFactory.PlayNewTrack(false);
                     }
                     else if(!XmasMod2025.KrampusAlive)
                     {
