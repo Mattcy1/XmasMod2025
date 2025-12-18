@@ -177,7 +177,7 @@ public class ChristmasGameMode : ModGameMode
     public override string Difficulty => DifficultyType.Hard;
     public override string BaseGameMode => GameModeType.Hard;
     public override string Icon => "XmasTowerSet-Button";
-    public override string DisplayName => "Christmas Gamemode";
+    public override string DisplayName => "Christmas Disaster";
 
     public override void ModifyBaseGameModeModel(ModModel gameModeModel)
     {
