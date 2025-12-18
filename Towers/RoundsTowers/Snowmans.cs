@@ -32,6 +32,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             public override string Description => "Slowy, generates gifts.";
             public override string Icon => VanillaSprites.SnowMonkey;
             public override string Portrait => Icon;
+            public override int UnlockRound => 24;
             public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
             {
                 return towerSet.First(model => model.towerId == Game.instance.model.GetTowerFromId(ModContent.TowerID<XmasTree>()).baseId).towerIndex + 1;
@@ -66,6 +67,8 @@ namespace XmasMod2025.Towers.RoundsTowers
             protected override int Order => 1;
             public override string DisplayName => "Novice Snowman";
             public override string Description => "Generates gifts a bit faster then the old tier.";
+            public override string Icon => VanillaSprites.SnowMonkey;
+            public override string Portrait => Icon;
             public override int UnlockRound => 44;
             public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
             {
@@ -101,6 +104,8 @@ namespace XmasMod2025.Towers.RoundsTowers
             public override string DisplayName => "Pro Snowman";
             public override int ShopTowerCount => 3;
             public override string Description => "Generates gifts at a medium rate.";
+            public override string Icon => VanillaSprites.SnowMonkey;
+            public override string Portrait => Icon;
             public override int UnlockRound => 64;
             public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
             {
@@ -136,6 +141,8 @@ namespace XmasMod2025.Towers.RoundsTowers
             public override string DisplayName => "Elite Snowman";
             public override int ShopTowerCount => 3;
             public override string Description => "Generates gifts at a max speeds for snowmans.";
+            public override string Icon => VanillaSprites.SnowMonkey;
+            public override string Portrait => Icon;
             public override int UnlockRound => 84;
             public override int GetTowerIndex(List<TowerDetailsModel> towerSet)
             {
@@ -164,6 +171,39 @@ namespace XmasMod2025.Towers.RoundsTowers
         }
 
         public class R20Display : ModTowerDisplay<R20>
+        {
+            public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
+            public override float Scale => 0.5f;
+
+            public override bool UseForTower(params int[] tiers)
+            {
+                return tiers.Sum() == 0;
+            }
+        }
+
+        public class R40Display : ModTowerDisplay<R40>
+        {
+            public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
+            public override float Scale => 0.5f;
+
+            public override bool UseForTower(params int[] tiers)
+            {
+                return tiers.Sum() == 0;
+            }
+        }
+
+        public class R60Display : ModTowerDisplay<R60>
+        {
+            public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
+            public override float Scale => 0.5f;
+
+            public override bool UseForTower(params int[] tiers)
+            {
+                return tiers.Sum() == 0;
+            }
+        }
+
+        public class R80Display : ModTowerDisplay<R80>
         {
             public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
             public override float Scale => 0.5f;

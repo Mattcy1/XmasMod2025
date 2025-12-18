@@ -131,6 +131,10 @@ namespace XmasMod2025.Bosses
             XmasMod2025.KrampusAlive = true;
             BossUI.UpdateNameColor(new Color32(21, 23, 22, 255), null);
             PostProcessing.EnableNight();
+
+            Game.instance.audioFactory.StopMusic();
+            AudioClip FinalBossSound = ModContent.GetAudioClip<XmasMod2025>("FrostMoon");
+            Game.instance.audioFactory.PlayMusic(FinalBossSound);
         }
 
         public static void KidnapTower()
