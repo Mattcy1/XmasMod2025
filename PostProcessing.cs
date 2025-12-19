@@ -93,7 +93,7 @@ internal static class PostProcessing
         XmasVolumeProfile.components[0].active = true;
         XmasVolumeProfile.components[2].active = true;
         XmasVolumeProfile.components[3].active = true;
-        Object.FindObjectOfType<NightModeSettings>().gameObject.SetActive(true);
+        Object.FindObjectOfType<NightModeSettings>().enabled = true;
     }
     public static void DisableNight()
     {
@@ -105,7 +105,7 @@ internal static class PostProcessing
         XmasVolumeProfile.components[0].active = false;
         XmasVolumeProfile.components[2].active = false;
         XmasVolumeProfile.components[3].active = false;
-        Object.FindObjectOfType<NightModeSettings>().gameObject.SetActive(false);
+        Object.FindObjectOfType<NightModeSettings>().enabled = false;
     }
 
     public static void SetPulseSpeed(float totalSpeedMultiplier)

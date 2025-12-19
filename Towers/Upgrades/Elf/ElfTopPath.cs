@@ -174,6 +174,9 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
             weapon.rate = 0.175f; // Just under 6/s (~5.88)
 
             towerModel.dontDisplayUpgrades = true;
+
+            towerModel.isSubTower = true;
+            towerModel.AddBehavior(new CreditPopsToParentTowerModel("CreditPopsToParentTowerModel"));
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
@@ -262,6 +265,13 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
                 LastProjectile = __instance;
                 InGame.instance.bridge.CreateTowerAt(__instance.Position.ToUnity(), GetTowerModel<ToyCartTower>(), towerId, false, new Action<bool>(suc => { }), true, true, false, 0, false);
             }
+            else 
+            if (__instance.projectileModel.id == "ToyCart_High")
+            {
+                ObjectId towerId = ObjectId.Create(9999 + ToyCartCounter++);
+                LastProjectile = __instance;
+                InGame.instance.bridge.CreateTowerAt(__instance.Position.ToUnity(), GetTowerModel<ToyCartTower>(0, 1), towerId, false, new Action<bool>(suc => { }), true, true, false, 0, false);
+            }
         }
     }
     [HarmonyPatch(typeof(Projectile), nameof(Projectile.OnDestroy))]
@@ -300,6 +310,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
             if (modelToUse.Cast<TowerModel>().baseId == TowerID<ToyCartTower>())
             {
                 TowerForProjectile.Add(Projectile_Initialize.LastProjectile, __instance);
+                __instance.ParentId = Projectile_Initialize.LastProjectile.EmittedByTowerId;
             }
         }
     }
@@ -319,7 +330,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
                 return;
             }
             tower.PositionTower(projectile.Position.ToVector2());
-            tower.Rotation = projectile.Rotation;
+            //tower.Rotation = projectile.Rotation; // Messes up some stuff
         }
     }
 
@@ -335,6 +346,33 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
 {
     public class ToyCart2 : ModUpgrade<ToyCart.ToyCartTower>
     {
+        public class Cart2Tower : ModTowerCustomDisplay<ToyCart.ToyCartTower>
+        {
+            public override bool UseForTower(params int[] tiers) => tiers[1] == 1;
+
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => Name;
+
+            public override Il2CppAssets.Scripts.Simulation.SMath.Vector3 PositionOffset =>
+                new Il2CppAssets.Scripts.Simulation.SMath.Vector3(0, 5);
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+                    if (!renderer.name.StartsWith("Wheel"))
+                    {
+                        renderer.SetOutlineColor(new Color32(135, 135, 135, 255));
+                    }
+                    else
+                    {
+                        renderer.gameObject.AddComponent<ToyCart.ToyCartProjectile.SimpleRotation>();
+                    }
+                }
+            }
+        }
+        
         public class MetalBoomerang : ModDisplay2D
         {
             protected override string TextureName => Name;
@@ -355,16 +393,47 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
         public override int Cost => 0;
     }
     
-    public class ToyMortar2 : ModSubTower
+    /*public class ToyMortar2 : ModSubTower
     {
+        public class ToyMortar2Display : ModTowerCustomDisplay<ToyMortar2>
+        {
+            public override bool UseForTower(params int[] tiers) => true;
+
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => "ToyMortarV2";
+        }
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
-            towerModel.baseId = TowerID<ToyMortar.ToyMortarTower>();
-            towerModel.name = TowerID<ToyMortar.ToyMortarTower>(0, 1);
+            
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
-        public override string BaseTower => TowerID<ToyMortar.ToyMortarTower>();
+        public override string BaseTower => TowerType.DartMonkey;
+
+        protected override int Order => 1;
+    }*/
+   
+    
+    public class Cart2 : ModCustomDisplay
+    {
+        public override string AssetBundleName => "xmas";
+        public override string PrefabName => Name;
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            foreach (var renderer in node.GetMeshRenderers())
+            {
+                renderer.ApplyOutlineShader();
+                if (!renderer.name.StartsWith("Wheel"))
+                {
+                    renderer.SetOutlineColor(new Color32(135, 135, 135, 255));
+                }
+                else
+                {
+                    renderer.gameObject.AddComponent<ToyCart.ToyCartProjectile.SimpleRotation>();
+                }
+            }
+        }
     }
     
     public override void ApplyUpgrade(TowerModel towerModel)
@@ -377,18 +446,19 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
         toyMortarWeapon.RemoveBehavior<EmissionsPerRoundFilterModel>();
         toyMortarWeapon.rate *= 0.25f;
 
-        toyMortarProjectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMortar2>();
+        //toyMortarProjectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMortar2>();
         
         toyCartWeapon.rate *= 0.25f;
         
         toyCartProjectile.id = "ToyCart_High";
         toyCartProjectile.GetDamageModel().damage = 99999;
+        toyCartProjectile.ApplyDisplay<Cart2>();
     }
 
 
     public override int Path => Top;
-    public override int Tier => 4;
-    public override int Cost => 225;
+    public override int Tier => 5;
+    public override int Cost => 4500;
 
     public override string Description =>
         "Creates newly enhanced toy carts and mortars and a much faster rate!";
