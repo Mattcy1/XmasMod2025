@@ -19,10 +19,10 @@ namespace ChristmasMod;
 
 internal class ChristmasRouds : ModRoundSet
 {
+    public override string Icon => "XmasTowerSet-Button";
 
     public override string BaseRoundSet => RoundSetType.Default;
     public override int DefinedRounds => 100;
-    public override string DisplayName => "Christmas Rounds";
 
     public override void ModifyEasyRoundModels(RoundModel roundModel, int round)
     {

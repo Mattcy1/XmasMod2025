@@ -241,17 +241,6 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         }
     }
 
-    // Credits to grahamkracker https://github.com/GrahamKracker/BloonsClicker/blob/a2bc8512d11d99bfdd2394b64c030e9f7e18cb90/Main.cs#L127
-    [HarmonyPatch(typeof(TowerInventory), nameof(TowerInventory.GetTowerInventoryCount))]
-    [HarmonyPrefix]
-    static void TowerInventory_GetTowerInventoryCount(TowerInventory __instance, TowerModel def)
-    {
-        if (def.baseId == GetInstance<ToyCartTower>().Id && !__instance.towerCounts.TryGetValue(def.baseId, out _))
-        {
-            __instance.towerCounts[def.baseId] = -1;
-        }
-    }
-
     [HarmonyPatch(typeof(Projectile), nameof(Projectile.Initialise))]
     private static class Projectile_Initialize
     {
@@ -393,25 +382,46 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
         public override int Cost => 0;
     }
     
-    /*public class ToyMortar2 : ModSubTower
+    public class EnhancedToyMortar : ModSubTower
     {
-        public class ToyMortar2Display : ModTowerCustomDisplay<ToyMortar2>
+        public class ToyMortarV2Display : ModTowerCustomDisplay<EnhancedToyMortar>
         {
-            public override bool UseForTower(params int[] tiers) => true;
+            public override bool UseForTower(params int[] tiers)
+            {
+                return true;
+            }
 
             public override string AssetBundleName => "xmas";
             public override string PrefabName => "ToyMortarV2";
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                
+            }
         }
+        
+        public override string Portrait => "ToyMortar-Portrait";
+
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
-            
+            towerModel.range = 40f;
+            towerModel.GetAttackModel().range = 40f;
+
+            var weapon = towerModel.GetWeapon();
+            weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-200").GetWeapon().projectile.Duplicate());
+            weapon.rate /= 4;
+            var damageModel = weapon.projectile.GetDescendant<DamageModel>();
+            damageModel.damage *= 10;
+            damageModel.immuneBloonProperties = BloonProperties.None;
+            var proj = weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile;
+            proj.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel_Moabs", "Moabs", 2f, 3, false, true));
+            proj.AddBehavior(Game.instance.model.GetTowerFromId("MortarMonkey-300").GetDescendant<SlowModel>().Duplicate());
+            weapon.projectile.ApplyDisplay<ToyMortar.ToyMortarTower.ToyBomb>();
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
-        public override string BaseTower => TowerType.DartMonkey;
-
-        protected override int Order => 1;
-    }*/
+        public override string BaseTower => TowerType.Sentry;
+    }
    
     
     public class Cart2 : ModCustomDisplay
@@ -435,18 +445,21 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
             }
         }
     }
-    
+
+    public override void LateApplyUpgrade(TowerModel towerModel)
+    {
+        towerModel.GetWeapon(1).projectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<EnhancedToyMortar>();
+    }
+
     public override void ApplyUpgrade(TowerModel towerModel)
     {
         var toyMortarWeapon = towerModel.GetWeapon(1);
-        var toyMortarProjectile = toyMortarWeapon.projectile;
         var toyCartWeapon = towerModel.GetWeapon(2);
         var toyCartProjectile = toyCartWeapon.projectile;
         
         toyMortarWeapon.RemoveBehavior<EmissionsPerRoundFilterModel>();
         toyMortarWeapon.rate *= 0.25f;
-
-        //toyMortarProjectile.GetBehavior<CreateTowerModel>().tower = GetTowerModel<ToyMortar2>();
+        
         
         toyCartWeapon.rate *= 0.25f;
         
