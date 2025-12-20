@@ -23,7 +23,7 @@ namespace XmasMod2025.Bloons.Bfbs
     public class IceBfb : ModBloon
     {
         public override string BaseBloon => BloonType.sBfb;
-
+        public override string Icon => "IceBfb";
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.maxHealth *= (int)1.5f;
@@ -115,7 +115,7 @@ namespace XmasMod2025.Bloons.Bfbs
         {
             foreach (var renderer in node.GetMeshRenderers())
             {
-                renderer.SetMainTexture(GetTexture(Name));
+                renderer.SetMainTexture(GetTexture("IceBfbDamage3Display"));
                 renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
             }
         }

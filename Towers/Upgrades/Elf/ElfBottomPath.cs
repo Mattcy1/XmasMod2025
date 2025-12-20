@@ -30,6 +30,7 @@ namespace XmasMod2025.Towers.Upgrades
             public override int Path => BOTTOM;
             public override int Tier => 1;
             public override int Cost => 50;
+            public override string Icon => "Elf001Icon";
             public override string DisplayName => "Less heavy presents";
             public override string Description => "The presents, become lighter allowing for a bit more attack speed.";
             public override void ApplyUpgrade(TowerModel towerModel)
@@ -47,6 +48,7 @@ namespace XmasMod2025.Towers.Upgrades
             public override int Tier => 2;
             public override int Cost => 70;
             public override string DisplayName => "Better Vision";
+            public override string Icon => "Elf002Icon";
             public override string Description => "The elf monkey wear special glasses to see camo, and increased range.";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
@@ -68,6 +70,7 @@ namespace XmasMod2025.Towers.Upgrades
             public override int Tier => 3;
             public override int Cost => 150;
             public override string DisplayName => "Gift Making";
+            public override string Icon => "Elf003Icon";
             public override string Description => "The elf monkey learns the art of making gifts, and will now produce gifts at the cost of not attacking.";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
@@ -102,6 +105,7 @@ namespace XmasMod2025.Towers.Upgrades
         public override int Cost => 800;
         public override string DisplayName => "Better Wrapping Paper";
         public override string Description => "The elf monkey buy better wrapping paper making gift more valuable.";
+        public override string Icon => "Elf004Icon";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
             var weapon = towerModel.GetWeapon();
@@ -118,6 +122,7 @@ namespace XmasMod2025.Towers.Upgrades
         public override int Path => BOTTOM;
         public override int Tier => 5;
         public override int Cost => 2000;
+        public override string Icon => "Elf005Icon";
         public override string DisplayName => "End of day bonus";
         public override string Description => "The elf monkey get paid end of round bonus (150 Gifts).";
         public override void ApplyUpgrade(TowerModel towerModel)

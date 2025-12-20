@@ -19,7 +19,7 @@ namespace XmasMod2025.Bloons.Moabs
     public class SnowBfb : ModBloon
     {
         public override string BaseBloon => BloonType.sBfb;
-
+        public override string Icon => "SnowBfb";
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.RemoveAllChildren();
@@ -52,7 +52,7 @@ namespace XmasMod2025.Bloons.Moabs
 
         public class SnowBfbDamage1Display : ModBloonDisplay<SnowBfb>
         {
-            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb, 1);
+            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
 
             public override int Damage => 1;
 
@@ -68,7 +68,7 @@ namespace XmasMod2025.Bloons.Moabs
 
         public class SnowBfbDamage2Display : ModBloonDisplay<SnowBfb>
         {
-            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb, 2);
+            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
 
             public override int Damage => 2;
 
@@ -84,7 +84,7 @@ namespace XmasMod2025.Bloons.Moabs
 
         public class SnowBfbDamage3Display : ModBloonDisplay<SnowBfb>
         {
-            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb, 3);
+            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
 
             public override int Damage => 3;
 
@@ -100,7 +100,7 @@ namespace XmasMod2025.Bloons.Moabs
 
         public class SnowBfbDamage4Display : ModBloonDisplay<SnowBfb>
         {
-            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb, 4);
+            public override string BaseDisplay => GetBloonDisplay(BloonType.sBfb);
 
             public override int Damage => 4;
 
@@ -108,7 +108,7 @@ namespace XmasMod2025.Bloons.Moabs
             {
                 foreach (var renderer in node.GetMeshRenderers())
                 {
-                    renderer.SetMainTexture(GetTexture(Name));
+                    renderer.SetMainTexture(GetTexture("SnowBfbDamage3Display"));
                     renderer.materials[2].SetColor("_OutlineColor", new Color32(161, 187, 214, 255));
                 }
             }
