@@ -113,11 +113,11 @@ public class XmasTowerSet : ModTowerSet
     [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.GetUpgradeStatus))]
     private static class UpgradeButton_CheckCash
     {
-        public static bool Prefix(UpgradeButton __instance, ref UpgradeButton.UpgradeStatus __result)
+        public static void Postfix(UpgradeButton __instance, ref UpgradeButton.UpgradeStatus __result)
         {
             if (!__instance || __instance.upgrade == null)
             {
-                return true;
+                return;
             }
             ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
             if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
@@ -126,15 +126,60 @@ public class XmasTowerSet : ModTowerSet
                 {
                     __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
                     __result = UpgradeButton.UpgradeStatus.CanNotAfford;
-                    return false;
                 }
             }
-
-            return true;
         }
     }
     [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.UpdateCostVisuals))]
     private static class UpgradeButton_UpdateCostVisuals
+    {
+        public static void Postfix(UpgradeButton __instance)
+        {
+            if (!__instance || __instance.upgrade == null)
+            {
+                return;
+            }
+            ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
+            {
+                __instance.cost.text = $"{cUpgrade.Cost} {cUpgrade.Currency}";
+            }
+        }
+    }
+    [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.UpdateVisuals))]
+    private static class UpgradeButton_UpdateVisuals
+    {
+        public static void Postfix(UpgradeButton __instance)
+        {
+            if (!__instance || __instance.upgrade == null)
+            {
+                return;
+            }
+            ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
+            {
+                __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+            }
+        }
+    }
+    [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.Update))]
+    private static class UpgradeButton_Update
+    {
+        public static void Postfix(UpgradeButton __instance)
+        {
+            if (!__instance || __instance.upgrade == null)
+            {
+                return;
+            }
+            ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
+            {
+                __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+            }
+        }
+    }
+    [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.UpdateCost))]
+    private static class UpgradeButton_UpdateCost
     {
         public static void Postfix(UpgradeButton __instance)
         {

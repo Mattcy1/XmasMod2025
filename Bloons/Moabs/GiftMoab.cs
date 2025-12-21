@@ -42,4 +42,48 @@ namespace XmasMod2025.Bloons
             SetMeshTexture(node, Name);
         }
     }
+    public class GiftMoabDamage1Display : ModBloonDisplay<GiftMoab>
+    {
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sMoab);
+
+        public override int Damage => 1;
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, Name);
+        }
+    }
+    public class GiftMoabDamage2Display : ModBloonDisplay<GiftMoab>
+    {
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sMoab);
+
+        public override int Damage => 2;
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, Name);
+        }
+    }
+    public class GiftMoabDamage3Display : ModBloonDisplay<GiftMoab>
+    {
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sMoab);
+
+        public override int Damage => 3;
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, Name);
+        }
+    }
+    public class GiftMoabDamage4Display : ModBloonDisplay<GiftMoab>
+    {
+        public override string BaseDisplay => GetBloonDisplay(BloonType.sMoab);
+
+        public override int Damage => 4;
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, Name);
+        }
+    }
 }
