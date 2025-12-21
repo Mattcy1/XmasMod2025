@@ -37,7 +37,7 @@ namespace XmasMod2025.Towers
         public override int BottomPathUpgrades => 5;
         public override int MiddlePathUpgrades => 5;
         public override int TopPathUpgrades => 5;
-        public override int Cost => 35;
+        public override int Cost => 45;
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
@@ -45,7 +45,7 @@ namespace XmasMod2025.Towers
 
             var proj = towerModel.GetWeapon().projectile;
 
-            proj.GetDamageModel().damage += 1;
+            proj.GetDamageModel().damage = 1;
             proj.pierce = 2;
             proj.ApplyDisplay<Gift1>();
             proj.id = "ElfProj";

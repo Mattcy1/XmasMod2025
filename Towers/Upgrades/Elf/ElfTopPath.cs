@@ -71,9 +71,9 @@ public class BuildersAtmosphere : ChristmasUpgrade<ElfMonkey>
         var rateSupportModel = towerModel.GetBehavior<RateSupportModel>("RateSupportModel_BuildersSpirit");
         var rangeSupportModel = towerModel.GetBehavior<RangeSupportModel>("RangeSupportModel_BuildersSpirit");
 
-        rateSupportModel.customRadius = towerModel.range *= 1.2f;
+        rateSupportModel.customRadius = towerModel.range *= 1.1f;
         rateSupportModel.isCustomRadius = true;
-        rangeSupportModel.customRadius = towerModel.range * 1.2f;
+        rangeSupportModel.customRadius = towerModel.range * 1.1f;
         rangeSupportModel.isCustomRadius = true;
         rangeSupportModel.multiplier += 0.05f;
     }
@@ -100,7 +100,7 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
             towerModel.GetAttackModel().RemoveBehavior<RotateToTargetModel>();
 
             var weapon = towerModel.GetWeapon();
-            weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-200").GetWeapon().projectile.Duplicate());
+            weapon.SetProjectile(Game.instance.model.GetTowerFromId("MortarMonkey-200").GetWeapon().projectile.Duplicate());
             weapon.projectile.ApplyDisplay<ToyBomb>();
         }
 
@@ -209,6 +209,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     {
         var newAtk = towerModel.GetAttackModel().Duplicate();
         newAtk.fireWithoutTarget = true;
+
         var weapon = newAtk.weapons[0];
         var projectile = weapon.projectile;
         weapon.SetEmission(new EmissionAtClosestPathSegmentModel("EmissionAtClosestPathSegmentModel_", 1, 0, new Il2CppReferenceArray<EmissionBehaviorModel>(0)));
@@ -217,7 +218,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         projectile.id = "ToyCart_Low";
         projectile.pierce = Single.MaxValue;
         projectile.canCollideWithBloons = false;
-        projectile.GetDamageModel().damage = 3;
+        projectile.GetDamageModel().damage = 2;
         projectile.ApplyDisplay<ToyCartProjectile>();
         projectile.RemoveBehavior<RandomDisplayModel>();
         projectile.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel_MoabImmunity", "Moabs", 0, 0, false, false));
@@ -487,10 +488,10 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
         toyMortarWeapon.rate *= 0.25f;
         
         
-        toyCartWeapon.rate *= 0.25f;
+        toyCartWeapon.rate *= 0.35f;
         
         toyCartProjectile.id = "ToyCart_High";
-        toyCartProjectile.GetDamageModel().damage = 99999;
+        toyCartProjectile.GetDamageModel().damage = 7;
         toyCartProjectile.ApplyDisplay<Cart2>();
     }
 

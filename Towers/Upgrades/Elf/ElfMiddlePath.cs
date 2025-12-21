@@ -62,7 +62,7 @@ namespace XmasMod2025.Towers.Upgrades
         {
             public override int Path => MIDDLE;
             public override int Tier => 2;
-            public override int Cost => 40;
+            public override int Cost => 60;
             public override string Icon => "Elf020Icon";
             public override string DisplayName => "Stronger Throw";
             public override string Description => "More damages, to bloons";
@@ -122,8 +122,8 @@ namespace XmasMod2025.Towers.Upgrades
             foreach (var weapon in towerModel.GetWeapons())
             {
                 weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().mutationId = "Elf040";
-                weapon.projectile.pierce += 3;
-                weapon.projectile.GetDamageModel().damage += 2;
+                weapon.projectile.pierce += 1;
+                weapon.projectile.GetDamageModel().damage += 3;
                 weapon.rate -= 0.1f;
             }
 
@@ -149,11 +149,13 @@ namespace XmasMod2025.Towers.Upgrades
             foreach (var weapon in towerModel.GetWeapons())
             {
                 weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().mutationId = "Elf050";
+                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().lifespan *= 2;
+                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().Lifespan *= 2;
                 towerModel.GetAbility().displayName = "Super Slam";
                 towerModel.GetAbility().description = "Stuns EVERYTHING on the screen for 10s";
 
                 weapon.projectile.pierce += 5;
-                weapon.projectile.GetDamageModel().damage += 15;
+                weapon.projectile.GetDamageModel().damage += 17;
                 weapon.rate -= 0.1f;
             }
         }
