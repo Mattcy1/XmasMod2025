@@ -559,7 +559,7 @@ public class ChangeMap
 }
 
 [HarmonyLib.HarmonyPatch(typeof(TimeTrigger), nameof(TimeTrigger.Trigger))]
-public class TimeTriggerPacth
+public class TimeTriggerPatch
 {
     [HarmonyLib.HarmonyPostfix]
     public static void Postfix(TimeTrigger __instance)

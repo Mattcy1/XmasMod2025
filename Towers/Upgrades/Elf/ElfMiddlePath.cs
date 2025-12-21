@@ -162,7 +162,7 @@ namespace XmasMod2025.Towers.Upgrades
     }
 
     [HarmonyPatch(typeof(Ability), nameof(Ability.Activate))]
-    public static class PacthAbility
+    public static class PatchAbility
     {
         public static void Postfix(Ability __instance)
         {

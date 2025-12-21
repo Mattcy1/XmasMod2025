@@ -250,7 +250,7 @@ public class Hooks
 
     //Runs on boss spawn function and create the ui
     [HarmonyPatch(typeof(Bloon), nameof(Bloon.OnSpawn))]
-    public class HandleBossSpawn_Pacth
+    public class HandleBossSpawn_Patch
     {
         [HarmonyPostfix]
 
@@ -381,7 +381,7 @@ public class Hooks
 
     //Destroy the ui on leak
     [HarmonyPatch(typeof(Bloon), nameof(Bloon.Leaked))]
-    public class HandeBossLeaks_Pacth
+    public class HandeBossLeaks_Patch
     {
         [HarmonyPostfix]
 
