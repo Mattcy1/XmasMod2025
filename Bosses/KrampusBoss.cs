@@ -13,6 +13,7 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
+using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api.Display;
 using Il2Cpp;
 using Il2CppAssets.Scripts.Unity.Display;
@@ -171,6 +172,7 @@ namespace XmasMod2025.Bosses
             public void Start()
             {
                 half = false;
+                nextHalf = false;
             }
             public void Update()
             {
@@ -211,6 +213,7 @@ namespace XmasMod2025.Bosses
 
                 if (healthPercent <= 0.25f && !nextHalf)
                 {
+                    ModHelper.Log<XmasMod2025>(healthPercent);
                     foreach (var boss in ModContent.GetContent<ModBoss>())
                     {
                         if (boss.Id != ModContent.BloonID<KrampusBoss>())

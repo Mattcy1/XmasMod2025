@@ -20,6 +20,9 @@
       <Reference Include="DialogLib">
         <HintPath>Libraries\DialogLib.dll</HintPath>
       </Reference>
+      <Reference Include="Il2CppNinjaKiwi.LiNK">
+        <HintPath>Libraries\Il2CppNinjaKiwi.LiNK.dll</HintPath>
+      </Reference>
       <Reference Include="Unity.RenderPipelines.Core.Runtime">
         <HintPath>Libraries\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
       </Reference>
@@ -28,6 +31,7 @@
       </Reference>
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Assets\Dialogue\" />
       <Folder Include="Assets\Music\" />
     </ItemGroup>
 

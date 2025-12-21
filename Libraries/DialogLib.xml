@@ -1,0 +1,504 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DialogLib</name>
+    </assembly>
+    <members>
+        <member name="T:DialogLib.DialogLib">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DialogLib.DialogLib.LoadClips(System.String)">
+            <summary>
+            Loads audio clips from a bundle into <see cref="T:DialogLib.Internal.AudioManager"/> which allows the mod to use them. If you're using embedded resources not in a bundle, the clips are automatically loaded.
+            </summary>
+            <param name="bundleName">full name of the bundle without the file extension</param>
+        </member>
+        <member name="M:DialogLib.DialogLib.LoadClips(System.String,System.String)">
+            <summary>
+            Loads audio clips from a bundle into <see cref="T:DialogLib.Internal.AudioManager"/> which allows the mod to use them. If you're using embedded resources not in a bundle, the clips are automatically loaded.
+            </summary>
+            <param name="modPrefix"><see cref="P:BTD_Mod_Helper.BloonsMod.IDPrefix"/> of the mod</param>
+            <param name="bundleName">name of the bundle without the file extension</param>
+        </member>
+        <member name="M:DialogLib.DialogLib.LoadClips(BTD_Mod_Helper.BloonsMod)">
+            <summary>
+            Loads audio clips from every bundle from the provided mod into <see cref="T:DialogLib.Internal.AudioManager"/> which allows this mod to use them. If you're using embedded resources not in a bundle, the clips are automatically loaded.
+            </summary>
+            <param name="mod">Mod that added the bundles</param>
+        </member>
+        <member name="M:DialogLib.DialogLib.OnTitleScreen">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:DialogLib.DialogLib.OnEarlyInitialize">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:DialogLib.DialogLib.OnRoundStart">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:DialogLib.DialogLib.OnMatchStart">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="F:DialogLib.DialogLib.CharacterSpeed">
+            <summary>
+            Seconds per character. Decreasing the value will cause words to appear faster.
+            </summary>
+        </member>
+        <member name="F:DialogLib.DialogLib.ShowExample">
+            <summary>
+            Show the example dialogs made to show what this mod can do.
+            </summary>
+        </member>
+        <member name="T:DialogLib.Ui.VoiceType">
+            <summary>
+            All of the voices that come with this mod
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.VoiceType.Low">
+            <summary>
+            The provided Low voice
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.VoiceType.Medium">
+            <summary>
+            The provided Medium voice
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.VoiceType.High">
+            <summary>
+            The provided High voice
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.VoiceType.TenorMale">
+            <summary>
+            The provided TenorMale voice
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.VoiceType.BassMale">
+            <summary>
+            The provided BassMale voice
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.VoiceType.SopranoFemale">
+            <summary>
+            The provided SopranoFemale voice
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.VoiceType.MezzoSopranoFemale">
+            <summary>
+            The provided MezzoSopranoFemale voice
+            </summary>
+        </member>
+        <member name="T:DialogLib.Ui.Dialog">
+            <summary>
+            Struct to hold all data required for a dialog message
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.Dialog.#ctor(System.String,System.String,System.String,System.Int32,DialogLib.Voice)">
+            <summary>
+            Create a dialog with the specified name, message, portrait, round, and voice
+            </summary>
+            <param name="name">The name of the character</param>
+            <param name="message">What the character is saying</param>
+            <param name="portrait">What the character looks like</param>
+            <param name="round">The round it appears on</param>
+            <param name="voice">What this character sounds like</param>
+        </member>
+        <member name="M:DialogLib.Ui.Dialog.#ctor(System.String,System.String,Il2CppNinjaKiwi.Common.ResourceUtils.SpriteReference,System.Int32,DialogLib.Voice)">
+            <summary>
+            Create a dialog with the specified name, message, portrait, round, and voice
+            </summary>
+            <param name="name">The name of the character</param>
+            <param name="message">What the character is saying</param>
+            <param name="portrait">What the character looks like</param>
+            <param name="round">The round it appears on</param>
+            <param name="voice">What this character sounds like</param>
+        </member>
+        <member name="M:DialogLib.Ui.Dialog.#ctor(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Create a dialog with the specified name, message, portrait, and round
+            </summary>
+            <param name="name">The name of the character</param>
+            <param name="message">What the character is saying</param>
+            <param name="portrait">What the character looks like</param>
+            <param name="round">The round it appears on</param>
+        </member>
+        <member name="M:DialogLib.Ui.Dialog.#ctor(System.String,System.String,Il2CppNinjaKiwi.Common.ResourceUtils.SpriteReference,System.Int32)">
+            <summary>
+            Create a dialog with the specified name, message, portrait, and round
+            </summary>
+            <param name="name">The name of the character</param>
+            <param name="message">What the character is saying</param>
+            <param name="portrait">What the character looks like</param>
+            <param name="round">The round it appears on</param>
+        </member>
+        <member name="M:DialogLib.Ui.Dialog.#ctor(System.String,System.String,System.String,System.Int32,DialogLib.Ui.VoiceType)">
+            <summary>
+            Create a dialog with the specified name, message, portrait, round, and voice
+            </summary>
+            <param name="name">The name of the character</param>
+            <param name="message">What the character is saying</param>
+            <param name="portrait">What the character looks like</param>
+            <param name="round">The round it appears on</param>
+            <param name="voice">What this character sounds like</param>
+        </member>
+        <member name="M:DialogLib.Ui.Dialog.#ctor(System.String,System.String,Il2CppNinjaKiwi.Common.ResourceUtils.SpriteReference,System.Int32,DialogLib.Ui.VoiceType)">
+            <summary>
+            Create a dialog with the specified name, message, portrait, round, and voice
+            </summary>
+            <param name="name">The name of the character</param>
+            <param name="message">What the character is saying</param>
+            <param name="portrait">What the character looks like</param>
+            <param name="round">The round it appears on</param>
+            <param name="voice">What this character sounds like</param>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.CharacterName">
+            <summary>
+            The character's name
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.Text">
+            <summary>
+            What the character says
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.PortraitGUID">
+            <summary>
+            GUID of the portrait
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.BackgroundGUID">
+            <summary>
+            Sprite GUID of the background
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.BackgroundTex">
+            <summary>
+            Texure2D of the background.
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.Background">
+            <summary>
+            Sprite of the background.
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.Voice">
+            <summary>
+            What the character sounds like
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.Dialog.Round">
+            <summary>
+            The round it spawns on
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.Options">
+            <summary>
+            Options which get displayed in the bottom right corner of the panel which can provide player interaction
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.OnNext">
+            <summary>
+            What happens when this message is closed
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.OnThis">
+            <summary>
+            What happens when this message is shown
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.TextSpeed">
+            <summary>
+            How fast the text appears (<see cref="F:DialogLib.DialogLib.CharacterSpeed"/> / dialog.TextSpeed)
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.Dialog.CharactersPerSound">
+            <summary>
+            After how many characters should a voice sound be played
+            </summary>
+        </member>
+        <member name="T:DialogLib.Ui.DialogOption">
+            <summary>
+            Abstract class for dialog options. Override this to create your own custom options. By default the mod provides <see cref="T:DialogLib.Ui.RedOption"/> and <seealso cref="T:DialogLib.Ui.GreenOption"/>
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.DialogOption.Name">
+            <summary>
+            Name of the button type. By default the type name.
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.DialogOption.dialogUi">
+            <summary>
+            Instance of DialogUi the option will use to access the ui.
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.DialogOption.Sprite">
+            <summary>
+            GUID of the sprite of the button
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.DialogOption.OptionText">
+            <summary>
+            What text is displayed on the button
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.DialogOption.SequentialDialog">
+            <summary>
+            Dialog shown after clicking this option
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogOption.Click">
+            <summary>
+            Show the sequential dialog for this option
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogOption.Create(System.Boolean@)">
+            <summary>
+            Get the button for this option
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DialogLib.Ui.RedOption">
+            <summary>
+            <see cref="T:DialogLib.Ui.DialogOption"/> using the sprite <see cref="F:BTD_Mod_Helper.Api.Enums.VanillaSprites.RedBtnLong"/> and default click action
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.RedOption.Sprite">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.RedOption.dialogUi">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.RedOption.OptionText">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.RedOption.OnClick">
+            <summary>
+            Additional thing to do on click.
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.RedOption.#ctor(System.String,System.Collections.Generic.Queue{DialogLib.Ui.Dialog})">
+            <summary>
+            Create a RedOption with the following text and dialog queue
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.RedOption.#ctor(System.String,DialogLib.Ui.Dialog[])">
+            <summary>
+            Create a RedOption with the following text and dialog
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.RedOption.SequentialDialog">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="T:DialogLib.Ui.GreenOption">
+            <summary>
+            <see cref="T:DialogLib.Ui.DialogOption"/> using the sprite <see cref="F:BTD_Mod_Helper.Api.Enums.VanillaSprites.GreenBtnLong"/> and default click action
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.GreenOption.Sprite">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.GreenOption.dialogUi">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.GreenOption.OptionText">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.GreenOption.#ctor(System.String,System.Collections.Generic.Queue{DialogLib.Ui.Dialog})">
+            <summary>
+            Create a GreenOption with the following text and dialog queue
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.GreenOption.#ctor(System.String,DialogLib.Ui.Dialog[])">
+            <summary>
+            Create a GreenOption with the following text and dialog
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.GreenOption.SequentialDialog">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.GreenOption.OnClick">
+            <summary>
+            Additional thing to do on click.
+            </summary>
+        </member>
+        <member name="T:DialogLib.Ui.DialogUi">
+            <summary>
+            UI that handles the dialogue, override to make your own dialogue ui. Requires you to make your own create method.
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.DialogUi.defaultInstanceForOptions">
+            <summary>
+            The instance set by default for the dialog options that come with this mod.
+            </summary>
+        </member>
+        <member name="P:DialogLib.Ui.DialogUi.instance">
+            <summary>
+            Instance of the ui.
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.DialogUi.mainPanel">
+            
+        </member>
+        <member name="F:DialogLib.Ui.DialogUi.OptionsGroup">
+            <summary>
+            Group where options are placed
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.DialogUi.NextBtnWidth">
+            <summary>
+            Width of the next and close buttons
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.DialogUi.NextBtnHeight">
+            <summary>
+            Height of the next and close buttons
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.Close">
+            <summary>
+            Destroys the parent of the MonoBehavior, only use when this ui is no longer needed as garbage collection doesn't work due to IL2CPP
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.Hide">
+            <summary>
+            Hides this ui and sets values back to default, use if the ui will be used again.
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.Start">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.DialogUi.canGoToNext">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:DialogLib.Ui.DialogUi.skip">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.ShowDialog(DialogLib.Ui.Dialog,System.Single)">
+            <summary>
+            Shows the provided dialog with the given delay. Use <see cref="M:DialogLib.Ui.DialogUi.QueueForRound(System.Int32)"/> to load all dialog in a round.
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.QueueForRound(System.Int32)">
+            <summary>
+            Propely show all dialogs for the provided round
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.ShowQueue(System.Collections.Generic.Queue{DialogLib.Ui.Dialog})">
+            <summary>
+            Show a queue of dialogs.
+            </summary>
+            <param name="queue">Queue in order of dialog shown.</param>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.ShowDialogCouroutine(DialogLib.Ui.Dialog,System.Single)">
+            <summary>
+            Actual method that shows the ui. Remember, this is a coroutine!
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.AddToDialogQueue(System.Collections.Generic.IEnumerable{DialogLib.Ui.Dialog})">
+            <summary>
+            Adds the provided dialogs to the queue
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.AddToDialogQueue(DialogLib.Ui.Dialog[])">
+            <summary>
+            Adds the provided dialogs to the queue
+            </summary>
+        </member>
+        <member name="M:DialogLib.Ui.DialogUi.CreateInstance">
+            <summary>
+            Creates the instance of this ui, shows the ui if <see cref="P:DialogLib.Ui.DialogUi.instance"/> isn't null.
+            </summary>
+        </member>
+        <member name="T:DialogLib.Voice">
+            <summary>
+            Holds sounds for dialog message.
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.Low">
+            <summary>
+            The provided Low voice
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.Medium">
+            <summary>
+            The provided Medium voice
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.High">
+            <summary>
+            The provided High voice
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.BassMale">
+            <summary>
+            The provided BassMale voice
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.TenorMale">
+            <summary>
+            The provided TenorMale voice
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.SopranoFemale">
+            <summary>
+            The provided SopranoFemale voice
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.MezzoSopranoFemale">
+            <summary>
+            The provided MezzoSopranoFemale voice
+            </summary>
+        </member>
+        <member name="P:DialogLib.Voice.Silent">
+            <summary>
+            The provided Silent voice. Default voice and sounds like nothing
+            </summary>
+        </member>
+        <member name="M:DialogLib.Voice.Play">
+            <summary>
+            Play a random sound in this voice
+            </summary>
+        </member>
+        <member name="F:DialogLib.Voice.soundGUIDs">
+            <summary>
+            GUIDs of the voices
+            </summary>
+        </member>
+        <member name="M:DialogLib.Voice.#ctor(System.String[])">
+            <summary>
+            Creates a voice with the provided sounds
+            </summary>
+            <param name="soundGUIDs">GUIDs of the audio clips, doesn't support vanilla audio</param>
+        </member>
+    </members>
+</doc>

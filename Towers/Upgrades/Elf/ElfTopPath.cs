@@ -24,7 +24,10 @@ using System;
 using System.Linq;
 using BTD_Mod_Helper;
 using Il2CppAssets.Scripts.Models;
+using Il2CppAssets.Scripts.Models.GenericBehaviors;
 using Il2CppAssets.Scripts.Models.Map;
+using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack.Behaviors;
+using Il2CppAssets.Scripts.Models.Towers.Filters;
 using Il2CppAssets.Scripts.Simulation.Input;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Track;
@@ -93,7 +96,8 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
         {
             towerModel.range = 40f;
             towerModel.GetAttackModel().range = 40f;
-            towerModel.GetAttackModel().ApplyDisplay<ToyMortarAttackDisplay>();
+            towerModel.GetAttackModel().RemoveBehavior<DisplayModel>();
+            towerModel.GetAttackModel().RemoveBehavior<RotateToTargetModel>();
 
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-200").GetWeapon().projectile.Duplicate());
@@ -105,12 +109,11 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
             public override bool UseForTower(params int[] tiers) => true;
 
             public override string AssetBundleName => "xmas";
-            public override string PrefabName => "ToyTurretLegs";
-        }
-        public class ToyMortarAttackDisplay : ModCustomDisplay
-        {
-            public override string AssetBundleName => "xmas";
-            public override string PrefabName => "ToyTurretBody";
+            public override string PrefabName => "Mortar";
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                
+            }
         }
 
         public class ToyBomb : ModDisplay2D
@@ -153,6 +156,21 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     public static Dictionary<Tower, Projectile> ProjectileForTower = new Dictionary<Tower, Projectile>();
     public class ToyCartTower : ModTower
     {
+        public class ToyTurretBody : ModTowerCustomDisplay<ToyCartTower>
+        {
+            public override bool UseForTower(params int[] tiers) => true;
+
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => Name;
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                var renderer = node.GetMeshRenderer();
+                renderer.ApplyOutlineShader();
+                renderer.SetOutlineColor(new Color32(40, 16, 12, 255));
+            }
+        }
+
         public override int MiddlePathUpgrades => 1;
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
@@ -177,6 +195,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
 
             towerModel.isSubTower = true;
             towerModel.AddBehavior(new CreditPopsToParentTowerModel("CreditPopsToParentTowerModel"));
+            towerModel.AddBehavior(new TowerExpireOnParentDestroyedModel("TowerExpireOnParentDestroyedModel"));
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
@@ -309,11 +328,11 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     {
         public static void Postfix(TravelAlongPath __instance)
         {
-            if(!__instance.travelAlongPathModel.name.EndsWith("ToyCart")) return;
+            if(!__instance.travelAlongPathModel.name.EndsWith("ToyCart") || !TowerForProjectile.ContainsKey(__instance.projectile)) return;
             
             var projectile = __instance.projectile;
             var tower = TowerForProjectile[projectile];
-            if (tower == null)
+            if (tower.IsDestroyed)
             {
                 projectile.Destroy();
                 return;
@@ -340,25 +359,14 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
             public override bool UseForTower(params int[] tiers) => tiers[1] == 1;
 
             public override string AssetBundleName => "xmas";
-            public override string PrefabName => Name;
-
-            public override Il2CppAssets.Scripts.Simulation.SMath.Vector3 PositionOffset =>
-                new Il2CppAssets.Scripts.Simulation.SMath.Vector3(0, 5);
+            public override string PrefabName => "Cart2TowerFixed";
 
             public override void ModifyDisplayNode(UnityDisplayNode node)
             {
-                foreach (var renderer in node.GetMeshRenderers())
-                {
-                    renderer.ApplyOutlineShader();
-                    if (!renderer.name.StartsWith("Wheel"))
-                    {
-                        renderer.SetOutlineColor(new Color32(135, 135, 135, 255));
-                    }
-                    else
-                    {
-                        renderer.gameObject.AddComponent<ToyCart.ToyCartProjectile.SimpleRotation>();
-                    }
-                }
+                var renderer = node.GetMeshRenderer();
+                renderer.enabled = true;
+                renderer.ApplyOutlineShader();
+                renderer.SetOutlineColor(new Color32(135, 135, 135, 255));
             }
         }
         
@@ -375,6 +383,9 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
             projectile.GetDamageModel().damage = 15;
             projectile.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel_Moabs", "Moabs", 3, 0, false, true));
             projectile.AddBehavior(new KnockbackModel("KnockbackModel_ToyCart", 0.02f, 0.05f, 0.1f, 1, "KB:ToyCart"));
+            projectile.GetDamageModel().immuneBloonProperties = BloonProperties.None;
+            
+            towerModel.GetDescendants<FilterInvisibleModel>().ForEach(filter => filter.isActive = false);
         }
 
         public override int Path => Middle;
@@ -396,7 +407,18 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
 
             public override void ModifyDisplayNode(UnityDisplayNode node)
             {
-                
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+                    if (renderer.name.StartsWith("Wall"))
+                    {
+                        renderer.SetOutlineColor(new Color32(48, 51, 54, 255)); 
+                    }
+                    else
+                    {
+                        renderer.SetOutlineColor(new Color32(63, 63, 63, 255));
+                    }
+                }
             }
         }
         
@@ -406,6 +428,8 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
         {
             towerModel.range = 40f;
             towerModel.GetAttackModel().range = 40f;
+            towerModel.GetAttackModel().RemoveBehavior<DisplayModel>();
+            towerModel.GetAttackModel().RemoveBehavior<RotateToTargetModel>();
 
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-200").GetWeapon().projectile.Duplicate());
@@ -417,6 +441,8 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
             proj.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel_Moabs", "Moabs", 2f, 3, false, true));
             proj.AddBehavior(Game.instance.model.GetTowerFromId("MortarMonkey-300").GetDescendant<SlowModel>().Duplicate());
             weapon.projectile.ApplyDisplay<ToyMortar.ToyMortarTower.ToyBomb>();
+            
+            towerModel.GetDescendants<FilterInvisibleModel>().ForEach(filter => filter.isActive = false);
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();

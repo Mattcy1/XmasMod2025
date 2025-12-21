@@ -72,8 +72,10 @@ using static XmasMod2025.UI.Gift;
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
 
 namespace XmasMod2025;
-public class XmasMod2025 : BloonsTD6Mod
+public partial class XmasMod2025 : BloonsTD6Mod
 {
+    private static string PlayerName;
+    
     public static Assembly ModAssembly => Assembly.GetExecutingAssembly();
     public static string lastMap = null;
     public static T GetEmbeddedModelFromJson<T>(string resourceName) where T : Model
@@ -263,6 +265,8 @@ public class XmasMod2025 : BloonsTD6Mod
         {
             item.Reset();
         }
+
+        PlayerName = Game.instance.GetBtd6Player().LiNKAccount.DisplayName;
     }
 
     public override void OnTowerCreated(Tower tower, Entity target, Model modelToUse)
