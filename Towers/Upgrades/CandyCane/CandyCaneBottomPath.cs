@@ -137,7 +137,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
     {
         public override int Path => BOTTOM;
         public override int Tier => 5;
-        public override int Cost => 4250;
+        public override int Cost => 5500;
         public override string Description => "With this guy in town, no boss will dare fight you.";
         public override string Icon => "BottomPathCane5";
         public override string Portrait => "Candy005Portrait";

@@ -26,9 +26,9 @@ public class GiftMultiplier : GiftShopItem
     {
         return upgrade switch
         {
-            1 => 750,
-            2 => 1500,
-            3 => 3500,
+            1 => 1500,
+            2 => 3500,
+            3 => 5000,
             4 => 7000,
             5 => 14000,
             _ => base.GetCostForUpgradeNumber(upgrade)

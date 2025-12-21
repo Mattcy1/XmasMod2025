@@ -55,6 +55,7 @@ namespace XmasMod2025.Towers.RoundsTowers
                 proj.id = "SnowmanT1";
 
                 towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                towerModel.footprint = Game.instance.model.GetTower(TowerType.DartMonkey).footprint; 
                 proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
             }
         }
@@ -92,6 +93,7 @@ namespace XmasMod2025.Towers.RoundsTowers
                 proj.id = "SnowmanT2";
 
                 towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                towerModel.footprint = Game.instance.model.GetTower(TowerType.DartMonkey).footprint;
                 proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
             }
         }
@@ -129,6 +131,7 @@ namespace XmasMod2025.Towers.RoundsTowers
                 proj.id = "SnowmanT3";
 
                 towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                towerModel.footprint = Game.instance.model.GetTower(TowerType.DartMonkey).footprint;
                 proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
             }
         }
@@ -166,6 +169,7 @@ namespace XmasMod2025.Towers.RoundsTowers
                 proj.id = "SnowmanT4";
 
                 towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
+                towerModel.footprint = Game.instance.model.GetTower(TowerType.DartMonkey).footprint;
                 proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
             }
         }

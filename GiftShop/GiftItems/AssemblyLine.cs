@@ -31,9 +31,9 @@ public class AssemblyLine : GiftShopItem
     {
         return upgrade switch
         {
-            1 => 2000,
-            2 => 4000,
-            3 => 8000,
+            1 => 3500,
+            2 => 7000,
+            3 => 1000,
             4 => 16000,
             _ => base.GetCostForUpgradeNumber(upgrade)
         };
