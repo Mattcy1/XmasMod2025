@@ -35,7 +35,6 @@ using Il2CppAssets.Scripts.Unity.Bridge;
 using MelonLoader;
 using UnityEngine;
 using Vector2 = Il2CppAssets.Scripts.Simulation.SMath.Vector2;
-using Il2CppSteamworks.Data;
 
 namespace XmasMod2025.Towers.Upgrades;
 
