@@ -39,7 +39,7 @@ namespace XmasMod2025.Bloons.Bfbs
 
             bloonModel.AddBehavior(healthPercentTriggerModel);
             bloonModel.AddBehavior(stunTowersInRadiusActionModel);
-            
+            bloonModel.AddTag("Bfb");
             bloonModel.AddBehavior(new CreateSoundOnBloonDestroyedModel("CreateSoundOnBloonDestroyedModel_Ice", new SoundModel("IceShatter_1", GetAudioClipReference("IceShatter_1")), new SoundModel("IceShatter_2", GetAudioClipReference("IceShatter_2")), "IceMoab"));
         }
     }

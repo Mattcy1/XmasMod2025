@@ -9,6 +9,7 @@ using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using MelonLoader;
+using System.Collections.Generic;
 using UnityEngine;
 using XmasMod2025.Bloons;
 using XmasMod2025.BossAPI;
@@ -27,8 +28,7 @@ namespace XmasMod2025.Bosses
         public override int SpawnsRound => 60;
         public override string BaseBloon => BloonType.sBad;
         public override string Description => "While the boss is alive all spawned bloons  gets x2 health, on top of that the boss stuns your towers on skull.";
-
-
+        public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.maxHealth = 100000;

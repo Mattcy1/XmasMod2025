@@ -8,6 +8,7 @@ using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
+using System.Collections.Generic;
 using UnityEngine;
 using XmasMod2025.Bloons.Moabs;
 
@@ -43,10 +44,8 @@ namespace XmasMod2025.Bosses
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 40;
         public override string BaseBloon => BloonType.sBad;
-
         public override string Description => "The Evil Elf, Steals 5% of your cash every 30 seconds, and spawn a Ice Moab every Skull.";
-
-
+        public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.maxHealth = 4000;

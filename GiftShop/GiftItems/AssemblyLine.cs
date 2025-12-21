@@ -9,6 +9,7 @@ public class AssemblyLine : GiftShopItem
     public override ShopType Shop => ShopType.Gift;
     public override double BaseCost => 0;
     public override string Description => "Gain gifts per second based on total gifts";
+    public override string Icon => "AssemblyLine";
     public override void Buy(InGame game)
     {
         XmasMod2025.UpgradeCount += 1;

@@ -8,6 +8,7 @@ public class GiftMultiplier : GiftShopItem
     public override ShopType Shop => ShopType.Gift;
     public override double BaseCost => 0;
     public override string Description => "Increase the total Multiplier of gifts.";
+    public override string Icon => "GiftMult";
     public override void Buy(InGame game)
     {
         XmasMod2025.GiftMult += 0.2;

@@ -16,6 +16,7 @@ public class ChocoBfb : ModBloon
         
         bloonModel.RemoveAllChildren();
         bloonModel.AddToChildren<ChocoMoab>(4);
+        bloonModel.AddTag("Bfb");
     }
 
     public override string BaseBloon => BloonType.sBfb;

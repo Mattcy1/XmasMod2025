@@ -32,6 +32,7 @@ namespace XmasMod2025.Bloons.Zomgs
             bloonModel.bloonProperties = Il2Cpp.BloonProperties.White | Il2Cpp.BloonProperties.Frozen;
 
             bloonModel.RemoveAllChildren();
+            bloonModel.AddTag("Zomg");
             bloonModel.AddToChildren<IceBfb>(4);
 
             StunTowersInRadiusActionModel stunTowersInRadiusActionModel = new("StunTowersInRadiusActionModel", "freeze", 50, 1, 1, CreatePrefabReference<IceCubeOverlay>(), true);

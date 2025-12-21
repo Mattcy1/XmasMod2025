@@ -133,10 +133,31 @@ public class Hooks
                 BossAPI.RoundsUntilNextBoss = nearestBoss - r - 1;
 
                 RoundBossUI.UpdateRoundsUI();
+            }
+        }
+    }
 
-                if (r == bossInfo.SpawnRound - 1)
+    [HarmonyPatch(typeof(TitleScreen), nameof(TitleScreen.Start))]
+    public class EditRs
+    {
+        [HarmonyPostfix]
+
+        public static void Postfix(InGame __instance)
+        {
+            foreach (RoundSetModel roundSet in GameData.Instance.roundSets)
+            {
+                try
                 {
-                    InGame.instance.SpawnBloons(bossInfo.BossToSpawn, 1, 0);
+                    foreach (var bossInfo in BossAPI.BossInfos)
+                    {
+                        var r = bossInfo.SpawnRound;
+                        roundSet.rounds[r - 1].ClearBloonGroups();
+                        roundSet.rounds[r - 1].AddBloonGroup(bossInfo.BossToSpawn, 1);
+                    }
+                }
+                catch
+                {
+
                 }
             }
         }
@@ -308,7 +329,7 @@ public class Hooks
                 if (__instance.bloonModel.IsModdedBoss())
                 {
                     bossInfo.Boss = __instance;
-                    XmasMod2025.AddCurrency(CurrencyType.Gift, 1000);
+                    XmasMod2025.AddCurrency(CurrencyType.Gift, 500);
 
 
                     if(XmasMod2025.KrampusAlive && __instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())

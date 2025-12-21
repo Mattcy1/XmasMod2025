@@ -15,6 +15,7 @@ public class ChocoZomg : ModBloon
         bloonModel.speed *= 1.15f;
         
         bloonModel.RemoveAllChildren();
+        bloonModel.AddTag("Zomg");
         bloonModel.AddToChildren<ChocoBfb>(4);
     }
 

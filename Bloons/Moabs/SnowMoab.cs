@@ -49,6 +49,8 @@ namespace XmasMod2025.Bloons.Moabs
                 GetAudioClipReference("SnowBloon_2"),
                 GetAudioClipReference("SnowBloon_3")
             ])));
+
+            bloonModel.AddTag("Moab");
         }
 
         public class SnowMoabDisplay : ModBloonDisplay<SnowMoab>

@@ -60,6 +60,7 @@ namespace XmasMod2025.Bosses
         public override int SpawnsRound => 80;
         public override string BaseBloon => BloonType.sBad;
         public override string Description => "";
+        public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.maxHealth = 550000;

@@ -21,6 +21,7 @@ using Il2CppAssets.Scripts.Models.ContentBrowser;
 using Il2CppAssets.Scripts.Models.Map;
 using Il2CppAssets.Scripts.Models.MapEditorBehaviors;
 using Il2CppAssets.Scripts.Models.Towers;
+using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Objects;

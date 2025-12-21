@@ -34,8 +34,9 @@ namespace XmasMod2025.Towers
         public override string Icon => VanillaSprites.MonkeyVillageElfPetIcon;
         public override string Portrait => Icon;
         public override string Description => "One of Santa's Minions, help you defend.";
-
         public override int BottomPathUpgrades => 5;
+        public override int MiddlePathUpgrades => 5;
+        public override int TopPathUpgrades => 5;
         public override int Cost => 35;
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)

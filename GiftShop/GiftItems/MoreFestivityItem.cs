@@ -7,6 +7,7 @@ public class MoreFestivity : GiftShopItem
 {
     public override ShopType Shop => ShopType.Gift;
     public override double BaseCost => 0;
+    public override string Icon => "Festive";
     public override void Buy(InGame game)
     {
         XmasMod2025.TreeDropRates += (5, 7);

@@ -8,6 +8,7 @@ using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
+using System.Collections.Generic;
 using UnityEngine;
 using XmasMod2025.Bloons;
 using XmasMod2025.Bloons.Moabs;
@@ -56,6 +57,7 @@ namespace XmasMod2025.Bosses
         public override string Description => "Every 30 seconds, spawn 2 candy cane bloons, On Skull spawns a snow moab.";
 
         public BloonModel Bloon = null;
+        public override IEnumerable<string> DamageStates => [];
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {

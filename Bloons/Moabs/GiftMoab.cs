@@ -29,6 +29,7 @@ namespace XmasMod2025.Bloons
             //bloonModel.icon = "";
 
             bloonModel.disallowCosmetics = true;
+            bloonModel.AddTag("Moab");
         }
     }
 

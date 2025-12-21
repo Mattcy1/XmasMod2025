@@ -23,7 +23,7 @@ using XmasMod2025.Towers;
 
 namespace XmasMod2025.Towers.Upgrades
 {
-    internal class CandyCaneTopPath
+    internal class ElfBottomPath
     {
         public class Tier1 : ChristmasUpgrade<ElfMonkey>
         {
@@ -42,7 +42,7 @@ namespace XmasMod2025.Towers.Upgrades
             }
         }
 
-        public class Tier2 : ChristmasUpgrade<ElfMonkey>
+        public class TierBottom2 : ChristmasUpgrade<ElfMonkey>
         {
             public override int Path => BOTTOM;
             public override int Tier => 2;
@@ -54,7 +54,7 @@ namespace XmasMod2025.Towers.Upgrades
             {
                 towerModel.IncreaseRange(10);
 
-                if (towerModel.tiers[1] >= 2)
+                if (towerModel.tiers[0] >= 2)
                 {
                     towerModel.GetBehavior<RateSupportModel>("RateSupportModel_BuildersSpirit").customRadius += 12f;
                     towerModel.GetBehavior<RangeSupportModel>("RangeSupportModel_BuildersSpirit").customRadius += 12f;
@@ -103,7 +103,7 @@ namespace XmasMod2025.Towers.Upgrades
         public override int Path => BOTTOM;
         public override int Tier => 4;
         public override int Cost => 800;
-        public override string DisplayName => "Better Wrapping Paper";
+        public override string DisplayName => "Better Gift Content";
         public override string Description => "The elf monkey buy better wrapping paper making gift more valuable.";
         public override string Icon => "Elf004Icon";
         public override void ApplyUpgrade(TowerModel towerModel)

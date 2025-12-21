@@ -106,6 +106,7 @@ namespace XmasMod2025.Bosses
         public override string BaseBloon => BloonType.sBad;
         public override string PreviewIcon => Icon + "Preview";
         public override string Description => "Most know of good ol' Saint. Nicolas. But not as many know of the much more sinister Krampus, who punishes anyone who's been bad throughout the year, in fact, his sacks are already carrying some bloons right now. Let's just say, when you hear his screech, you know that this will be a horrible night...";
+        public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             //bloonModel.maxHealth = 20000000;
@@ -191,7 +192,7 @@ namespace XmasMod2025.Bosses
 
                 KidnapTower();
                 
-                if (healthPercent <= 0.5f && !half)
+                if (boss.health <= boss.bloonModel.maxHealth * 0.5f && !half)
                 {
                     BossUI.UpdateNameColor(UnityEngine.Color.yellow, null);
 
@@ -211,7 +212,7 @@ namespace XmasMod2025.Bosses
                     half = true;
                 }
 
-                if (healthPercent <= 0.25f && !nextHalf)
+                if (boss.health <= boss.bloonModel.maxHealth * 0.25f && !nextHalf)
                 {
                     ModHelper.Log<XmasMod2025>(healthPercent);
                     foreach (var boss in ModContent.GetContent<ModBoss>())

@@ -11,6 +11,7 @@ public class FestiveSpirit : GiftShopItem
 {
     public override ShopType Shop => ShopType.Buffs;
     public override double BaseCost => 700;
+    public override string Icon => "XmasTree-Icon";
 
     public override string Description => "All towers are in the festive mood for the duration of the next 3 rounds, gaining a bit of range and attack speed.";
     public override void Buy(InGame game)
