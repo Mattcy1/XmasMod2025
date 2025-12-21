@@ -31,7 +31,7 @@ namespace XmasMod2025.Bosses
         public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            bloonModel.maxHealth = 100000;
+            bloonModel.maxHealth = 75000;
             bloonModel.RemoveAllChildren();
 
             StunTowersInRadiusActionModel stun = Game.instance.model.GetBloon("Vortex1").GetBehavior<StunTowersInRadiusActionModel>().Duplicate();

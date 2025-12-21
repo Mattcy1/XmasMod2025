@@ -102,7 +102,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
     {
         public override int Path => TOP;
         public override int Tier => 4;
-        public override int Cost => 550;
+        public override int Cost => 2000;
         public override string DisplayName => "Candy Cane Boomerang";
         public override string Description => "The projectile, now acts like a boomerang.";
         public override string Icon => "TopPathCane4";
@@ -122,7 +122,7 @@ namespace XmasMod2025.Towers.Upgrades.CandyCane
     {
         public override int Path => TOP;
         public override int Tier => 5;
-        public override int Cost => 2500;
+        public override int Cost => 7000;
         public override string Description => "Throws, 5 Boomerang at once, increased pierce and damage, projectile splits into even more shards.";
         public override string Icon => "TopPathCane5";
         public override string Portrait => "Candy500Portrait";

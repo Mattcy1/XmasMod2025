@@ -686,7 +686,7 @@ public class Bloon_Destroy
                 unallowedIds = ["Bad"];
             }
 
-            string[] BossID = ["Lych", "Phayze", "Bloonarius", "Dreadbloon", "Blastapopoulos", "Vortex", "Test"];
+            string[] BossID = ["Lych", "Phayze", "Bloonarius", "Dreadbloon", "Blastapopoulos", "Vortex", "Test", "Mini"];
 
             if (!unallowedIds.Contains(bloon.baseId) && !BossID.Contains(bloon.id) && !bloon.HasTag("Sandbox") && !bloon.isBoss) 
             {

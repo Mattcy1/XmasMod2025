@@ -102,7 +102,7 @@ namespace XmasMod2025.Towers.Upgrades
     {
         public override int Path => BOTTOM;
         public override int Tier => 4;
-        public override int Cost => 800;
+        public override int Cost => 1250;
         public override string DisplayName => "Better Gift Content";
         public override string Description => "The elf monkey buy better wrapping paper making gift more valuable.";
         public override string Icon => "Elf004Icon";
@@ -121,7 +121,7 @@ namespace XmasMod2025.Towers.Upgrades
     {
         public override int Path => BOTTOM;
         public override int Tier => 5;
-        public override int Cost => 2000;
+        public override int Cost => 5000;
         public override string Icon => "Elf005Icon";
         public override string DisplayName => "End of day bonus";
         public override string Description => "The elf monkey get paid end of round bonus (150 Gifts).";

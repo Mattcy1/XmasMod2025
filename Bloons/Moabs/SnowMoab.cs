@@ -28,8 +28,8 @@ namespace XmasMod2025.Bloons.Moabs
                 bloonModel.dontShowInSandbox = true;
                 bloonModel.danger -= 1;
                 bloonModel.RemoveAllChildren();
-                bloonModel.AddToChildren<SnowBloon>(2);
-                bloonModel.maxHealth = 20;
+                bloonModel.AddToChildren<SnowBloon>(3);
+                bloonModel.maxHealth = 15;
             }
         }
 

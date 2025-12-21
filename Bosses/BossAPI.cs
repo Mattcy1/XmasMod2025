@@ -35,6 +35,7 @@ using XmasMod2025.UI;
 using static XmasMod2025.BossAPI.BossAPI;
 using Info = BTD_Mod_Helper.Api.Components.Info;
 using Il2CppAssets.Scripts.Unity;
+using XmasMod2025.Bloons.Moabs;
 
 namespace XmasMod2025.BossAPI;
 public class BossAPI
@@ -88,6 +89,11 @@ public class Hooks
             {
                 if (@this.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
                 {
+                    if(BossUI.instance == null)
+                    {
+                        BossUI.CreateBossBar(@this.GetInfo());
+                    }
+
                     BossUI.HandleUI(@this);
                 }
             }
@@ -95,6 +101,11 @@ public class Hooks
             {
                 if (@this.bloonModel.IsModdedBoss())
                 {
+                    if (BossUI.instance == null)
+                    {
+                        BossUI.CreateBossBar(@this.GetInfo());
+                    }
+
                     BossUI.HandleUI(@this);
                 }
             }
@@ -286,16 +297,6 @@ public class Hooks
                     boss.OnSpawn(__instance);
                 }
             }
-
-            if (!__instance.bloonModel.HasTag("Choco") && !__instance.bloonModel.isBoss && XmasMod2025.boss != null && (XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<ChocoBoss>() || XmasMod2025.boss.bloonModel.baseId == ModContent.BloonID<KrampusBoss>()))
-            {
-                var root = __instance.bloonModel.Duplicate();
-
-                root.maxHealth *= 2;
-
-                __instance.UpdateRootModel(root);
-                __instance.health = __instance.bloonModel.maxHealth;
-            }
         }
     }
 
@@ -436,6 +437,11 @@ public class Hooks
             if (__instance.modl.actionIds.Contains("ModdedSkullModdedBossCoal Boss") || __instance.modl.actionIds.Contains("ModdedSkullModdedBossKrampus"))
             {
                 InGame.instance.SpawnBloons(ModContent.BloonID<CoalTotem>(), 1, 0);
+            }
+
+            if (__instance.modl.actionIds.Contains("ModdedSkullModdedBossChoco Boss") || __instance.modl.actionIds.Contains("ModdedSkullModdedBossKrampus"))
+            {
+                InGame.instance.SpawnBloons(ModContent.BloonID<ChocoBfb>(), 2, 0);
             }
 
             if (BossAPI.skullUIs.Count > 0 && __instance.bloon.bloonModel.IsModdedBoss() && __instance.modl.actionIds.Contains("ModdedSkull" + __instance.bloon.bloonModel.GetBossID()))

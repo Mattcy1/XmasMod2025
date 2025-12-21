@@ -35,6 +35,7 @@ using Il2CppAssets.Scripts.Unity.Bridge;
 using MelonLoader;
 using UnityEngine;
 using Vector2 = Il2CppAssets.Scripts.Simulation.SMath.Vector2;
+using Il2CppSteamworks.Data;
 
 namespace XmasMod2025.Towers.Upgrades;
 
@@ -100,8 +101,11 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
             towerModel.GetAttackModel().RemoveBehavior<RotateToTargetModel>();
 
             var weapon = towerModel.GetWeapon();
-            weapon.SetProjectile(Game.instance.model.GetTowerFromId("MortarMonkey-200").GetWeapon().projectile.Duplicate());
+            weapon.SetProjectile(Game.instance.model.GetTowerFromId("MortarMonkey-201").GetWeapon().projectile.Duplicate());
             weapon.projectile.ApplyDisplay<ToyBomb>();
+
+            TowerExpireModel tower = new TowerExpireModel("name", 20f, 1, true, false);
+            towerModel.AddBehavior(tower);
         }
 
         public class ToyMortarTowerDisplay : ModTowerCustomDisplay<ToyMortarTower>
@@ -345,7 +349,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
 
     public override int Path => Top;
     public override int Tier => 4;
-    public override int Cost => 225;
+    public override int Cost => 1200;
 
     public override string Description =>
         "Elf monkey can now create carts which run over bloons for <b>three</b> damage (MOABs are immune) and have fast shooting turrets that only do <b>one</b> damage each shot.";
@@ -433,15 +437,18 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
             towerModel.GetAttackModel().RemoveBehavior<RotateToTargetModel>();
 
             var weapon = towerModel.GetWeapon();
-            weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-200").GetWeapon().projectile.Duplicate());
+            weapon.SetProjectile(Game.instance.model.GetTowerFromId("BombShooter-202").GetWeapon().projectile.Duplicate());
             weapon.rate /= 4;
             var damageModel = weapon.projectile.GetDescendant<DamageModel>();
-            damageModel.damage *= 10;
+            damageModel.damage *= 7;
             damageModel.immuneBloonProperties = BloonProperties.None;
             var proj = weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile;
             proj.AddBehavior(new DamageModifierForTagModel("DamageModifierForTagModel_Moabs", "Moabs", 2f, 3, false, true));
             proj.AddBehavior(Game.instance.model.GetTowerFromId("MortarMonkey-300").GetDescendant<SlowModel>().Duplicate());
             weapon.projectile.ApplyDisplay<ToyMortar.ToyMortarTower.ToyBomb>();
+
+            TowerExpireModel tower = new TowerExpireModel("name", 25f, 1, true, false);
+            towerModel.AddBehavior(tower);
             
             towerModel.GetDescendants<FilterInvisibleModel>().ForEach(filter => filter.isActive = false);
         }
@@ -498,7 +505,7 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
 
     public override int Path => Top;
     public override int Tier => 5;
-    public override int Cost => 4500;
+    public override int Cost => 6000;
 
     public override string Description =>
         "Creates newly enhanced toy carts and mortars and a much faster rate!";
