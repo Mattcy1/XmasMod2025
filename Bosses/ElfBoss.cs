@@ -31,6 +31,15 @@ namespace XmasMod2025.Bosses
                     if (renderer.name == "Propeller")
                     {
                         renderer.gameObject.AddComponent<CustomRotationSimple>();
+                        renderer.SetMainTexture(GetTexture("ElfBossDisplay"));
+                    }
+                    else if (renderer.name.StartsWith("ElfGeo"))
+                    {
+                        renderer.SetMainTexture(GetTexture("ElfBossDisplay2"));
+                    }
+                    else
+                    {
+                        renderer.SetMainTexture(GetTexture("ElfBossDisplay"));
                     }
                 }
             }

@@ -80,12 +80,12 @@ public partial class XmasMod2025
             Player("Neutral", "Well, there was this weird black furry guy with antlers who-", 10),
             ElfElder("Panicked", "Oh no! This is horribly bad! That person you saw was Krampus! He hates Santa, you must get Santa back immediately!", 10),
             ElfElder("Neutral", "You should know that Krampus is much more wise than the Grinch, and you should be very weary of him, since he definitely has a plan if you try to take Santa back.", 10),
-            new Dialog("Big Ol' Present", "So many presents to make bad, it's like there's no end to them, how does Santa make so many of these?", GetSpriteReference("GiftBossIcon"), 19, Voice.MezzoSopranoFemale),
-            new Dialog("Big Ol' Present", "At least I'm helping Krampus out.", GetSpriteReference("GiftBossIcon"), 19, Voice.MezzoSopranoFemale),
-            Player("Confused", "Uh, WHO is that? I wonder if I should be scared.", 19),
-            new Dialog("Big Ol' Present", "Don't mind me, I'm just coming through with some perfectly normal presents, ♪ laladee laladoo laladum ♪", GetSpriteReference("GiftBossIcon"), 20, Voice.MezzoSopranoFemale),
+            new Dialog("Big Ol' Present", "So many presents to make bad, it's like there's no end to them, how does Santa make so many of these?", GetSpriteReference("GiftBossIcon"), 19, Voice.MezzoSopranoFemale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            new Dialog("Big Ol' Present", "At least I'm helping Krampus out.", GetSpriteReference("GiftBossIcon"), 19, Voice.MezzoSopranoFemale) {Background = AssetHelper.GetSprite("KrampusPanel")},
+            Player("Confused", "Uh, WHO is that? I wonder if I should be scared.", 19) ,
+            new Dialog("Big Ol' Present", "Don't mind me, I'm just coming through with some perfectly normal presents, ♪ laladee laladoo laladum ♪", GetSpriteReference("GiftBossIcon"), 20, Voice.MezzoSopranoFemale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
             Player("Shocked", "What?! I thought present bloons could only be big as moabs! I guess Krampus figured out how to make bigger ones.", 20),
-            
+            Player("Neutral", "", 21)
         ]);
     }
 }

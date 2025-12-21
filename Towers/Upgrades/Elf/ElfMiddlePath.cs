@@ -80,7 +80,7 @@ namespace XmasMod2025.Towers.Upgrades
             public override int Path => MIDDLE;
             public override int Tier => 3;
             public override int Cost => 500;
-            public override string DisplayName => "Stone Gifts";
+            public override string DisplayName => "Hammah Time";
             public override string Icon => "Elf030Icon";
             public override string Description => "Stuns bloon on impacts up to MOABS.";
             public override void ApplyUpgrade(TowerModel towerModel)
@@ -114,7 +114,7 @@ namespace XmasMod2025.Towers.Upgrades
         public override int Path => MIDDLE;
         public override int Tier => 4;
         public override int Cost => 1200;
-        public override string DisplayName => "Metal Gifts";
+        public override string DisplayName => "Huge Hammah";
         public override string Description => "Better overall stats, can now stun BFBs, Slam: Stuns almost all bloons on screen.";
         public override string Icon => "Elf040Icon";
         public override void ApplyUpgrade(TowerModel towerModel)
@@ -142,7 +142,7 @@ namespace XmasMod2025.Towers.Upgrades
         public override int Tier => 5;
         public override int Cost => 7125;
         public override string Icon => "Elf050Icon";
-        public override string DisplayName => "SUPER Slam";
+        public override string DisplayName => "5 Tons Hammer";
         public override string Description => "Slam all bloons causing them to be stunned for 10s Including Bosses, Bad.";
         public override void ApplyUpgrade(TowerModel towerModel)
         {
