@@ -91,7 +91,7 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
 {
     public class ToyMortarTower : ModSubTower
     {
-        public override string Portrait => "ToyMortar-Portrait";
+        public override string Portrait => "ToyMortar-Icon";
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
@@ -160,9 +160,11 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     public static Dictionary<Tower, Projectile> ProjectileForTower = new Dictionary<Tower, Projectile>();
     public class ToyCartTower : ModTower
     {
+        public override string Portrait => "ToyCart-Icon";
+
         public class ToyTurretBody : ModTowerCustomDisplay<ToyCartTower>
         {
-            public override bool UseForTower(params int[] tiers) => true;
+            public override bool UseForTower(params int[] tiers) => tiers.Sum() == 0;
 
             public override string AssetBundleName => "xmas";
             public override string PrefabName => Name;
@@ -365,7 +367,7 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
     {
         public class Cart2Tower : ModTowerCustomDisplay<ToyCart.ToyCartTower>
         {
-            public override bool UseForTower(params int[] tiers) => tiers[1] == 1;
+            public override bool UseForTower(params int[] tiers) => tiers.Sum() > 0;
 
             public override string AssetBundleName => "xmas";
             public override string PrefabName => "Cart2TowerFixed";
@@ -385,6 +387,8 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
         }
         public override void ApplyUpgrade(TowerModel towerModel)
         {
+            towerModel.ApplyDisplay<Cart2Tower>();
+            
             var weapon = towerModel.GetWeapon();
             var projectile = weapon.projectile;
             
@@ -431,7 +435,7 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
             }
         }
         
-        public override string Portrait => "ToyMortar-Portrait";
+        public override string Portrait => "EnhancedToyMortar-Portrait";
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {

@@ -40,8 +40,6 @@ namespace XmasMod2025.Towers
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
-            towerModel.ApplyDisplay<ElfDisplay>();
-
             var proj = towerModel.GetWeapon().projectile;
 
             proj.GetDamageModel().damage = 1;
@@ -52,8 +50,16 @@ namespace XmasMod2025.Towers
         }
     }
 
-    public class ElfDisplay : ModDisplay
+    public class ElfMonkeyDisplay : ModTowerDisplay<ElfMonkey>
     {
+        public override bool UseForTower(params int[] tiers) => tiers[1] < 3;
+
         public override string BaseDisplay => MonkeyVillageElfPet;
+
+        public override void ModifyDisplayNode(UnityDisplayNode node)
+        {
+            SetMeshTexture(node, "Elf");
+            node.GetMeshRenderer().ApplyOutlineShader();
+        }
     }
 }
