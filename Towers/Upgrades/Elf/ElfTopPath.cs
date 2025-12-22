@@ -193,7 +193,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
 
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTower(TowerType.BoomerangMonkey, 0, 0, 0).GetWeapon().projectile.Duplicate());
-            weapon.projectile.GetDamageModel().damage += 2;
+            weapon.projectile.GetDamageModel().damage += 1;
             weapon.rate = 0.175f; // Just under 6/s (~5.88)
 
             towerModel.dontDisplayUpgrades = true;

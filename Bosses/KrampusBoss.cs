@@ -109,8 +109,7 @@ namespace XmasMod2025.Bosses
         public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            //bloonModel.maxHealth = 20000000;
-            bloonModel.maxHealth = 10000;
+            bloonModel.maxHealth = 15000000;
             bloonModel.RemoveAllChildren();
             bloonModel.speed /= 3f;
 
