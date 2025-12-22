@@ -18,7 +18,7 @@ namespace XmasMod2025.Bloons
 {
     public class GiftMoab : ModBloon
     {
-        public override string Icon => Name + "Icon";
+        public override string Icon => "GiftMoabIcon";
         public override string BaseBloon => BloonType.sMoab;
 
         public override void ModifyBaseBloonModel(BloonModel bloonModel)

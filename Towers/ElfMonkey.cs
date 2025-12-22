@@ -61,7 +61,6 @@ namespace XmasMod2025.Towers
 
             foreach (var rend in node.GetMeshRenderers())
             {
-                rend.SetMainTexture(GetTexture("Elf"));
                 rend.ApplyOutlineShader();
             }
         }

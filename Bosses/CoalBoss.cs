@@ -93,6 +93,7 @@ namespace XmasMod2025.Bosses
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
             bloonModel.maxHealth = 3000;
+            bloonModel.dontShowInSandbox = true;
             bloonModel.danger = 99999;
 
             TimeTriggerModel timeTrigger = new TimeTriggerModel("CoalTotemTimer", 15, false, new string[] { "SpawnsBloonCoal" });

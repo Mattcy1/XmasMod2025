@@ -412,7 +412,7 @@ public class Hooks
     }
 
     //Continue
-    [HarmonyPatch(typeof(InGame), nameof(InGame.Continue))]
+    /*[HarmonyPatch(typeof(InGame), nameof(InGame.Continue))]
     public class HandleContinue
     {
         [HarmonyPostfix]
@@ -425,7 +425,7 @@ public class Hooks
                 diedTo = null;
             }
         }
-    }
+    }*/
 
     //Handles Skull UI and HealthBar
     [HarmonyPatch(typeof(HealthPercentTrigger), nameof(HealthPercentTrigger.Trigger))]

@@ -690,7 +690,14 @@ public class Bloon_Destroy
 
             if (!unallowedIds.Contains(bloon.baseId) && !BossID.Contains(bloon.id) && !bloon.HasTag("Sandbox") && !bloon.isBoss) 
             {
-                InGame.instance.SpawnBloons(bloon.id, countRand, 10);
+                if(bloon.id.Contains("Mini"))
+                {
+                    InGame.instance.SpawnBloons(ModContent.BloonID<GiftMoab>(), countRand, 10);
+                }
+                else
+                {
+                    InGame.instance.SpawnBloons(bloon.id, countRand, 10);
+                }
             }
         }
         else if (__instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
