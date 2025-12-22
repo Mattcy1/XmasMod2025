@@ -193,13 +193,13 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
 
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTower(TowerType.BoomerangMonkey, 0, 0, 0).GetWeapon().projectile.Duplicate());
+            weapon.projectile.GetDamageModel().damage += 2;
             weapon.rate = 0.175f; // Just under 6/s (~5.88)
 
             towerModel.dontDisplayUpgrades = true;
 
             towerModel.isSubTower = true;
-            towerModel.AddBehavior(new CreditPopsToParentTowerModel("CreditPopsToParentTowerModel"));
-            towerModel.AddBehavior(new TowerExpireOnParentDestroyedModel("TowerExpireOnParentDestroyedModel"));
+            towerModel.AddBehavior(new CreditPopsToParentTowerModel("poptoelf"));
         }
 
         public override TowerSet TowerSet => GetTowerSet<XmasTowerSet>();
@@ -300,6 +300,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
             }
         }
     }
+
     [HarmonyPatch(typeof(Tower), nameof(Il2CppAssets.Scripts.Simulation.Towers.Tower.OnSold))]
     [HarmonyPatch(typeof(Tower), nameof(Il2CppAssets.Scripts.Simulation.Towers.Tower.OnDestroy))]
     private static class Tower_OnDestroy
@@ -318,9 +319,9 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     [HarmonyPatch(typeof(Tower), nameof(Il2CppAssets.Scripts.Simulation.Towers.Tower.Initialise))]
     private static class Tower_Initialize
     {
-        public static void Postfix(Tower __instance, Model modelToUse)
+        public static void Postfix(Tower __instance)
         {
-            if (modelToUse.Cast<TowerModel>().baseId == TowerID<ToyCartTower>())
+            if (__instance.towerModel.baseId == TowerID<ToyCartTower>())
             {
                 TowerForProjectile.Add(Projectile_Initialize.LastProjectile, __instance);
                 __instance.ParentId = Projectile_Initialize.LastProjectile.EmittedByTowerId;
@@ -337,11 +338,14 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
             
             var projectile = __instance.projectile;
             var tower = TowerForProjectile[projectile];
+
             if (tower.IsDestroyed)
             {
                 projectile.Destroy();
+                MelonLogger.Msg("test");
                 return;
             }
+
             tower.PositionTower(projectile.Position.ToVector2());
             //tower.Rotation = projectile.Rotation; // Messes up some stuff
         }
