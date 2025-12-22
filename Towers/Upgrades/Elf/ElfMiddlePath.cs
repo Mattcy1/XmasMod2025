@@ -106,6 +106,14 @@ namespace XmasMod2025.Towers.Upgrades
             public override string Description => "Stuns bloon on impacts up to MOABS.";
             public override void ApplyUpgrade(TowerModel towerModel)
             {
+                towerModel.GetAttackModel().RemoveWeapon(towerModel.GetWeapon(0));
+                var newAtk = Game.instance.model.GetTowerFromId("Sauda").GetAttackModel().Duplicate();
+                newAtk.weapons[0].projectile.pierce = 3;
+                newAtk.weapons[0].projectile.GetDamageModel().damage = 2;
+                newAtk.weapons[0].rate -= 0.1f;
+
+                towerModel.AddBehavior(newAtk);
+
                 foreach(var weapon in towerModel.GetWeapons())
                 {
                     var stun = Game.instance.model.GetTowerFromId("BombShooter-400").GetAttackModel().weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().Duplicate();
@@ -159,6 +167,8 @@ namespace XmasMod2025.Towers.Upgrades
             foreach (var weapon in towerModel.GetWeapons())
             {
                 weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().mutationId = "Elf040";
+                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().lifespan = 0.7f;
+                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().Lifespan = 0.7f;
                 weapon.projectile.pierce += 1;
                 weapon.projectile.GetDamageModel().damage += 3;
                 weapon.rate -= 0.1f;
@@ -212,8 +222,8 @@ namespace XmasMod2025.Towers.Upgrades
             foreach (var weapon in towerModel.GetWeapons())
             {
                 weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().mutationId = "Elf050";
-                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().lifespan *= 2;
-                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().Lifespan *= 2;
+                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().lifespan = 1f;
+                weapon.projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().Lifespan = 1f;
                 towerModel.GetAbility().displayName = "Super Slam";
                 towerModel.GetAbility().description = "Stuns EVERYTHING on the screen for 10s";
 
