@@ -1,4 +1,5 @@
-﻿using BTD_Mod_Helper.Api;
+﻿using System.IO;
+using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Api.Towers;
@@ -19,6 +20,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
 using MelonLoader;
 using System.Linq;
+using MelonLoader.Utils;
 using UnityEngine;
 using XmasMod2025.Bloons;
 using XmasMod2025.Towers;
@@ -34,9 +36,6 @@ namespace XmasMod2025.Towers
         public override string Icon => VanillaSprites.MonkeyVillageElfPetIcon;
         public override string Portrait => Icon;
         public override string Description => "One of Santa's Minions, help you defend.";
-        public override int BottomPathUpgrades => 5;
-        public override int MiddlePathUpgrades => 5;
-        public override int TopPathUpgrades => 5;
         public override int Cost => 45;
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
@@ -56,9 +55,5 @@ namespace XmasMod2025.Towers
     public class ElfDisplay : ModDisplay
     {
         public override string BaseDisplay => MonkeyVillageElfPet;
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            SetMeshTexture(node, "Elf");
-        }
     }
 }
