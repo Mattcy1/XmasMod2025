@@ -692,7 +692,7 @@ public class Bloon_Destroy
             {
                 if(bloon.id.Contains("Mini"))
                 {
-                    InGame.instance.SpawnBloons(ModContent.BloonID<GiftMoab>(), countRand, 10);
+                    InGame.instance.SpawnBloons(ModContent.BloonID<GiftMoab>(), 1, 10);
                 }
                 else
                 {

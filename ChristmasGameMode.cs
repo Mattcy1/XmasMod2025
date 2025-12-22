@@ -182,7 +182,8 @@ public class ChristmasGameMode : ModGameMode
     public override void ModifyBaseGameModeModel(ModModel gameModeModel)
     {
         gameModeModel.SetStartingRound(1);
-        gameModeModel.UseRoundSet<ChristmasRouds>();
         gameModeModel.SetEndingRound(100);
+
+        gameModeModel.UseRoundSet<ChristmasRouds>();
     }
 }

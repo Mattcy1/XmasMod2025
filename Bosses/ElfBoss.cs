@@ -53,11 +53,11 @@ namespace XmasMod2025.Bosses
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 40;
         public override string BaseBloon => BloonType.sBad;
-        public override string Description => "The Evil Elf, Steals 5% of your cash every 30 seconds, and spawn a Ice Moab every Skull.";
+        public override string Description => "Santa wasn't paying this elf enough so he decided to quit and fight back. (CAN ONLY BE DAMAGED BY ELF MONKEY!!)";
         public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {
-            bloonModel.maxHealth = 4000;
+            bloonModel.maxHealth = 900;
             bloonModel.RemoveAllChildren();
 
             TimeTriggerModel timeTrigger = new TimeTriggerModel("ElfTax", 30, false, new string[] { "ElfTax" });

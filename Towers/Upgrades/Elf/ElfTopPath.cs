@@ -84,6 +84,7 @@ public class BuildersAtmosphere : ChristmasUpgrade<ElfMonkey>
     public override int Path => Top;
     public override int Tier => 2;
     public override int Cost => 45;
+    public override string Icon => "Elf200Icon";
 }
 
 public class ToyMortar : ChristmasUpgrade<ElfMonkey>
@@ -103,7 +104,7 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
             weapon.SetProjectile(Game.instance.model.GetTowerFromId("MortarMonkey-201").GetWeapon().projectile.Duplicate());
             weapon.projectile.ApplyDisplay<ToyBomb>();
 
-            TowerExpireModel tower = new TowerExpireModel("name", 20f, 1, true, false);
+            TowerExpireModel tower = new TowerExpireModel("name", 999, 1, true, false);
             towerModel.AddBehavior(tower);
         }
 
@@ -446,7 +447,7 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
             proj.AddBehavior(Game.instance.model.GetTowerFromId("MortarMonkey-300").GetDescendant<SlowModel>().Duplicate());
             weapon.projectile.ApplyDisplay<ToyMortar.ToyMortarTower.ToyBomb>();
 
-            TowerExpireModel tower = new TowerExpireModel("name", 25f, 1, true, false);
+            TowerExpireModel tower = new TowerExpireModel("name", 999, 1, true, false);
             towerModel.AddBehavior(tower);
             
             towerModel.GetDescendants<FilterInvisibleModel>().ForEach(filter => filter.isActive = false);

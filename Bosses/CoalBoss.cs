@@ -59,7 +59,7 @@ namespace XmasMod2025.Bosses
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 80;
         public override string BaseBloon => BloonType.sBad;
-        public override string Description => "";
+        public override string Description => "The worse present of them all.";
         public override IEnumerable<string> DamageStates => [];
         public override void ModifyBaseBloonModel(BloonModel bloonModel)
         {

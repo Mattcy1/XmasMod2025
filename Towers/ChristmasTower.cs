@@ -6,9 +6,13 @@ using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation;
 using Il2CppAssets.Scripts.Unity.Achievements.List;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.RightMenu;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.StoreMenu;
+using Il2CppAssets.Scripts.Unity.UI_New.Main;
 using UnityEngine;
+using XmasMod2025.GiftShop.BuffsItems;
+using XmasMod2025.Towers.SubTowers;
 using XmasMod2025.Towers.Upgrades;
 
 namespace XmasMod2025.Towers;
@@ -30,7 +34,7 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
         
         public static void Postfix(TowerModel model, ITowerPurchaseButton __result)
         {
-            if (model.baseId == TowerID<ToyCart.ToyCartTower>())
+            if (model.baseId == TowerID<ToyCart.ToyCartTower>() || model.baseId == TowerID<FestiveSpiritTower>() || model.baseId == TowerID<ElfSpawner>() || model.baseId == TowerID<ElfHelper>())
             {
                 __result.GameObject.transform.parent.gameObject.Destroy();
             }
@@ -39,15 +43,33 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
             {
                 cTower.ShopButton = __result.GameObject.transform.parent.gameObject;
                 cTower.ShopButton.SetActive(false);
+
                 if (ButtonsToUnlock.TryGetValue(cTower.UnlockRound, out var buttons))
                 {
                     buttons.Add(cTower.ShopButton);
                 }
                 else
                 {
-                    ButtonsToUnlock.Add(cTower.UnlockRound, [cTower.ShopButton]);
+                    if (ButtonsToUnlock.ContainsKey(cTower.UnlockRound))
+                    {
+                        ButtonsToUnlock[cTower.UnlockRound].Add(cTower.ShopButton);
+                    }
+                    else
+                    {
+                        ButtonsToUnlock.Add(cTower.UnlockRound, [cTower.ShopButton]);
+                        ModHelper.Msg<XmasMod2025>(cTower.Id);
+                    }
                 }
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.ReOpen))]
+    private static class Reset
+    {
+        public static void Postfix(InGame __instance)
+        {
+            ButtonsToUnlock.Clear();
         }
     }
 

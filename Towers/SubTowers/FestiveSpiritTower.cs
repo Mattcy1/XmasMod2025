@@ -28,7 +28,6 @@ namespace XmasMod2025.Towers.SubTowers
     public class FestiveSpiritTower : ChristmasTower
     {
         public override string BaseTower => TowerType.MonkeyVillage + "-200";
-        public override bool DontAddToShop => true;
         public override string Icon => VanillaSprites.MonkeyVillageElfPetIcon;
         public override string Portrait => Icon;
         public override string Description => "One of Santa's Minions, help you defend.";

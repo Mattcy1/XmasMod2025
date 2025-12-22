@@ -58,11 +58,7 @@ namespace XmasMod2025.Towers
         public override string BaseDisplay => MonkeyVillageElfPet;
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
-
-            foreach (var rend in node.GetMeshRenderers())
-            {
-                rend.ApplyOutlineShader();
-            }
+            SetMeshTexture(node, "Elf");
         }
     }
 }

@@ -31,10 +31,10 @@ public class AssemblyLine : GiftShopItem
     {
         return upgrade switch
         {
-            1 => 3500,
-            2 => 7000,
-            3 => 1000,
-            4 => 16000,
+            1 => 2000,
+            2 => 3500,
+            3 => 7000,
+            4 => 12500,
             _ => base.GetCostForUpgradeNumber(upgrade)
         };
     }

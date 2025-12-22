@@ -54,7 +54,7 @@ namespace XmasMod2025.Bosses
         public override string HealthBarBackground => "";
         public override int SpawnsRound => 20;
         public override string BaseBloon => BloonType.sBad;
-        public override string Description => "Every 30 seconds, spawn 2 candy cane bloons, On Skull spawns a snow moab.";
+        public override string Description => "Don't try to open him, he doesn't like it he'd probably attack you.";
 
         public BloonModel Bloon = null;
         public override IEnumerable<string> DamageStates => [];
