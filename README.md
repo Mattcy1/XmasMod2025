@@ -8,10 +8,7 @@ Xmas Mod 2025
 
 Welcome, to the second Xmas Mod
 
-This time, we have more polished and bugfree features (you heard that right, mattcy made a bugfree mod with lerp).
-It’s based on last year’s mod, but instead of The Grinch, we have Krampus a similar boss with his own unique traits.
-It still has a story, custom Xmas themed bloons, 2 full 5-5-5 towers, a Gift Shop, gift currency, and a bunch more content.
-
+It’s based on last year’s mod, but instead of The Grinch, the antagonist is Krampus; a similar boss, but with his own unique traits. It includes custom dialogue to help bring the story to life, custom Xmas themed bloons, 2 full 5-5-5 towers, a gift shop, and much more! 
 # Get ready to save Xmas once again!
 
 [![Requires BTD6 Mod Helper](https://raw.githubusercontent.com/gurrenm3/BTD-Mod-Helper/master/banner.png)](https://github.com/gurrenm3/BTD-Mod-Helper#readme)
