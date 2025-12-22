@@ -88,7 +88,6 @@ namespace XmasMod2025.Bosses
             bloonModel.AddBehavior(timeTrigger);
 
             bloonModel.ApplyDisplay<GiftDisplay>();
-            mod.LoggerInstance.Msg("Gift guid: " + bloonModel.display.AssetGUID);
             Bloon = bloonModel;
         }
 

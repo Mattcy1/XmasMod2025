@@ -14,7 +14,7 @@ namespace XmasMod2025.GiftShop.BuffsItems;
 public class GiftOfGiving : GiftShopItem
 {
     public override ShopType Shop => ShopType.Buffs;
-    public override double BaseCost => 300;
+    public override double BaseCost => 700;
     public override string Icon => "GiftOfGiving";
     public override string Description => "Give a random tower a present, giving him extra range and attack speed for the duration of this round.";
     public override void Buy(InGame game)
@@ -35,5 +35,5 @@ public class GiftOfGiving : GiftShopItem
     }
 
 
-    public override double PriceMultiplier => 1.1f;
+    public override double PriceMultiplier => 1.5f;
 }

@@ -57,7 +57,6 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
                     else
                     {
                         ButtonsToUnlock.Add(cTower.UnlockRound, [cTower.ShopButton]);
-                        ModHelper.Msg<XmasMod2025>(cTower.Id);
                     }
                 }
             }

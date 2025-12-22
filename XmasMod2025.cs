@@ -364,7 +364,7 @@ public partial class XmasMod2025 : BloonsTD6Mod
     {
         while (UpgradeCount >= 1)
         {
-            double gps = totalGifts * (UpgradeCount / 1000f);
+            double gps = totalGifts * (UpgradeCount / 1500f);
 
             AddCurrency(CurrencyType.Gift, gps);
 
@@ -691,7 +691,7 @@ public class Bloon_Destroy
 
             if (!unallowedIds.Contains(bloon.baseId) && !BossID.Contains(bloon.id) && !bloon.HasTag("Sandbox") && !bloon.isBoss) 
             {
-                if(bloon.id.Contains("Mini"))
+                if(bloon.id.Contains("Mini") || bloon.id.Contains("Test"))
                 {
                     InGame.instance.SpawnBloons(ModContent.BloonID<GiftMoab>(), 1, 10);
                 }
