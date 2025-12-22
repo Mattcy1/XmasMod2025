@@ -29,6 +29,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BTD_Mod_Helper.Api.Display;
+using Il2CppAssets.Scripts.Models.Effects;
+using Il2CppAssets.Scripts.Unity.Display;
+using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons.Bfbs;
 using XmasMod2025.Bloons.Moabs;
@@ -77,6 +81,23 @@ namespace XmasMod2025.Towers.Upgrades
 
         public class TierMiddle3 : ChristmasUpgrade<ElfMonkey>
         {
+            public class HammahElf : ModTowerCustomDisplay<ElfMonkey>
+            {
+                public override bool UseForTower(params int[] tiers) => tiers[1] == 3;
+
+                public override string AssetBundleName => "xmas";
+                public override string PrefabName => Name;
+
+                public override void ModifyDisplayNode(UnityDisplayNode node)
+                {
+                    foreach (var renderer in node.GetMeshRenderers())
+                    {
+                        renderer.ApplyOutlineShader();
+                        renderer.SetOutlineColor(new Color32(128, 77, 54, 255));
+                    }
+                }
+            }
+            
             public override int Path => MIDDLE;
             public override int Tier => 3;
             public override int Cost => 500;
@@ -111,6 +132,22 @@ namespace XmasMod2025.Towers.Upgrades
 
     public class TierMiddle4 : ChristmasUpgrade<ElfMonkey>
     {
+        public class HammahElf2 : ModTowerCustomDisplay<ElfMonkey>
+        {
+            public override bool UseForTower(params int[] tiers) => tiers[1] == 4;
+
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => Name;
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+                    renderer.SetOutlineColor(new Color32(128, 77, 54, 255));
+                }
+            }
+        }
         public override int Path => MIDDLE;
         public override int Tier => 4;
         public override int Cost => 1200;
@@ -129,15 +166,41 @@ namespace XmasMod2025.Towers.Upgrades
 
             var ability = Game.instance.model.GetTowerFromId("BombShooter-040").GetAbility().Duplicate();
             ability.displayName = "Slam";
+            ability.animation = 3;
+            ability.AnimationOffset = 0.4167f; // 10/24
+            ability.GetBehavior<CreateEffectOnAbilityModel>().effectModel = new EffectModel("Shockwave",
+                CreatePrefabReference<ShockwaveEffect>(), 1, 4, Fullscreen.No, false, false, true, false, false, false);
             ability.RemoveBehavior<CreateSoundOnAbilityModel>();
             ability.RemoveBehavior<ActivateAttackModel>();
             ability.description = "Slam all bloons on screen expect a few slammed bloon are stunned.";
             towerModel.AddBehavior(ability);
         }
+
+        public class ShockwaveEffect : ModCustomDisplay
+        {
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => "Shockwave";
+        }
     }
 
     public class TierMiddle5 : ChristmasUpgrade<ElfMonkey>
     {
+        public class HammahElf3 : ModTowerCustomDisplay<ElfMonkey>
+        {
+            public override bool UseForTower(params int[] tiers) => tiers[1] == 5;
+
+            public override string AssetBundleName => "xmas";
+            public override string PrefabName => Name;
+
+            public override void ModifyDisplayNode(UnityDisplayNode node)
+            {
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+                    renderer.SetOutlineColor(new Color32(128, 77, 54, 255));
+                }
+            }
+        }
         public override int Path => MIDDLE;
         public override int Tier => 5;
         public override int Cost => 7125;
