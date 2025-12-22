@@ -38,6 +38,7 @@ using XmasMod2025.Bloons.Bfbs;
 using XmasMod2025.Bloons.Moabs;
 using XmasMod2025.Bloons.Zomgs;
 using XmasMod2025.Towers;
+using Il2CppAssets.Scripts.Models.Audio;
 
 namespace XmasMod2025.Towers.Upgrades
 {
@@ -111,6 +112,12 @@ namespace XmasMod2025.Towers.Upgrades
                 newAtk.weapons[0].projectile.pierce = 3;
                 newAtk.weapons[0].projectile.GetDamageModel().damage = 2;
                 newAtk.weapons[0].rate -= 0.1f;
+                var SoundModel = new SoundModel("bonk", ModContent.GetAudioClipReference<XmasMod2025>("bonk"));
+                newAtk.weapons[0].GetBehavior<CreateSoundOnProjectileCreatedModel>().sound1 = SoundModel;
+                newAtk.weapons[0].GetBehavior<CreateSoundOnProjectileCreatedModel>().sound2 = SoundModel;
+                newAtk.weapons[0].GetBehavior<CreateSoundOnProjectileCreatedModel>().sound3 = SoundModel;
+                newAtk.weapons[0].GetBehavior<CreateSoundOnProjectileCreatedModel>().sound4 = SoundModel;
+                newAtk.weapons[0].GetBehavior<CreateSoundOnProjectileCreatedModel>().sound5 = SoundModel;
 
                 towerModel.AddBehavior(newAtk);
 
