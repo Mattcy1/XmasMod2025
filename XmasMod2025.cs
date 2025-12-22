@@ -1,5 +1,6 @@
 ﻿using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
+using BTD_Mod_Helper.Api.Bloons;
 using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Api.Helpers;

@@ -64,15 +64,6 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
         }
     }
 
-    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.ReOpen))]
-    private static class Reset
-    {
-        public static void Postfix(InGame __instance)
-        {
-            ButtonsToUnlock.Clear();
-        }
-    }
-
     [HarmonyPatch(typeof(Simulation), nameof(Simulation.RoundStart))]
     private static class Simulation_RoundStart
     {
