@@ -26,7 +26,7 @@ internal class ElfMiddlePath
     {
         public override int Path => MIDDLE;
         public override int Tier => 1;
-        public override int Cost => 35;
+        public override int Cost => 10;
         public override string Icon => "Elf010Icon";
         public override string Description => "Faster projectile speed, with more pierce";
 
@@ -35,8 +35,7 @@ internal class ElfMiddlePath
             foreach (var weapons in towerModel.GetWeapons())
             {
                 weapons.projectile.pierce += 1;
-                weapons.projectile.GetBehavior<TravelStraitModel>().speed *= 1.1f;
-                weapons.projectile.GetBehavior<TravelStraitModel>().Speed *= 1.1f;
+                weapons.projectile.GetBehavior<TravelStraitModel>().speed *= 1.21f;
             }
         }
     }
@@ -45,10 +44,10 @@ internal class ElfMiddlePath
     {
         public override int Path => MIDDLE;
         public override int Tier => 2;
-        public override int Cost => 60;
+        public override int Cost => 20;
         public override string Icon => "Elf020Icon";
         public override string DisplayName => "Stronger Throw";
-        public override string Description => "More damages, to bloons";
+        public override string Description => "Deals more damage to bloons.";
 
         public override void ApplyUpgrade(TowerModel towerModel)
         {
@@ -60,7 +59,7 @@ internal class ElfMiddlePath
     {
         public override int Path => MIDDLE;
         public override int Tier => 3;
-        public override int Cost => 500;
+        public override int Cost => 55;
         public override string DisplayName => "Hammah Time";
         public override string Icon => "Elf030Icon";
         public override string Description => "Stuns bloon on impacts up to MOABS.";
@@ -142,7 +141,7 @@ public class TierMiddle4 : ChristmasUpgrade<ElfMonkey>
 {
     public override int Path => MIDDLE;
     public override int Tier => 4;
-    public override int Cost => 1200;
+    public override int Cost => 415;
     public override string DisplayName => "Huge Hammah";
 
     public override string Description =>
@@ -212,7 +211,7 @@ public class TierMiddle5 : ChristmasUpgrade<ElfMonkey>
 {
     public override int Path => MIDDLE;
     public override int Tier => 5;
-    public override int Cost => 7125;
+    public override int Cost => 4000;
     public override string Icon => "Elf050Icon";
     public override string DisplayName => "5 Tons Hammer";
     public override string Description => "Slam all bloons causing them to be stunned for 10s Including Bosses, Bad.";

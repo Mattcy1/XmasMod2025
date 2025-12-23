@@ -152,9 +152,7 @@ public class XmasTowerSet : ModTowerSet
             if (__instance.upgrade == null) return;
             var modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
             if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
-                __instance.cost.text = cUpgrade.Cost == 0 ? "Free" : $"{cUpgrade.Cost} {cUpgrade.Currency}";
-            else if (modUpgrade is ChristmasParagonUpgrade cParagon && cParagon.Currency != CurrencyType.Cash)
-                __instance.cost.text = cParagon.Cost == 0 ? "Free" : $"{cParagon.Cost} {cParagon.Currency}";
+                __instance.cost.text = cUpgrade.Cost == 0 ? "Free" : $"{cUpgrade.Cost} {cUpgrade.Currency + (cUpgrade.Cost == 1 ? "" : "s")}";
         }
     }
 
@@ -188,8 +186,6 @@ public class XmasTowerSet : ModTowerSet
             if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
                 if (XmasMod2025.GetCurrency(cUpgrade.Currency) < cUpgrade.Cost)
                 {
-                    XmasMod2025.Log("yessir");
-
                     __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
                     __instance.Cost.color = __instance.costInactiveColor;
                     __instance.background.SetSprite(__instance.backgroundInactive);
@@ -237,7 +233,7 @@ public class XmasTowerSet : ModTowerSet
             if (__instance.upgrade == null) return;
             var modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
             if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
-                __instance.cost.text = cUpgrade.Cost == 0 ? "Free" : $"{cUpgrade.Cost} {cUpgrade.Currency}";
+                __instance.cost.text = cUpgrade.Cost == 0 ? "Free" : $"{cUpgrade.Cost} {cUpgrade.Currency + (cUpgrade.Cost == 1 ? "" : "s")}";
         }
     }
 

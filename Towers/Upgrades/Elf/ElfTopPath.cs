@@ -165,7 +165,7 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
 
     public override int Path => Top;
     public override int Tier => 4;
-    public override int Cost => 1200;
+    public override int Cost => 450;
 
     public override string Description =>
         "Elf monkey can now create carts which run over bloons for <b>three</b> damage (MOABs are immune) and have fast shooting turrets that only do <b>one</b> damage each shot.";
@@ -385,7 +385,7 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
 {
     public override int Path => Top;
     public override int Tier => 5;
-    public override int Cost => 6000;
+    public override int Cost => 5000;
 
     public override string Description =>
         "Creates newly enhanced toy carts and mortars and a much faster rate!";

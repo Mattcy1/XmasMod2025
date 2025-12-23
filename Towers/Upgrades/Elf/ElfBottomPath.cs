@@ -2,12 +2,14 @@
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
+using Il2CppAssets.Scripts.Models.Artifacts.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
 using Il2CppAssets.Scripts.Models.Towers.Filters;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
+using Il2CppAssets.Scripts.Simulation.Artifacts.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
@@ -60,7 +62,7 @@ internal class ElfBottomPath
     {
         public override int Path => BOTTOM;
         public override int Tier => 3;
-        public override int Cost => 150;
+        public override int Cost => 85;
         public override string DisplayName => "Gift Making";
         public override string Icon => "Elf003Icon";
 
@@ -103,7 +105,7 @@ public class Tier4 : ChristmasUpgrade<ElfMonkey>
 {
     public override int Path => BOTTOM;
     public override int Tier => 4;
-    public override int Cost => 1250;
+    public override int Cost => 360;
     public override string DisplayName => "Better Gift Content";
     public override string Description => "The elf monkey buy better wrapping paper making gift more valuable.";
     public override string Icon => "Elf004Icon";
@@ -123,7 +125,7 @@ public class Tier5 : ChristmasUpgrade<ElfMonkey>
 {
     public override int Path => BOTTOM;
     public override int Tier => 5;
-    public override int Cost => 5000;
+    public override int Cost => 2400;
     public override string Icon => "Elf005Icon";
     public override string DisplayName => "End of day bonus";
     public override string Description => "The elf monkey get paid end of round bonus (150 Gifts).";
@@ -133,8 +135,8 @@ public class Tier5 : ChristmasUpgrade<ElfMonkey>
         var weapon = towerModel.GetWeapon();
         var cashModel = weapon.projectile.GetBehavior<CashModel>();
 
-        cashModel.minimum = 6;
-        cashModel.maximum = 8;
+        cashModel.minimum = 15;
+        cashModel.maximum = 17;
         weapon.GetBehavior<EmissionsPerRoundFilterModel>().count = 10;
     }
 }
