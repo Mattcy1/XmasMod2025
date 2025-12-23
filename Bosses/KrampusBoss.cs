@@ -25,7 +25,7 @@ internal class KrampusBoss : ModBoss
 {
     public static Dictionary<Tower, Vector3Boxed> kidnapTowers = new();
     public override string BossName => "Krampus";
-    public override int SkullCount => 10;
+    public override int SkullCount => 5;
     public override string HealthBar => "";
     public override string IconGuid => "";
     public override int Stars => 6;

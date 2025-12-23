@@ -163,7 +163,7 @@ public partial class XmasMod2025
                     GetSpriteReference("ElfBoss-Icon"), 40, Voice.BassMale)
                 { Background = AssetHelper.GetSprite("KrampusPanel") },
             new Dialog("Evil Elf", "I mean, you probably can't even beat me let alone Krampus!",
-                    GetSpriteReference("ElfBoss-Icon"), 39, Voice.BassMale)
+                    GetSpriteReference("ElfBoss-Icon"), 40, Voice.BassMale)
                 { Background = AssetHelper.GetSprite("KrampusPanel") },
             Player("Neutral", "We'll see after I smoke you!", 40),
             ElfElder("Neutral", "Good job, you beat that elf!", 41),
@@ -176,14 +176,14 @@ public partial class XmasMod2025
                 "Is there any way I can maybe... make my towers not get stunned. Like drink a milk bucket or something?",
                 45), ElfElder("Neutral", "I'm afraid not! You'll just have to do this all on your own.", 45),
             new Dialog("Chocolaty Choco", "Chocolate, chocolate I love chocolate!",
-                    GetSpriteReference("ChocolateBossIcon"), 59, Voice.High)
+                    GetSpriteReference("ChocoBossIcon"), 59, Voice.High)
                 { Background = AssetHelper.GetSprite("KrampusPanel") },
             new Dialog("Chocolaty Choco", "But as a chocolate, I don't love being eaten by others who love chocolate",
-                    GetSpriteReference("ChocolateBossIcon"), 59, Voice.High)
+                    GetSpriteReference("ChocoBossIcon"), 59, Voice.High)
                 { Background = AssetHelper.GetSprite("KrampusPanel") },
             Player("Neutral", "Oh boy, I do love chocolate too!", 59),
             new Dialog("Chocolaty Choco", "I heard what you said earlier! I'll have to stop you if you try eating me!",
-                    GetSpriteReference("ChocolateBossIcon"), 60, Voice.High)
+                    GetSpriteReference("ChocoBossIcon"), 60, Voice.High)
                 { Background = AssetHelper.GetSprite("KrampusPanel") },
             Player("Confused", "Oh wow, it really is made of chocolate. I've never seen something like that before.",
                 60), ElfElder("Neutral", "So have you finished your chocolate yet?", 70),
@@ -248,7 +248,7 @@ public partial class XmasMod2025
             Santa("Happy", "Oh, c'mon you know that I'm a great employer.", 100),
             new Dialog("Santa Claus", "But remember, Merry Christmas (or Happy Holidays) everyone! Ho ho ho...",
                     GetSpriteReference("SantaHappy"), 100, SantaVoice)
-                { OnNext = () => RoundStaller.AliveStaller?.Destroy() }
+                { OnNext = () => RoundStaller.AliveStaller?.Destroy(), Background = AssetHelper.GetSprite("ChristmasPanel")}
         ]));
     }
 }
