@@ -48,7 +48,7 @@ public class ElfSpawner : ChristmasTower
 
 public class ElfHelper : ChristmasTower
 {
-    public override string BaseTower => TowerType.SniperMonkey + "-003";
+    public override string BaseTower => TowerType.SniperMonkey + "-202";
     public override string Icon => VanillaSprites.MonkeyVillageElfPetIcon;
     public override string Portrait => Icon;
     public override string Description => "One of Santa's Minions, help you defend.";
@@ -58,25 +58,7 @@ public class ElfHelper : ChristmasTower
     {
         towerModel.dontDisplayUpgrades = true;
         towerModel.isSubTower = true;
+        towerModel.ApplyDisplay<ElfMonkeyDisplay>()
         towerModel.AddBehavior(new TowerExpireModel("TowerExpireModel", 20, 1, true, false));
-    }
-
-    public class ElfDisplay : ModTowerDisplay<ElfHelper>
-    {
-        public override string BaseDisplay => MonkeyVillageElfPet;
-
-        public override bool UseForTower(params int[] tiers)
-        {
-            return true;
-        }
-
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            foreach (var rend in node.GetMeshRenderers())
-            {
-                rend.SetMainTexture(GetTexture("Elf"));
-                rend.ApplyOutlineShader();
-            }
-        }
     }
 }
