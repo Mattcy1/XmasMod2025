@@ -232,7 +232,7 @@ namespace XmasMod2025.Towers.RoundsTowers
 
                 if (InGame.instance != null || InGame.instance.bridge != null)
                 {
-                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gift {(random == 1 ? "" : "s")}", true);
                 }
 
                 XmasMod2025.Gifts += random;

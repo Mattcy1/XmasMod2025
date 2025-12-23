@@ -17,6 +17,14 @@ using XmasMod2025.Towers.Upgrades;
 
 namespace XmasMod2025.Towers;
 
+public abstract class ChristmasParagonUpgrade : ModParagonUpgrade
+{
+    public virtual CurrencyType Currency => CurrencyType.Gift;
+}
+public abstract class ChristmasParagonUpgrade<T> : ChristmasParagonUpgrade where T : ModTower
+{
+    public override ModTower Tower => GetInstance<T>();
+}
 public abstract class ChristmasTower : ModTower<XmasTowerSet>
 {
     public static readonly Dictionary<int, List<GameObject>> ButtonsToUnlock = [];

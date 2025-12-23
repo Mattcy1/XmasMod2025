@@ -44,7 +44,7 @@ namespace XmasMod2025.Bosses
                 }
             }
         }
-        public override string BossName => "Gift Boss";
+        public override string BossName => "Big Ol' Present";
         public override int SkullCount => 3;
         public override string HealthBar => "";
         public override string IconGuid => "";

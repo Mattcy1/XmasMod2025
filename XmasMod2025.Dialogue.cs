@@ -31,7 +31,7 @@ public partial class XmasMod2025
     public static Dialog Player (string emotion, string message, int round, DialogOption[] options = null) => 
         new Dialog(PlayerName, message, GetSpriteReference<XmasMod2025>("Player" + emotion), round, Voice.Medium) {Options = options, Background = AssetHelper.GetSprite("ChristmasPanel")};
     public static Dialog ElfElder (string emotion, string message, int round, DialogOption[] options = null) => 
-        new Dialog("Elf Elder", message, GetSpriteReference<XmasMod2025>("ElfElder" + emotion), round, Voice.Medium) {Options = options, Background = AssetHelper.GetSprite("ChristmasPanel")};
+        new Dialog("Elf Elder", message, GetSpriteReference<XmasMod2025>("ElfElder" + emotion), round, Voice.Low) {Options = options, Background = AssetHelper.GetSprite("ChristmasPanel")};
 
     public override void OnMatchStart()
     {
@@ -62,13 +62,14 @@ public partial class XmasMod2025
             Santa("Captured", "Hey! Get me out of here!", 5),
             Krampus("Neutral", $"I hope you won't miss your buddy here. Because you will never see him again, Santa Claus. Same goes for you {PlayerName}, don't even think about trying to save him this time.", 5),
             Player("Shocked", "Oh no! Santa's been captured this time!", 5),
-            Player("Sad", "And I didn't even do anything to stop it...", 5),
+            Player("Disappointed", "And I didn't even do anything to stop it...", 5),
             Player("Neutral", "Oh look. A wallet that just so happened to appear right where Santa was. Should I take it?", 5, [
                 new GreenOption("Yes!", 
-                    new Dialog(PlayerName, "Wow! 3,500 cash! What a find!", GetSpriteReference<XmasMod2025>("PlayerHappy"), 0) {Background = AssetHelper.GetSprite("ChristmasPanel") }
+                     Player("Happy", "Wow! 3,500 cash! What a find!", 0)
                 ) { OnClick = () =>
                 {
                     InGame.instance.AddCash(3500);
+                    TookWallet = true;
                 }},
                 new RedOption("No.", 
                     new Dialog(PlayerName, "I shouldn't. It's probably Santa's and he wouldn't give me any presents if I took his or anyone else's wallet.", GetSpriteReference<XmasMod2025>("PlayerNeutral"), 0) {Background = AssetHelper.GetSprite("ChristmasPanel") }
@@ -85,7 +86,43 @@ public partial class XmasMod2025
             Player("Confused", "Uh, WHO is that? I wonder if I should be scared.", 19) ,
             new Dialog("Big Ol' Present", "Don't mind me, I'm just coming through with some perfectly normal presents, ♪ laladee laladoo laladum ♪", GetSpriteReference("GiftBossIcon"), 20, Voice.MezzoSopranoFemale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
             Player("Shocked", "What?! I thought present bloons could only be big as moabs! I guess Krampus figured out how to make bigger ones.", 20),
-            Player("Neutral", "", 21)
+            Player("Neutral", "Well he was pretty easy to defeat. he was just a big present after all...", 21),
+            ElfElder("Neutral", "Good job you took that big present down! Make sure you keep beating bosses to ensure you can save Santa!", 25),
+            ElfElder("Neutral", "You should know however that the next boss coming can only be damaged by elves. In fact, they were an elf before they got corrupted by the bloons and become one themself!", 25),
+            ElfElder("Neutral", "For whatever reason Santa's magic makes it so elves can only be hurt by bloons and other elves, and not by other monkeys.", 25),
+            new Dialog("Evil Elf", "That darn Santa finally got what he deserved I see. He had it coming for him after not paying us elves enough...", GetSpriteReference("ElfBoss-Icon"), 39, Voice.BassMale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            new Dialog("Evil Elf", "...Or anything at all really.", GetSpriteReference("ElfBoss-Icon"), 39, Voice.BassMale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            Player("Disappointed", "Wasn't this brought up last year..?", 39),
+            Player("Disappointed", "I guess it finally caught up to the other elves.", 39),
+            new Dialog("Evil Elf", "Aren't you the person who saved Santa last year? Don't even try it this year there's no way you'll do it.", GetSpriteReference("ElfBoss-Icon"), 40, Voice.BassMale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            new Dialog("Evil Elf", "I mean, you probably can't even beat me let alone Krampus!", GetSpriteReference("ElfBoss-Icon"), 39, Voice.BassMale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            Player("Neutral", "We'll see after I smoke you!", 40),
+            ElfElder("Neutral", "Good job, you beat that elf!", 41),
+            ElfElder("Neutral", "I never really like that one before he went rogue anyway...", 41),
+            ElfElder("Neutral", "I should warn you about the next boss I suppose.", 45),
+            ElfElder("Neutral", "This one is made out of chocolate, and is pretty annoying to deal with since each skull will stun nearby towers!", 45),
+            Player("Confused", "Is there any way I can maybe... make my towers not get stunned. Like drink a milk bucket or something?", 45),
+            ElfElder("Neutral", "I'm afraid not! You'll just have to do this all on your own.", 45),
+            new Dialog("Chocolaty Choco", "Chocolate, chocolate I love chocolate!", GetSpriteReference("ChocolateBossIcon"), 59, Voice.High)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            new Dialog("Chocolaty Choco", "But as a chocolate, I don't love being eaten by others who love chocolate", GetSpriteReference("ChocolateBossIcon"), 59, Voice.High)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            Player("Neutral", "Oh boy, I do love chocolate too!", 59),
+            new Dialog("Chocolaty Choco", "I heard what you said earlier! I'll have to stop you if you try eating me!", GetSpriteReference("ChocolateBossIcon"), 60, Voice.High)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            Player("Confused", "Oh wow, it really is made of chocolate. I've never seen something like that before.", 60),
+            ElfElder("Neutral", "So have you finished your chocolate yet?", 70),
+            Player("Happy", "Yes! It was very delicious.", 70),
+            ElfElder("Neutral", "Well, I'm happy you enjoyed it. Though it's time I tell you about the next boss.", 70),
+            ElfElder("Neutral", "This one is a massive stocking filled with coal that came to life from the sadness that game with getting coal from Krampus!", 70),
+            ElfElder("Neutral", "This negative energy can get imposed on the bloons, making them sad and go away from the boss.", 70),
+            ElfElder("Neutral", "Just like last time, you kind of just need to deal with it.", 70),
+            Player("Neutral", "Oh, well thanks for the heads up anyway.", 70),
+            new Dialog("Crying Coal", "Why? Oh why? Why was I given coal? I never deserved this...", GetSpriteReference("CoalBossIcon"), 79, Voice.Low)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            new Dialog("Crying Coal", "I don't know who gave me this coal, but I'm assuming it's Santa, right? He's the one who goes to everyone's houses.", GetSpriteReference("CoalBossIcon"), 79, Voice.Low)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            Player("Confused", "Does this guy not know about what Krampus is all about?", 79),
+            new Dialog("Crying Coal", "Aren't you the one who wants to save Santa, just like you did last year?", GetSpriteReference("CoalBossIcon"), 80, Voice.Low)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            new Dialog("Crying Coal", "Look at what Santa gave to me! I'll hate him forever for this! And I hate you by extension that means!", GetSpriteReference("CoalBossIcon"), 80, Voice.Low)  {Background = AssetHelper.GetSprite("KrampusPanel")},
+            Player("Neutral", "I don't think Santa gave you the coal, but whatever.", 80)
         ]);
     }
+
+    public static bool TookWallet = false;
 }

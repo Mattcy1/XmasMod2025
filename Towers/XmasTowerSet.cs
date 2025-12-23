@@ -1,4 +1,5 @@
-﻿using BTD_Mod_Helper;
+﻿using System.Linq;
+using BTD_Mod_Helper;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
@@ -31,13 +32,13 @@ public class XmasTowerSet : ModTowerSet
             var modTower = __instance.towerModel.GetModTower();
             if (modTower is ChristmasTower cTower && cTower.Currency != CurrencyType.Cash)
             {
-                __instance.Cast<TowerPurchaseButton>().costText.text = $"{cTower.Cost} {cTower.Currency}";
+                __instance.Cast<TowerPurchaseButton>().costText.text = cTower.Cost == 0 ? "Free" :  $"{cTower.Cost} {cTower.Currency + (cTower.Cost == 1 ? "" : "s")}";
                 if (XmasMod2025.GetCurrency(cTower.Currency) < cTower.Cost)
                 {
                     __instance.SetUnavailable();
                     __instance.SetNotEnoughCash();
                 }
-                else __instance.SetAvailable();
+                else if(__instance.GetLockedState() == TowerPurchaseLockState.ButtonDisabled || __instance.GetLockedState() == TowerPurchaseLockState.PurchasesLocked) __instance.SetAvailable();
             }
         }
     }
@@ -85,7 +86,7 @@ public class XmasTowerSet : ModTowerSet
             {
                 if (InGame.instance != null && InGame.instance.bridge != null)
                 {
-                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"-{cTower.Cost} {cTower.Currency}", true);
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"-{cTower.Cost} {cTower.Currency + (cTower.Cost == 1 ? "" : "s")}", true);
                 }
             }
         }
@@ -104,18 +105,18 @@ public class XmasTowerSet : ModTowerSet
 
                 if (InGame.instance != null && InGame.instance.bridge != null)
                 {
-                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{__instance.SaleValue} {cTower.Currency}", true);
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{__instance.SaleValue} {cTower.Currency + (__instance.SaleValue == 1 ? "" : "s")}", true);
                 }
             }
         }
     }
 
     [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.GetUpgradeStatus))]
-    private static class UpgradeButton_CheckCash
+    private static class UpgradeButton_GetUpgradeStatus
     {
         public static void Postfix(UpgradeButton __instance, ref UpgradeButton.UpgradeStatus __result)
         {
-            if (!__instance || __instance.upgrade == null)
+            if (__instance.upgrade == null)
             {
                 return;
             }
@@ -126,23 +127,69 @@ public class XmasTowerSet : ModTowerSet
                 {
                     __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
                     __result = UpgradeButton.UpgradeStatus.CanNotAfford;
+                    __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                    __instance.Cost.color = __instance.costInactiveColor;
+                    __instance.background.SetSprite(__instance.backgroundInactive);
+                }
+            }
+            else if (modUpgrade is ChristmasParagonUpgrade cParagon && cParagon.Currency != CurrencyType.Cash)
+            {
+                if (XmasMod2025.GetCurrency(cParagon.Currency) < cParagon.Cost)
+                {
+                    __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                    __result = UpgradeButton.UpgradeStatus.CanNotAfford;
+                    __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                    __instance.Cost.color = __instance.costInactiveColor;
+                    __instance.background.SetSprite(__instance.backgroundInactive);
                 }
             }
         }
     }
+    
+    
     [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.UpdateCostVisuals))]
     private static class UpgradeButton_UpdateCostVisuals
     {
         public static void Postfix(UpgradeButton __instance)
         {
-            if (!__instance || __instance.upgrade == null)
+            if (__instance.upgrade == null)
             {
                 return;
             }
             ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
             if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
             {
-                __instance.cost.text = $"{cUpgrade.Cost} {cUpgrade.Currency}";
+                __instance.cost.text = cUpgrade.Cost == 0 ? "Free" : $"{cUpgrade.Cost} {cUpgrade.Currency}";
+            }
+            else if (modUpgrade is ChristmasParagonUpgrade cParagon && cParagon.Currency != CurrencyType.Cash)
+            {
+                __instance.cost.text = cParagon.Cost == 0 ? "Free" : $"{cParagon.Cost} {cParagon.Currency}";
+            }
+        }
+    }
+    [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.CheckCash))]
+    private static class UpgradeButton_CheckCost
+    {
+        public static void Postfix(UpgradeButton __instance)
+        {
+            if (__instance.upgrade == null)
+            {
+                return;
+            }
+            ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
+            {
+                if (XmasMod2025.GetCurrency(cUpgrade.Currency) < cUpgrade.Cost)
+                {
+                    __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                }
+            }
+            else if (modUpgrade is ChristmasParagonUpgrade cParagon && cParagon.Currency != CurrencyType.Cash)
+            {
+                if (XmasMod2025.GetCurrency(cParagon.Currency) < cParagon.Cost)
+                {
+                    __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                }
             }
         }
     }
@@ -151,15 +198,45 @@ public class XmasTowerSet : ModTowerSet
     {
         public static void Postfix(UpgradeButton __instance)
         {
-            if (!__instance || __instance.upgrade == null)
+            if (__instance.upgrade == null)
             {
                 return;
             }
             ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
             if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
             {
-                __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                if (XmasMod2025.GetCurrency(cUpgrade.Currency) < cUpgrade.Cost)
+                {
+                    XmasMod2025.Log("yessir");
+                    
+                    __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                    __instance.Cost.color = __instance.costInactiveColor;
+                    __instance.background.SetSprite(__instance.backgroundInactive);
+                }
             }
+        }
+    }
+    [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.IsUpgradePathPurchasable))]
+    private static class UpgradeButton_IsUpgradePathPurchasable
+    {
+        public static bool Prefix(UpgradeButton __instance, ref bool __result)
+        {
+            if (__instance.upgrade == null)
+            {
+                return true;
+            }
+            ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
+            {
+                if (XmasMod2025.GetCurrency(cUpgrade.Currency) < cUpgrade.Cost)
+                {
+                    __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
+                    __result = false;
+                    return false;
+                }
+            }
+            
+            return true;
         }
     }
     [HarmonyPatch(typeof(UpgradeButton), nameof(UpgradeButton.Update))]
@@ -167,12 +244,12 @@ public class XmasTowerSet : ModTowerSet
     {
         public static void Postfix(UpgradeButton __instance)
         {
-            if (!__instance || __instance.upgrade == null)
+            if ( __instance.upgrade == null)
             {
                 return;
             }
             ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
-            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
+            if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash && cUpgrade.Cost > XmasMod2025.GetCurrency(cUpgrade.Currency))
             {
                 __instance.upgradeStatus = UpgradeButton.UpgradeStatus.CanNotAfford;
             }
@@ -183,14 +260,14 @@ public class XmasTowerSet : ModTowerSet
     {
         public static void Postfix(UpgradeButton __instance)
         {
-            if (!__instance || __instance.upgrade == null)
+            if (__instance.upgrade == null)
             {
                 return;
             }
             ModUpgrade? modUpgrade = GetContent<ModUpgrade>().Find(m => m.Id == __instance.upgrade.name);
             if (modUpgrade is ChristmasUpgrade cUpgrade && cUpgrade.Currency != CurrencyType.Cash)
             {
-                __instance.cost.text = $"{cUpgrade.Cost} {cUpgrade.Currency}";
+                __instance.cost.text = cUpgrade.Cost == 0 ? "Free" : $"{cUpgrade.Cost} {cUpgrade.Currency}";
             }
         }
     }
@@ -231,9 +308,9 @@ public class XmasTowerSet : ModTowerSet
                     tower.GetTowerToSim().sim.AddCash(upgradeCost, Simulation.CashSource.TowerUpgraded);
                     XmasMod2025.AddCurrency(cUpgrade.Currency, -cUpgrade.Cost);
                         
-                    if (InGame.instance != null || InGame.instance.bridge != null)
+                    if (InGame.instance != null && InGame.instance.bridge != null && cUpgrade.Cost != 0)
                     {
-                        InGame.instance.bridge.simulation.CreateTextEffect(tower.Position, CreatePrefabReference<CollectText>(), 2f, $"-{cUpgrade.Cost} {cUpgrade.Currency}", true);
+                        InGame.instance.bridge.simulation.CreateTextEffect(tower.Position, CreatePrefabReference<CollectText>(), 2f, $"-{cUpgrade.Cost} {cUpgrade.Currency + (cUpgrade.Cost == 1 ? "" : "s")}", true);
                     }
                 }
             }

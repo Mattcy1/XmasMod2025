@@ -51,7 +51,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json;
+using Il2CppAssets.Scripts.Models.Profile;
+using Newtonsoft.Json;
 using UnityEngine;
 using XmasMod2025;
 using XmasMod2025.Bloons;
@@ -69,6 +70,8 @@ using XmasMod2025.Towers.Upgrades;
 using XmasMod2025.UI;
 using static MelonLoader.MelonLogger;
 using static XmasMod2025.UI.Gift;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using Map = Il2CppAssets.Scripts.Simulation.Track.Map;
 
 [assembly: MelonInfo(typeof(XmasMod2025.XmasMod2025), ModHelperData.Name, ModHelperData.Version, ModHelperData.Author)]
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
@@ -76,6 +79,8 @@ using static XmasMod2025.UI.Gift;
 namespace XmasMod2025;
 public partial class XmasMod2025 : BloonsTD6Mod
 {
+    public static void Log(object msg) => ModHelper.Log<XmasMod2025>(msg);
+    
     private static string PlayerName;
     
     public static Assembly ModAssembly => Assembly.GetExecutingAssembly();
@@ -251,6 +256,8 @@ public partial class XmasMod2025 : BloonsTD6Mod
         {
             item.Reset();
         }
+
+        TookWallet = false;
     }
 
     public override void OnNewGameModel(GameModel result)
@@ -704,6 +711,33 @@ public class Bloon_Destroy
         else if (__instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
         {
             PostProcessing.DisableNight();
+        }
+    }
+}
+
+[HarmonyPatch(typeof(Map), nameof(Map.GetSaveData))]
+static class Map_GetSaveData
+{
+    [HarmonyPostfix]
+    public static void Postfix(MapSaveDataModel mapData)
+    {
+        var json = JsonConvert.SerializeObject(XmasMod2025.TookWallet);
+        if (!mapData.metaData.TryAdd("XmasMod2025-TookWallet", json))
+        {
+            mapData.metaData["XmasMod2025-TookWallet"] = json;
+        }
+    }
+}
+
+[HarmonyPatch(typeof(Map), nameof(Map.SetSaveData))]
+static class Map_SetSaveData
+{
+    [HarmonyPostfix]
+    public static void Postfix(MapSaveDataModel mapData)
+    {
+        if (mapData.metaData.TryGetValue("XmasMod2025-TookWallet", out var data))
+        {
+            XmasMod2025.TookWallet = JsonConvert.DeserializeObject<bool>(data)!;
         }
     }
 }

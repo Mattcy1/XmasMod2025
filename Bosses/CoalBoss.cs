@@ -49,7 +49,7 @@ namespace XmasMod2025.Bosses
             }
         }
 
-        public override string BossName => "Coal Boss";
+        public override string BossName => "Crying Coal";
         public override int SkullCount => 5;
         public override string HealthBar => "";
         public override string IconGuid => "";

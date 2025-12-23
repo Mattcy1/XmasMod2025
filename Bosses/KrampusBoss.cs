@@ -131,7 +131,7 @@ namespace XmasMod2025.Bosses
             Hooks.StartMonobehavior<HandleTotem>();
             Hooks.StartMonobehavior<KrampusHandler>();
             XmasMod2025.KrampusAlive = true;
-            BossUI.UpdateNameColor(new Color32(21, 23, 22, 255), null);
+            BossUI.UpdateNameColor(new Color32(42, 23, 44, 255), null);
             PostProcessing.EnableNight();
 
             Game.instance.audioFactory.StopMusic();

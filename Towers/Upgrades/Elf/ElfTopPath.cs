@@ -103,9 +103,6 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
             var weapon = towerModel.GetWeapon();
             weapon.SetProjectile(Game.instance.model.GetTowerFromId("MortarMonkey-201").GetWeapon().projectile.Duplicate());
             weapon.projectile.ApplyDisplay<ToyBomb>();
-
-            TowerExpireModel tower = new TowerExpireModel("name", 999, 1, true, false);
-            towerModel.AddBehavior(tower);
         }
 
         public class ToyMortarTowerDisplay : ModTowerCustomDisplay<ToyMortarTower>

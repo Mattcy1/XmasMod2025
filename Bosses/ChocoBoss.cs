@@ -18,7 +18,7 @@ namespace XmasMod2025.Bosses
 {
     internal class ChocoBoss : ModBoss
     {
-        public override string BossName => "Choco Boss";
+        public override string BossName => "Chocolaty Choco";
         public override int SkullCount => 4;
         public override string HealthBar => "";
         public override string Icon => Name + "Icon";

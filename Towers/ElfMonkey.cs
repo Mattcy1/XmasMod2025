@@ -58,7 +58,7 @@ namespace XmasMod2025.Towers
 
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
-            SetMeshTexture(node, "Elf");
+            SetMeshTexture(node, "ElfGeo");
             node.GetMeshRenderer().ApplyOutlineShader();
         }
     }
