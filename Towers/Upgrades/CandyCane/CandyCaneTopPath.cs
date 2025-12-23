@@ -15,7 +15,7 @@ internal class TopPath
     {
         public override int Path => TOP;
         public override int Tier => 1;
-        public override int Cost => 55;
+        public override int Cost => 25;
         public override string DisplayName => "Pointy Candycane";
         public override string Description => "Allows the candy cane to pop more bloons.";
         public override string Icon => "TopPathCane1";
@@ -42,7 +42,7 @@ internal class TopPath
     {
         public override int Path => TOP;
         public override int Tier => 2;
-        public override int Cost => 85;
+        public override int Cost => 45;
         public override string Description => "The more fragile candycane, now splits in 3 projectile instead of 2.";
         public override string Icon => "TopPathCane2";
 
@@ -68,7 +68,7 @@ internal class TopPath
     {
         public override int Path => TOP;
         public override int Tier => 3;
-        public override int Cost => 250;
+        public override int Cost => 125;
         public override string Description => "Now shoots, 2 Candy Cane Instead of one.";
         public override string Icon => "TopPathCane3";
         public override string Portrait => "Candy300Portrait";
@@ -85,7 +85,7 @@ public class Return : ChristmasUpgrade<CandyCaneMonkey>
 {
     public override int Path => TOP;
     public override int Tier => 4;
-    public override int Cost => 2000;
+    public override int Cost => 350;
     public override string DisplayName => "Candy Cane Boomerang";
     public override string Description => "The projectile, now acts like a boomerang.";
     public override string Icon => "TopPathCane4";
@@ -107,7 +107,7 @@ public class CandyCaneOverlord : ChristmasUpgrade<CandyCaneMonkey>
 {
     public override int Path => TOP;
     public override int Tier => 5;
-    public override int Cost => 7000;
+    public override int Cost => 3000;
 
     public override string Description =>
         "Throws, 5 Boomerang at once, increased pierce and damage, projectile splits into even more shards.";

@@ -42,7 +42,7 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
         {
             if (model.baseId == TowerID<ToyCart.ToyCartTower>() || model.baseId == TowerID<FestiveSpiritTower>() ||
                 model.baseId == TowerID<ElfSpawner>() ||
-                model.baseId == TowerID<ElfHelper>()) __result.GameObject.transform.parent.gameObject.Destroy();
+                model.baseId == TowerID<ElfHelper>()) __result.GameObject.transform.parent.gameObject.SetActive(false);
 
             if (model.GetModTower() is ChristmasTower cTower && cTower.UnlockRound != 0)
             {
