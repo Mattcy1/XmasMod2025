@@ -81,6 +81,8 @@ internal class CoalBoss : ModBoss
                 {
                     renderer.SetOutlineColor(new Color32(125, 30, 30, 255));
                 }
+                
+                renderer.SetMainTexture(GetTexture("Palette"));
             }
         }
     }

@@ -16,6 +16,7 @@ using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.Display;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using UnityEngine;
+using XmasMod2025.Assets;
 
 namespace XmasMod2025.Towers.Upgrades;
 
@@ -119,6 +120,18 @@ internal class ElfMiddlePath
                 {
                     renderer.ApplyOutlineShader();
                     renderer.SetOutlineColor(new Color32(128, 77, 54, 255));
+                    if(renderer.name.StartsWith("Elf"))
+                    {
+                        renderer.SetMainTexture(GetTexture("ElfGeo"));
+                    }
+                    else
+                    {
+                        renderer.material.mainTexture = AssetHelper.Get<Texture2D>("Texture_01");
+                        if (AssetHelper.Get<Texture2D>("Texture_01") == null)
+                        {
+                            XmasMod2025.Log("Texture_01 doesn't exist");
+                        }
+                    }
                 }
             }
         }
@@ -178,6 +191,10 @@ public class TierMiddle4 : ChristmasUpgrade<ElfMonkey>
         {
             foreach (var renderer in node.GetMeshRenderers())
             {
+                if(renderer.name.StartsWith("Elf"))
+                {
+                    renderer.SetMainTexture(GetTexture("ElfGeo"));
+                }
                 renderer.ApplyOutlineShader();
                 renderer.SetOutlineColor(new Color32(128, 77, 54, 255));
             }
@@ -233,6 +250,10 @@ public class TierMiddle5 : ChristmasUpgrade<ElfMonkey>
         {
             foreach (var renderer in node.GetMeshRenderers())
             {
+                if(renderer.name.StartsWith("Elf"))
+                {
+                    renderer.SetMainTexture(GetTexture("ElfGeo"));
+                }
                 renderer.ApplyOutlineShader();
                 renderer.SetOutlineColor(new Color32(128, 77, 54, 255));
             }

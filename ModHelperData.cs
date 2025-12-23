@@ -18,4 +18,6 @@ public static class ModHelperData
     public const string Icon = "XmasTowerSet-Button.png";
     public const string RepoName = "XmasMod2025";
     public const string Author = "DarkTerraYT / Mattcy1";
+
+    public const string Dependencies = "DarkTerraYT/DialogueLib";
 }

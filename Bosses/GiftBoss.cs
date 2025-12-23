@@ -81,9 +81,20 @@ internal class GiftBoss : ModBoss
                 if (renderer.name == "Propeller") renderer.gameObject.AddComponent<CustomRotationSimple>();
 
                 if (renderer.name.StartsWith("Green"))
+                {
                     renderer.SetOutlineColor(new Color32(2, 90, 0, 255));
-                else
+                    renderer.SetMainTexture(GetTexture("GiftBoxGreen"));
+                }
+                else if (renderer.name.StartsWith("Red") || renderer.name == "Ribbons")
+                {
                     renderer.SetOutlineColor(new Color(0.5f, 0, 0));
+                    renderer.SetMainTexture(GetTexture("GiftBox"));
+                }
+                else
+                {
+                    renderer.SetOutlineColor(new Color(0.5f, 0, 0));
+                    renderer.SetMainTexture(GetTexture("PresentBossDisplay"));
+                }
             }
         }
     }

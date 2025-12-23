@@ -25,7 +25,7 @@ internal class KrampusBoss : ModBoss
 {
     public static Dictionary<Tower, Vector3Boxed> kidnapTowers = new();
     public override string BossName => "Krampus";
-    public override int SkullCount => 10;
+    public override int SkullCount => 5;
     public override string HealthBar => "";
     public override string IconGuid => "";
     public override int Stars => 6;
@@ -109,23 +109,32 @@ internal class KrampusBoss : ModBoss
                 if (renderer.name.StartsWith("Prop"))
                 {
                     renderer.gameObject.AddComponent<CustomRotationSimple>();
+                    renderer.SetMainTexture(GetTexture("KrampusBody"));
                 }
                 else if (renderer.name.StartsWith("Horn"))
                 {
                     renderer.SetOutlineColor(new Color32(107, 106, 86, 255));
+                    renderer.SetMainTexture(GetTexture("KrampusHorns"));
                 }
                 else if (renderer.name.StartsWith("Sack"))
                 {
                     renderer.SetOutlineColor(new Color32(94, 62, 45, 255));
                     renderer.gameObject.AddComponent<Shake>();
+                    renderer.SetMainTexture(GetTexture("Palette"));
                 }
                 else if (renderer.name.StartsWith("Band"))
                 {
                     renderer.SetOutlineColor(new Color32(162, 114, 71, 255));
+                    renderer.SetMainTexture(GetTexture("Palette"));
                 }
                 else if (renderer.name.StartsWith("Basket"))
                 {
                     renderer.SetOutlineColor(new Color32(71, 31, 31, 255));
+                    renderer.SetMainTexture(GetTexture("Palette"));
+                }
+                else
+                {
+                    renderer.SetMainTexture(GetTexture("KrampusBody"));
                 }
             }
         }

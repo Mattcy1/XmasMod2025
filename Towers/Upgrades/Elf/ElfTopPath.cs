@@ -27,6 +27,7 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using MelonLoader;
 using UnityEngine;
+using XmasMod2025.Assets;
 
 namespace XmasMod2025.Towers.Upgrades;
 
@@ -134,6 +135,11 @@ public class ToyMortar : ChristmasUpgrade<ElfMonkey>
 
             public override void ModifyDisplayNode(UnityDisplayNode node)
             {
+                foreach (var renderer in node.GetMeshRenderers())
+                {
+                    renderer.ApplyOutlineShader();
+                    renderer.SetOutlineColor(new Color32(59, 35, 13, 255));
+                }
             }
         }
 
@@ -255,14 +261,18 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
         {
             foreach (var renderer in node.GetMeshRenderers())
             {
+                renderer.ApplyOutlineShader();
+                renderer.SetOutlineColor(new Color32(59, 35, 13, 255));
                 if (renderer.name.StartsWith("Wheel_"))
                 {
                     renderer.transform.rotation = Quaternion.Euler(0, 90, 0);
-                    var rot = renderer.gameObject.AddComponent<SimpleRotation>();
+                    renderer.gameObject.AddComponent<SimpleRotation>();
+                    renderer.material.mainTexture = AssetHelper.Get<Texture2D>("WoodenWheelDiffuse");
+                    if (AssetHelper.Get<Texture2D>("WoodenWheelDiffuse") == null)
+                    {
+                        XmasMod2025.Log("WoodenWheelDiffuse doesn't exist");
+                    }
                 }
-
-                renderer.ApplyOutlineShader();
-                renderer.SetOutlineColor(new Color32(59, 35, 13, 255));
             }
         }
 
@@ -441,6 +451,7 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
                 renderer.enabled = true;
                 renderer.ApplyOutlineShader();
                 renderer.SetOutlineColor(new Color32(135, 135, 135, 255));
+                renderer.SetMainTexture(GetTexture("Palette"));
             }
         }
 
@@ -523,6 +534,8 @@ public class MasterCrafter : ChristmasUpgrade<ElfMonkey>
                     renderer.SetOutlineColor(new Color32(135, 135, 135, 255));
                 else
                     renderer.gameObject.AddComponent<ToyCart.ToyCartProjectile.SimpleRotation>();
+                
+                renderer.SetMainTexture(GetTexture("Palette"));
             }
         }
     }
