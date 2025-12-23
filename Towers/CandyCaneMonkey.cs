@@ -14,12 +14,19 @@ public class CandyCaneMonkey : ChristmasTower
     public override string BaseTower => "DartMonkey";
     public override int Cost => 85;
     public override string Icon => Portrait;
-    public override string Description => "Shoots, candy cane that spilt into 2 more candy cane, deals X2 damage to Candy Type Bloon";
+
+    public override string Description =>
+        "Shoots, candy cane that spilt into 2 more candy cane, deals X2 damage to Candy Type Bloon";
+
     public override int TopPathUpgrades => 5;
     public override int MiddlePathUpgrades => 5;
     public override int BottomPathUpgrades => 5;
-    public override bool IsValidCrosspath(int[] tiers) =>
-    ModHelper.HasMod("UltimateCrosspathing") || base.IsValidCrosspath(tiers);
+
+    public override bool IsValidCrosspath(int[] tiers)
+    {
+        return ModHelper.HasMod("UltimateCrosspathing") || base.IsValidCrosspath(tiers);
+    }
+
     public override void ModifyBaseTowerModel(TowerModel towerModel)
     {
         var weapon = towerModel.GetWeapon();
@@ -32,7 +39,9 @@ public class CandyCaneMonkey : ChristmasTower
         var smallerProj = proj.Duplicate();
         smallerProj.pierce = 1;
         smallerProj.ApplyDisplay<ShardProj>();
-        CreateProjectileOnExhaustPierceModel createProjectileOnContactModel = new CreateProjectileOnExhaustPierceModel("candycanebreak", smallerProj, new ArcEmissionModel("ArcEmissionModel_Split", 2, 0, 30, null, true, false), 0, 2, 0, true, CreatePrefabReference<ShardProj>(), 5, true, false);
+        var createProjectileOnContactModel = new CreateProjectileOnExhaustPierceModel("candycanebreak", smallerProj,
+            new ArcEmissionModel("ArcEmissionModel_Split", 2, 0, 30, null, true, false), 0, 2, 0, true,
+            CreatePrefabReference<ShardProj>(), 5, true, false);
 
         proj.AddBehavior(createProjectileOnContactModel);
         towerModel.ApplyDisplay<CandyCaneMonkey000>();

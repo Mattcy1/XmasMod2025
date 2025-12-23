@@ -23,22 +23,77 @@ public struct IntMinMax : IEquatable<IntMinMax>
     {
         return HashCode.Combine(Min, Max);
     }
-    
-    public static bool operator == (IntMinMax? a, object? b) => a.HasValue && a.Value.Equals(b);
-    public static bool operator != (IntMinMax? a, object? b) => a.HasValue && a.Value.Equals(b);
 
-    public static IntMinMax operator +(IntMinMax a, int b) => new(a.Min + b, a.Max + b);
-    public static IntMinMax operator -(IntMinMax a, int b) => new(a.Min - b, a.Max - b);
-    public static IntMinMax operator *(IntMinMax a, int b) => new(a.Min * b, a.Max * b);
-    public static IntMinMax operator /(IntMinMax a, int b) => new(a.Min / b, a.Max / b);
-    public static IntMinMax operator +(IntMinMax a, IntMinMax b) => new(a.Min + b.Min, a.Max + b.Max);
-    public static IntMinMax operator -(IntMinMax a, IntMinMax b) => new(a.Min - b.Min, a.Max - b.Max);
-    public static IntMinMax operator *(IntMinMax a, IntMinMax b) => new(a.Min * b.Min, a.Max * b.Max);
-    public static IntMinMax operator /(IntMinMax a, IntMinMax b) => new(a.Min / b.Min, a.Max / b.Max);
-    public static IntMinMax operator +(IntMinMax a, (int, int) b) => new(a.Min + b.Item1, a.Max + b.Item2);
-    public static IntMinMax operator -(IntMinMax a, (int, int) b) => new(a.Min - b.Item1, a.Max - b.Item2);
-    public static IntMinMax operator *(IntMinMax a, (int, int) b) => new(a.Min * b.Item1, a.Max * b.Item2);
-    public static IntMinMax operator /(IntMinMax a, (int, int) b) => new(a.Min / b.Item1, a.Max / b.Item2);
+    public static bool operator ==(IntMinMax? a, object? b)
+    {
+        return a.HasValue && a.Value.Equals(b);
+    }
+
+    public static bool operator !=(IntMinMax? a, object? b)
+    {
+        return a.HasValue && a.Value.Equals(b);
+    }
+
+    public static IntMinMax operator +(IntMinMax a, int b)
+    {
+        return new IntMinMax(a.Min + b, a.Max + b);
+    }
+
+    public static IntMinMax operator -(IntMinMax a, int b)
+    {
+        return new IntMinMax(a.Min - b, a.Max - b);
+    }
+
+    public static IntMinMax operator *(IntMinMax a, int b)
+    {
+        return new IntMinMax(a.Min * b, a.Max * b);
+    }
+
+    public static IntMinMax operator /(IntMinMax a, int b)
+    {
+        return new IntMinMax(a.Min / b, a.Max / b);
+    }
+
+    public static IntMinMax operator +(IntMinMax a, IntMinMax b)
+    {
+        return new IntMinMax(a.Min + b.Min, a.Max + b.Max);
+    }
+
+    public static IntMinMax operator -(IntMinMax a, IntMinMax b)
+    {
+        return new IntMinMax(a.Min - b.Min, a.Max - b.Max);
+    }
+
+    public static IntMinMax operator *(IntMinMax a, IntMinMax b)
+    {
+        return new IntMinMax(a.Min * b.Min, a.Max * b.Max);
+    }
+
+    public static IntMinMax operator /(IntMinMax a, IntMinMax b)
+    {
+        return new IntMinMax(a.Min / b.Min, a.Max / b.Max);
+    }
+
+    public static IntMinMax operator +(IntMinMax a, (int, int) b)
+    {
+        return new IntMinMax(a.Min + b.Item1, a.Max + b.Item2);
+    }
+
+    public static IntMinMax operator -(IntMinMax a, (int, int) b)
+    {
+        return new IntMinMax(a.Min - b.Item1, a.Max - b.Item2);
+    }
+
+    public static IntMinMax operator *(IntMinMax a, (int, int) b)
+    {
+        return new IntMinMax(a.Min * b.Item1, a.Max * b.Item2);
+    }
+
+    public static IntMinMax operator /(IntMinMax a, (int, int) b)
+    {
+        return new IntMinMax(a.Min / b.Item1, a.Max / b.Item2);
+    }
+
     public bool Equals(IntMinMax other)
     {
         return Min == other.Min && Max == other.Max;

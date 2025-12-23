@@ -1,126 +1,122 @@
 ﻿using BTD_Mod_Helper.Api.Bloons;
 using BTD_Mod_Helper.Api.Display;
 using BTD_Mod_Helper.Extensions;
+using Il2Cpp;
+using Il2CppAssets.Scripts.Models.Audio;
 using Il2CppAssets.Scripts.Models.Bloons;
 using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
-using Il2CppAssets.Scripts.Unity.Display;
-using Il2CppSystem.Linq.Expressions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Il2CppAssets.Scripts.Models.Audio;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
+using Il2CppAssets.Scripts.Unity.Display;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using Il2CppNinjaKiwi.Common.ResourceUtils;
 using UnityEngine;
-using XmasMod2025.Bloons;
 using XmasMod2025.Bloons.Bfbs;
 using XmasMod2025.Bloons.Moabs;
 
-namespace XmasMod2025.Bloons.Zomgs
+namespace XmasMod2025.Bloons.Zomgs;
+
+public class IceZomg : ModBloon
 {
-    public class IceZomg : ModBloon
+    public override string BaseBloon => BloonType.sZomg;
+
+    public override void ModifyBaseBloonModel(BloonModel bloonModel)
     {
-        public override string BaseBloon => BloonType.sZomg;
+        bloonModel.maxHealth *= (int)1.5;
+        bloonModel.speed /= 2;
+        bloonModel.bloonProperties = BloonProperties.White | BloonProperties.Frozen;
 
-        public override void ModifyBaseBloonModel(BloonModel bloonModel)
+        bloonModel.RemoveAllChildren();
+        bloonModel.AddTag("Zomg");
+        bloonModel.AddToChildren<IceBfb>(4);
+
+        StunTowersInRadiusActionModel stunTowersInRadiusActionModel = new("StunTowersInRadiusActionModel", "freeze", 50,
+            1, 1, CreatePrefabReference<IceCubeOverlay>(), true);
+
+        HealthPercentTriggerModel healthPercentTriggerModel = new("HealthPercentTriggerModel", false,
+            new Il2CppStructArray<float>([0.1f]), new Il2CppStringArray(["freeze"]), false);
+
+        bloonModel.AddBehavior(healthPercentTriggerModel);
+        bloonModel.AddBehavior(stunTowersInRadiusActionModel);
+
+        bloonModel.AddBehavior(new CreateSoundOnBloonDestroyedModel("CreateSoundOnBloonDestroyedModel_Ice",
+            new SoundModel("IceShatter_1", GetAudioClipReference("IceShatter_1")),
+            new SoundModel("IceShatter_2", GetAudioClipReference("IceShatter_2")), "IceMoab"));
+    }
+}
+
+public class IceZomgDisplay : ModBloonDisplay<IceZomg>
+{
+    public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        foreach (var renderer in node.GetMeshRenderers())
         {
-            bloonModel.maxHealth *= (int)1.5;
-            bloonModel.speed /= 2;
-            bloonModel.bloonProperties = Il2Cpp.BloonProperties.White | Il2Cpp.BloonProperties.Frozen;
-
-            bloonModel.RemoveAllChildren();
-            bloonModel.AddTag("Zomg");
-            bloonModel.AddToChildren<IceBfb>(4);
-
-            StunTowersInRadiusActionModel stunTowersInRadiusActionModel = new("StunTowersInRadiusActionModel", "freeze", 50, 1, 1, CreatePrefabReference<IceCubeOverlay>(), true);
-
-            HealthPercentTriggerModel healthPercentTriggerModel = new("HealthPercentTriggerModel", false, new([0.1f]), new(["freeze"]), false);
-
-            bloonModel.AddBehavior(healthPercentTriggerModel);
-            bloonModel.AddBehavior(stunTowersInRadiusActionModel);
-            
-            bloonModel.AddBehavior(new CreateSoundOnBloonDestroyedModel("CreateSoundOnBloonDestroyedModel_Ice", new SoundModel("IceShatter_1", GetAudioClipReference("IceShatter_1")), new SoundModel("IceShatter_2", GetAudioClipReference("IceShatter_2")), "IceMoab"));
+            renderer.SetMainTexture(GetTexture(Name));
+            renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
         }
     }
+}
 
-    public class IceZomgDisplay : ModBloonDisplay<IceZomg>
+public class IceZomgDamage1Display : ModBloonDisplay<IceZomg>
+{
+    public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
+
+    public override int Damage => 1;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
-
-        public override void ModifyDisplayNode(UnityDisplayNode node)
+        foreach (var renderer in node.GetMeshRenderers())
         {
-            foreach (var renderer in node.GetMeshRenderers())
-            {
-                renderer.SetMainTexture(GetTexture(Name));
-                renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
-            }
+            renderer.SetMainTexture(GetTexture(Name));
+            renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
         }
     }
+}
 
-    public class IceZomgDamage1Display : ModBloonDisplay<IceZomg>
+public class IceZomgDamage2Display : ModBloonDisplay<IceZomg>
+{
+    public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
+
+    public override int Damage => 2;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
-
-        public override int Damage => 1;
-
-        public override void ModifyDisplayNode(UnityDisplayNode node)
+        foreach (var renderer in node.GetMeshRenderers())
         {
-            foreach (var renderer in node.GetMeshRenderers())
-            {
-                renderer.SetMainTexture(GetTexture(Name));
-                renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
-            }
+            renderer.SetMainTexture(GetTexture(Name));
+            renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
         }
     }
+}
 
-    public class IceZomgDamage2Display : ModBloonDisplay<IceZomg>
+public class IceZomgDamage3Display : ModBloonDisplay<IceZomg>
+{
+    public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
+
+    public override int Damage => 3;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
-
-        public override int Damage => 2;
-
-        public override void ModifyDisplayNode(UnityDisplayNode node)
+        foreach (var renderer in node.GetMeshRenderers())
         {
-            foreach (var renderer in node.GetMeshRenderers())
-            {
-                renderer.SetMainTexture(GetTexture(Name));
-                renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
-            }
+            renderer.SetMainTexture(GetTexture(Name));
+            renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
         }
     }
+}
 
-    public class IceZomgDamage3Display : ModBloonDisplay<IceZomg>
+public class IceZomgDamage4Display : ModBloonDisplay<IceZomg>
+{
+    public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
+
+    public override int Damage => 4;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
     {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
-
-        public override int Damage => 3;
-
-        public override void ModifyDisplayNode(UnityDisplayNode node)
+        foreach (var renderer in node.GetMeshRenderers())
         {
-            foreach (var renderer in node.GetMeshRenderers())
-            {
-                renderer.SetMainTexture(GetTexture(Name));
-                renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
-            }
-        }
-    }
-
-    public class IceZomgDamage4Display : ModBloonDisplay<IceZomg>
-    {
-        public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
-
-        public override int Damage => 4;
-
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            foreach (var renderer in node.GetMeshRenderers())
-            {
-                renderer.SetMainTexture(GetTexture(Name));
-                renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
-            }
+            renderer.SetMainTexture(GetTexture(Name));
+            renderer.materials[2].SetColor("_OutlineColor", new Color32(80, 108, 133, 255));
         }
     }
 }

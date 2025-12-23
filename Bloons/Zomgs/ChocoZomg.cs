@@ -9,17 +9,17 @@ namespace XmasMod2025.Bloons.Moabs;
 
 public class ChocoZomg : ModBloon
 {
+    public override string BaseBloon => BloonType.sZomg;
+
     public override void ModifyBaseBloonModel(BloonModel bloonModel)
     {
         bloonModel.maxHealth *= (int)1.5f;
         bloonModel.speed *= 1.15f;
-        
+
         bloonModel.RemoveAllChildren();
         bloonModel.AddTag("Zomg");
         bloonModel.AddToChildren<ChocoBfb>(4);
     }
-
-    public override string BaseBloon => BloonType.sZomg;
 
     public class ChocoZomgDisplay : ModBloonDisplay<ChocoZomg>
     {
@@ -34,6 +34,7 @@ public class ChocoZomg : ModBloon
             }
         }
     }
+
     public class ChocoZomgDamage1Display : ModBloonDisplay<ChocoZomg>
     {
         public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
@@ -49,6 +50,7 @@ public class ChocoZomg : ModBloon
             }
         }
     }
+
     public class ChocoZomgDamage2Display : ModBloonDisplay<ChocoZomg>
     {
         public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
@@ -64,6 +66,7 @@ public class ChocoZomg : ModBloon
             }
         }
     }
+
     public class ChocoZomgDamage3Display : ModBloonDisplay<ChocoZomg>
     {
         public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);
@@ -79,6 +82,7 @@ public class ChocoZomg : ModBloon
             }
         }
     }
+
     public class ChocoZomgDamage4Display : ModBloonDisplay<ChocoZomg>
     {
         public override string BaseDisplay => GetBloonDisplay(BloonType.sZomg);

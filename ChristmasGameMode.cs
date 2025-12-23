@@ -1,15 +1,10 @@
-﻿using BTD_Mod_Helper.Api;
-using BTD_Mod_Helper.Api.Bloons;
+﻿using BTD_Mod_Helper.Api.Bloons;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Api.Scenarios;
-using BTD_Mod_Helper.Extensions; 
+using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Difficulty;
-using Il2CppAssets.Scripts.Models.Gameplay.Mods;
 using Il2CppAssets.Scripts.Models.Rounds;
-using Il2CppAssets.Scripts.Simulation;
-using UnityEngine;
-using UnityEngine.Video;
 using XmasMod2025.Bloons;
 using XmasMod2025.Bloons.Bfbs;
 using XmasMod2025.Bloons.Moabs;
@@ -29,39 +24,39 @@ internal class ChristmasRouds : ModRoundSet
         switch (round)
         {
             case 4:
-                roundModel.AddBloonGroup(ModContent.BloonID<ChocolateBloon>(), 3, 0, 10);
+                roundModel.AddBloonGroup(BloonID<ChocolateBloon>(), 3, 0, 10);
                 break;
             case 6:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 3, 0, 10);
+                roundModel.AddBloonGroup(BloonID<SnowBloon>(), 3, 0, 10);
                 break;
             case 10:
-                roundModel.AddBloonGroup(ModContent.BloonID<ChocolateBloon>(), 3, 0, 10);
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 3, 0, 25);
+                roundModel.AddBloonGroup(BloonID<ChocolateBloon>(), 3, 0, 10);
+                roundModel.AddBloonGroup(BloonID<SnowBloon>(), 3, 0, 25);
                 break;
             case 13:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 1, 0, 0);
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 5, 0, 40);
+                roundModel.AddBloonGroup(BloonID<SnowMoab.WeakSnowMoab>(), 1, 0, 0);
+                roundModel.AddBloonGroup(BloonID<SnowBloon>(), 5, 0, 40);
                 break;
             case 19:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 2, 0, 25);
-                roundModel.AddBloonGroup(ModContent.BloonID<ChocolateBloon>(), 2, 0, 20);
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 5, 0, 30);
+                roundModel.AddBloonGroup(BloonID<SnowMoab.WeakSnowMoab>(), 2, 0, 25);
+                roundModel.AddBloonGroup(BloonID<ChocolateBloon>(), 2, 0, 20);
+                roundModel.AddBloonGroup(BloonID<SnowBloon>(), 5, 0, 30);
                 break;
             case 24:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 2, 0, 10);
-                roundModel.AddBloonGroup(ModContent.BloonID<ChocolateBloon>(), 5, 0, 40);
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowBloon>(), 5, 0, 30);
+                roundModel.AddBloonGroup(BloonID<SnowMoab.WeakSnowMoab>(), 2, 0, 10);
+                roundModel.AddBloonGroup(BloonID<ChocolateBloon>(), 5, 0, 40);
+                roundModel.AddBloonGroup(BloonID<SnowBloon>(), 5, 0, 30);
                 break;
             case 29:
-                roundModel.AddBloonGroup(ModContent.BloonID<CandyCaneBloon>(), 2, 0, 10);
+                roundModel.AddBloonGroup(BloonID<CandyCaneBloon>(), 2, 0, 10);
                 break;
 
             case 34:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab.WeakSnowMoab>(), 1, 0, 10);
+                roundModel.AddBloonGroup(BloonID<SnowMoab.WeakSnowMoab>(), 1, 0, 10);
                 break;
 
             case 38:
-                roundModel.AddBloonGroup(ModContent.BloonID<SnowMoab>(), 2, 0, 10);
+                roundModel.AddBloonGroup(BloonID<SnowMoab>(), 2, 0, 10);
                 roundModel.AddBloonGroup<GiftBloon>(3, 0, 50);
                 break;
         }
@@ -102,13 +97,13 @@ internal class ChristmasRouds : ModRoundSet
                 roundModel.AddBloonGroup<SnowBfb>(1, 50, 1000);
                 roundModel.AddBloonGroup<IceBfb>(1, 75, 1000);
                 break;
-            case 62: 
+            case 62:
                 roundModel.AddBloonGroup<CandyCaneBloon>(25, 25, 1000);
                 roundModel.AddBloonGroup<SnowBloon>(25, 50, 1000);
                 roundModel.AddBloonGroup<IceBloon>(10, 75, 1000);
                 roundModel.AddBloonGroup<ChocolateBloon>(10, 100, 1000);
                 break;
-            case 69: 
+            case 69:
                 roundModel.ClearBloonGroups();
                 roundModel.AddBloonGroup<ChocoBfb>(5, 25, 1000);
                 roundModel.AddBloonGroup<SnowMoab>(3, 100, 500);
@@ -118,7 +113,7 @@ internal class ChristmasRouds : ModRoundSet
             case 72:
                 roundModel.AddBloonGroup<GiftMoab>(5, 25, 500);
                 break;
-            case 75: 
+            case 75:
                 roundModel.AddBloonGroup<CandyCaneBloon>(1, 0, 0);
                 roundModel.AddBloonGroup<SnowBloon>(1, 0, 0);
                 roundModel.AddBloonGroup<ChocoBfb>(1, 0, 0);
@@ -132,7 +127,7 @@ internal class ChristmasRouds : ModRoundSet
     {
         switch (round)
         {
-            case 81: 
+            case 81:
                 roundModel.AddBloonGroup<IceZomg>(1, 500, 1000);
                 break;
             case 82:
@@ -176,7 +171,6 @@ internal class ChristmasRouds : ModRoundSet
 
 public class ChristmasGameMode : ModGameMode
 {
-
     public override string Difficulty => DifficultyType.Hard;
     public override string BaseGameMode => GameModeType.Hard;
     public override string Icon => "XmasTowerSet-Button";

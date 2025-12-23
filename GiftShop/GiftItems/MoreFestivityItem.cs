@@ -8,13 +8,16 @@ public class MoreFestivity : GiftShopItem
     public override ShopType Shop => ShopType.Gift;
     public override double BaseCost => 0;
     public override string Icon => "Festive";
+
+    public override string Description =>
+        "Increases the xmas tree’s gifts drop rate by a min of 5 and max of 7 each upgrade.";
+
+    public override int MaxUpgrades => 2;
+
     public override void Buy(InGame game)
     {
         XmasMod2025.TreeDropRates += (5, 7);
     }
-    public override string Description => "Increases the xmas tree’s gifts drop rate by a min of 5 and max of 7 each upgrade.";
-
-    public override int MaxUpgrades => 2;
 
     public override double GetCostForUpgradeNumber(int upgrade)
     {

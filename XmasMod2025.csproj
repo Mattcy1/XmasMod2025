@@ -10,30 +10,30 @@
         <DebugType>embedded</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <Content Include=".github\workflows\build.yml" />
+        <Content Include=".github\workflows\build.yml"/>
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="Assets\XmasMap.json" />
-        <EmbeddedResource Include="XmasCubismProps.json" />
+        <EmbeddedResource Include="Assets\XmasMap.json"/>
+        <EmbeddedResource Include="XmasCubismProps.json"/>
     </ItemGroup>
     <ItemGroup>
-      <Reference Include="DialogLib">
-        <HintPath>Libraries\DialogLib.dll</HintPath>
-      </Reference>
-      <Reference Include="Il2CppNinjaKiwi.LiNK">
-        <HintPath>Libraries\Il2CppNinjaKiwi.LiNK.dll</HintPath>
-      </Reference>
-      <Reference Include="Unity.RenderPipelines.Core.Runtime">
-        <HintPath>Libraries\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
-      </Reference>
-      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-        <HintPath>Libraries\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
-      </Reference>
+        <Reference Include="DialogLib">
+            <HintPath>Libraries\DialogLib.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2CppNinjaKiwi.LiNK">
+            <HintPath>Libraries\Il2CppNinjaKiwi.LiNK.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.RenderPipelines.Core.Runtime">
+            <HintPath>Libraries\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+            <HintPath>Libraries\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Assets\Dialogue\" />
-      <Folder Include="Assets\Music\" />
+        <Folder Include="Assets\Dialogue\"/>
+        <Folder Include="Assets\Music\"/>
     </ItemGroup>
 
-    <Import Project="..\btd6.targets" />
+    <Import Project="..\btd6.targets"/>
 </Project>

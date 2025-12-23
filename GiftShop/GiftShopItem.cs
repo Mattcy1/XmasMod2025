@@ -9,25 +9,12 @@ namespace XmasMod2025.GiftShop;
 
 public abstract class GiftShopItem : NamedModContent
 {
+    public static Dictionary<ShopType, List<GiftShopItem>> GiftShopItems = [];
+    public int Upgrades;
+
     static GiftShopItem()
     {
-        foreach (ShopType type in Enum.GetValues(typeof(ShopType)))
-        {
-            GiftShopItems.Add(type, []);
-        }
-    }
-    
-    public static Dictionary<ShopType, List<GiftShopItem>> GiftShopItems = [];
-    
-    public override void Register()
-    {
-        IconReference =  GetSpriteReferenceOrDefault(mod, Icon);
-        GiftShopItems[Shop].Add(this);
-    }
-
-    public virtual void Reset()
-    {
-        Upgrades = 0;
+        foreach (ShopType type in Enum.GetValues(typeof(ShopType))) GiftShopItems.Add(type, []);
     }
 
     public abstract ShopType Shop { get; }
@@ -40,14 +27,30 @@ public abstract class GiftShopItem : NamedModContent
     protected virtual bool IconIsGUID => false;
 
     public SpriteReference IconReference { get; protected set; }
-    
-    public virtual string? GetTooltipText(int upgrade) => null;
-    
+
     public abstract double BaseCost { get; }
     public virtual double PriceMultiplier => 1.25f;
-    public int Upgrades = 0;
+
+    public override void Register()
+    {
+        IconReference = GetSpriteReferenceOrDefault(mod, Icon);
+        GiftShopItems[Shop].Add(this);
+    }
+
+    public virtual void Reset()
+    {
+        Upgrades = 0;
+    }
+
+    public virtual string? GetTooltipText(int upgrade)
+    {
+        return null;
+    }
 
     public abstract void Buy(InGame game);
-    
-    public virtual double GetCostForUpgradeNumber(int upgrade) => Math.Round(BaseCost * Math.Pow(PriceMultiplier, upgrade));
+
+    public virtual double GetCostForUpgradeNumber(int upgrade)
+    {
+        return Math.Round(BaseCost * Math.Pow(PriceMultiplier, upgrade));
+    }
 }

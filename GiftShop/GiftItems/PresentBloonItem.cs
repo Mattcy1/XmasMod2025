@@ -9,6 +9,9 @@ public class PresentBloonChance : GiftShopItem
     public override double BaseCost => 0;
     public override string Description => "Increase the chances of present bloons spawning.";
     public override string Icon => "BloonChance";
+
+    public override int MaxUpgrades => 5;
+
     public override void Buy(InGame game)
     {
         XmasMod2025.PresentBloonChance += 5;
@@ -19,8 +22,6 @@ public class PresentBloonChance : GiftShopItem
         base.Reset();
         XmasMod2025.PresentBloonChance = 1;
     }
-
-    public override int MaxUpgrades => 5;
 
     public override double GetCostForUpgradeNumber(int upgrade)
     {

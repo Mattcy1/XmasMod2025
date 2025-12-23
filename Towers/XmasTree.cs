@@ -1,150 +1,159 @@
 ﻿using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Display;
-using BTD_Mod_Helper.Api.Towers;
 using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
-using Il2CppAssets.Scripts.Data.Behaviors.Projectiles;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
-using Il2CppAssets.Scripts.Models.TowerSets;
-using Il2CppAssets.Scripts.Simulation.Towers.Projectiles;
 using Il2CppAssets.Scripts.Unity.Display;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
-using Il2CppTMPro;
-using MelonLoader;
-using System.Diagnostics;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
+using Il2CppTMPro;
 using UnityEngine;
-using static MelonLoader.MelonLogger;
 using Projectile = Il2CppAssets.Scripts.Simulation.Towers.Projectiles.Projectile;
+using Random = System.Random;
 
-namespace XmasMod2025.Towers
+namespace XmasMod2025.Towers;
+
+public class XmasTree : ChristmasTower
 {
-    public class XmasTree : ChristmasTower
+    public override string BaseTower => TowerType.BananaFarm;
+    public override int Cost => 0;
+    public override int ShopTowerCount => 1;
+    public override string Portrait => Icon;
+
+    public override void ModifyBaseTowerModel(TowerModel towerModel)
     {
+        towerModel.dontDisplayUpgrades = true;
 
-        public override string BaseTower => TowerType.BananaFarm;
-        public override int Cost => 0;
-        public override int ShopTowerCount => 1;
-        public override string Portrait => Icon;
+        var proj = towerModel.GetWeapon().projectile;
 
-        public override void ModifyBaseTowerModel(TowerModel towerModel)
-        {
-            towerModel.dontDisplayUpgrades = true;
+        proj.GetBehavior<CashModel>().maximum = 0;
+        proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
 
-            var proj = towerModel.GetWeapon().projectile;
+        proj.RemoveBehavior<AgeModel>();
+        proj.RemoveBehavior<CreateEffectOnExpireModel>();
 
-            proj.GetBehavior<CashModel>().maximum = 0;
-            proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+        proj.ApplyDisplay<Gift1>();
+        proj.AddBehavior(new RandomDisplayModel("RandomDisplayModel_",
+            new Il2CppReferenceArray<PrefabReference>([
+                new PrefabReference(GetDisplayGUID<Gift1>()), new PrefabReference(GetDisplayGUID<Gift2>()),
+                new PrefabReference(GetDisplayGUID<Gift3>()), new PrefabReference(GetDisplayGUID<Gift4>()),
+                new PrefabReference(GetDisplayGUID<Gift5>()), new PrefabReference(GetDisplayGUID<Gift6>())
+            ]), true));
 
-            proj.RemoveBehavior<AgeModel>();
-            proj.RemoveBehavior<CreateEffectOnExpireModel>();
+        proj.id = "TreeGift";
 
-            proj.ApplyDisplay<Gift1>();
-            proj.AddBehavior(new RandomDisplayModel("RandomDisplayModel_", new Il2CppReferenceArray<PrefabReference>([new PrefabReference(GetDisplayGUID<Gift1>()), new PrefabReference(GetDisplayGUID<Gift2>()), new PrefabReference(GetDisplayGUID<Gift3>()), new PrefabReference(GetDisplayGUID<Gift4>()), new PrefabReference(GetDisplayGUID<Gift5>()), new PrefabReference(GetDisplayGUID<Gift6>())]), true));
-
-            proj.id = "TreeGift";
-
-            towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 5;
-            proj.GetBehavior<CreateTextEffectModel>().assetId = new("");
-        }
-
-        public class Display : ModTowerCustomDisplay<XmasTree>
-        {
-            public override bool UseForTower(params int[] tiers) => true;
-            public override string AssetBundleName => "xmas";
-            public override string PrefabName => "ChristmasTreePrefab";
-
-            public override void ModifyDisplayNode(UnityDisplayNode node)
-            {
-            }
-        }
+        towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 5;
+        proj.GetBehavior<CreateTextEffectModel>().assetId = new PrefabReference("");
     }
 
-    [HarmonyPatch(typeof(Projectile), nameof(Projectile.Pickup))]
-    public class HandlePickup
+    public class Display : ModTowerCustomDisplay<XmasTree>
     {
-        [HarmonyPostfix]
+        public override string AssetBundleName => "xmas";
+        public override string PrefabName => "ChristmasTreePrefab";
 
-        public static void Prefix(Projectile __instance)
+        public override bool UseForTower(params int[] tiers)
         {
-            if (__instance.projectileModel.id == "TreeGift")
-            {
-                var random = new System.Random().Next(XmasMod2025.TreeDropRates.Min, XmasMod2025.TreeDropRates.Min);
-
-                if (InGame.instance != null || InGame.instance.bridge != null)
-                {
-                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position, ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
-                }
-
-                XmasMod2025.Gifts += random;
-            }
+            return true;
         }
-    }
-
-    public class Gift1 : ModDisplay
-    {
-        public override string BaseDisplay => Generic2dDisplay;
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            Set2DTexture(node, "Gift1");
-        }
-    }
-
-    public class Gift2 : ModDisplay
-    {
-        public override string BaseDisplay => Generic2dDisplay;
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            Set2DTexture(node, "Gift2");
-        }
-    }
-    public class Gift3 : ModDisplay
-    {
-        public override string BaseDisplay => Generic2dDisplay;
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            Set2DTexture(node, "Gift3");
-        }
-    }
-    public class Gift4 : ModDisplay
-    {
-        public override string BaseDisplay => Generic2dDisplay;
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            Set2DTexture(node, "Gift4");
-        }
-    }
-    public class Gift5 : ModDisplay
-    {
-        public override string BaseDisplay => Generic2dDisplay;
-        public override void ModifyDisplayNode(UnityDisplayNode node)
-        {
-            Set2DTexture(node, "Gift5");
-        }
-    }
-    public class Gift6 : ModDisplay
-    {
-        public override string BaseDisplay => Generic2dDisplay;
 
         public override void ModifyDisplayNode(UnityDisplayNode node)
         {
-            Set2DTexture(node, "Gift6");
         }
     }
+}
 
-    public class CollectText : ModDisplay
-     {
-        public override string BaseDisplay => "80178409df24b3b479342ed73cffb63d";
-        public override void ModifyDisplayNode(UnityDisplayNode node)
+[HarmonyPatch(typeof(Projectile), nameof(Projectile.Pickup))]
+public class HandlePickup
+{
+    [HarmonyPostfix]
+    public static void Prefix(Projectile __instance)
+    {
+        if (__instance.projectileModel.id == "TreeGift")
         {
-            foreach (Renderer renderer in node.genericRenderers)
-            {
-                node.GetComponentInChildren<TextMeshPro>().outlineColor = new Color32(207, 237, 255, 255);
-                node.GetComponentInChildren<TextMeshPro>().color = new Color(1f, 1f, 1f);     
-            }
+            var random = new Random().Next(XmasMod2025.TreeDropRates.Min, XmasMod2025.TreeDropRates.Min);
+
+            if (InGame.instance != null || InGame.instance.bridge != null)
+                InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position,
+                    ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+
+            XmasMod2025.Gifts += random;
+        }
+    }
+}
+
+public class Gift1 : ModDisplay
+{
+    public override string BaseDisplay => Generic2dDisplay;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        Set2DTexture(node, "Gift1");
+    }
+}
+
+public class Gift2 : ModDisplay
+{
+    public override string BaseDisplay => Generic2dDisplay;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        Set2DTexture(node, "Gift2");
+    }
+}
+
+public class Gift3 : ModDisplay
+{
+    public override string BaseDisplay => Generic2dDisplay;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        Set2DTexture(node, "Gift3");
+    }
+}
+
+public class Gift4 : ModDisplay
+{
+    public override string BaseDisplay => Generic2dDisplay;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        Set2DTexture(node, "Gift4");
+    }
+}
+
+public class Gift5 : ModDisplay
+{
+    public override string BaseDisplay => Generic2dDisplay;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        Set2DTexture(node, "Gift5");
+    }
+}
+
+public class Gift6 : ModDisplay
+{
+    public override string BaseDisplay => Generic2dDisplay;
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        Set2DTexture(node, "Gift6");
+    }
+}
+
+public class CollectText : ModDisplay
+{
+    public override string BaseDisplay => "80178409df24b3b479342ed73cffb63d";
+
+    public override void ModifyDisplayNode(UnityDisplayNode node)
+    {
+        foreach (var renderer in node.genericRenderers)
+        {
+            node.GetComponentInChildren<TextMeshPro>().outlineColor = new Color32(207, 237, 255, 255);
+            node.GetComponentInChildren<TextMeshPro>().color = new Color(1f, 1f, 1f);
         }
     }
 }

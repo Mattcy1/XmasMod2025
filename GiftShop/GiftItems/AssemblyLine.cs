@@ -10,13 +10,13 @@ public class AssemblyLine : GiftShopItem
     public override double BaseCost => 0;
     public override string Description => "Gain gifts per second based on total gifts";
     public override string Icon => "AssemblyLine";
+
+    public override int MaxUpgrades => 4;
+
     public override void Buy(InGame game)
     {
         XmasMod2025.UpgradeCount += 1;
-        if(XmasMod2025.UpgradeCount == 1)
-        {
-            MelonCoroutines.Start(XmasMod2025.HandleGPS());
-        }
+        if (XmasMod2025.UpgradeCount == 1) MelonCoroutines.Start(XmasMod2025.HandleGPS());
     }
 
     public override void Reset()
@@ -24,8 +24,6 @@ public class AssemblyLine : GiftShopItem
         base.Reset();
         XmasMod2025.UpgradeCount = 0;
     }
-
-    public override int MaxUpgrades => 4;
 
     public override double GetCostForUpgradeNumber(int upgrade)
     {

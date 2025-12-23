@@ -9,6 +9,9 @@ public class GiftMultiplier : GiftShopItem
     public override double BaseCost => 0;
     public override string Description => "Increase the total Multiplier of gifts.";
     public override string Icon => "GiftMult";
+
+    public override int MaxUpgrades => 5;
+
     public override void Buy(InGame game)
     {
         XmasMod2025.GiftMult += 0.2;
@@ -19,8 +22,6 @@ public class GiftMultiplier : GiftShopItem
         base.Reset();
         XmasMod2025.GiftMult = 1;
     }
-
-    public override int MaxUpgrades => 5;
 
     public override double GetCostForUpgradeNumber(int upgrade)
     {
