@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BTD_Mod_Helper.Extensions;
+using ChristmasMod;
 using DialogLib;
 using DialogLib.Ui;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
@@ -58,13 +59,18 @@ public partial class XmasMod2025
 
     public override void OnMatchStart()
     {
-        /*if (InGame.instance.GetGameModel().gameMode != ModContent.GameModeId<ChristmasGameMode>())
+        AddDialogue();
+    }
+
+    public static void AddDialogue()
+    {
+        if (InGame.instance.GetGameModel().gameMode != GameModeId<ChristmasGameMode>())
         {
             DialogUi.instance.AddToDialogQueue(
                 Santa("Happy", "To play this mod with the story, you are <b>required</b> to play on the Christmas Game Mode!", InGame.instance.bridge.GetCurrentRound() + 1)
             );
             return;
-        }*/
+        }
 
         DialogUi.instance.AddToDialogQueue(
             Santa("Happy",

@@ -238,6 +238,8 @@ public partial class XmasMod2025 : BloonsTD6Mod
         foreach (var item in ModContent.GetContent<GiftShopItem>()) item.Reset();
 
         TookWallet = false;
+        
+        AddDialogue();
     }
 
     public override void OnNewGameModel(GameModel result)
