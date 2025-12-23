@@ -19,5 +19,5 @@ public static class ModHelperData
     public const string RepoName = "XmasMod2025";
     public const string Author = "DarkTerraYT / Mattcy1";
 
-    public const string Dependencies = "DarkTerraYT/DialogLib";
+    public const string Dependencies = "DarkTerraYT/DialogueLib";
 }
