@@ -20,7 +20,7 @@ internal class BottomPath
     {
         public override int Path => Bottom;
         public override int Tier => 1;
-        public override int Cost => 70;
+        public override int Cost => 40;
         public override string Description => "The cane monkey, throws the candy cane harder allowing for more damage.";
         public override string Icon => "BottomPathCane1";
 
@@ -34,7 +34,7 @@ internal class BottomPath
     {
         public override int Path => BOTTOM;
         public override int Tier => 2;
-        public override int Cost => 95;
+        public override int Cost => 55;
 
         public override string Description =>
             "Throws candy cane even harder for more damage, at the cost of less range.";
@@ -58,7 +58,7 @@ internal class BottomPath
     {
         public override int Path => BOTTOM;
         public override int Tier => 3;
-        public override int Cost => 150;
+        public override int Cost => 100;
         public override string Description => "Candy cane have a small chance to grant gifts.";
         public override string Icon => "BottomPathCane3";
         public override string Portrait => "Candy003Portrait";
@@ -92,7 +92,7 @@ public class FocusedShots : ChristmasUpgrade<CandyCaneMonkey>
 {
     public override int Path => BOTTOM;
     public override int Tier => 4;
-    public override int Cost => 650;
+    public override int Cost => 450;
 
     public override string Description =>
         "Slower, attack speed, less pierce, but INSANE single target damage perfect for taking down these pesky moab.";
@@ -120,7 +120,7 @@ public class ExtremlyFocusedShots : ChristmasUpgrade<CandyCaneMonkey>
 {
     public override int Path => BOTTOM;
     public override int Tier => 5;
-    public override int Cost => 5500;
+    public override int Cost => 2500;
     public override string Description => "With this guy in town, no boss will dare fight you.";
     public override string Icon => "BottomPathCane5";
     public override string Portrait => "Candy005Portrait";

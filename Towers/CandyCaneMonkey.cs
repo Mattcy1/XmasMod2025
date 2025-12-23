@@ -12,7 +12,7 @@ namespace XmasMod2025.Towers;
 public class CandyCaneMonkey : ChristmasTower
 {
     public override string BaseTower => "DartMonkey";
-    public override int Cost => 85;
+    public override int Cost => 55;
     public override string Icon => Portrait;
 
     public override string Description =>

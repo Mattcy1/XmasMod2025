@@ -21,7 +21,7 @@ internal class MiddlePath
     {
         public override int Path => Middle;
         public override int Tier => 1;
-        public override int Cost => 65;
+        public override int Cost => 35;
         public override string DisplayName => "Improved Eyesight";
         public override string Description => "Increase the range of all weapons.";
         public override string Icon => "MiddlePathCane1";
@@ -40,7 +40,7 @@ internal class MiddlePath
     {
         public override int Path => Middle;
         public override int Tier => 2;
-        public override int Cost => 70;
+        public override int Cost => 45;
         public override string Description => "Gains even more range, and can pop camos.";
         public override string Icon => "MiddlePathCane2";
 
@@ -57,7 +57,7 @@ internal class MiddlePath
     {
         public override int Path => Middle;
         public override int Tier => 3;
-        public override int Cost => 225;
+        public override int Cost => 150;
         public override string Description => "The candy cane is set on fire allowing it to pop Leads, and inflict dot";
         public override string Icon => "MiddlePathCane3";
         public override string Portrait => "Candy030Portrait";
@@ -95,7 +95,7 @@ public class CandyCaneRing : ChristmasUpgrade<CandyCaneMonkey>
 {
     public override int Path => Middle;
     public override int Tier => 4;
-    public override int Cost => 800;
+    public override int Cost => 550;
     public override string Description => "Ability: Spawns a ring of candy cane around him.";
     public override string Icon => "MiddlePathCane4";
     public override string Portrait => "Candy040Portrait";
@@ -134,7 +134,7 @@ public class CandyCaneStorm : ChristmasUpgrade<CandyCaneMonkey>
 {
     public override int Path => Middle;
     public override int Tier => 5;
-    public override int Cost => 3500;
+    public override int Cost => 2000;
     public override string Description => "Shoots candy canes so hot they melt bloons in seconds.";
     public override string Icon => "MiddlePathCane5";
     public override string Portrait => "Candy050Portrait";
