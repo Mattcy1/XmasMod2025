@@ -20,9 +20,9 @@ using System.Threading.Tasks;
 
 namespace XmasMod2025.Towers.RoundsTowers
 {
-    internal class Snowmans 
+    internal class Snowmen 
     {
-        public class R20 : ChristmasTower
+        public class Snowman1 : ChristmasTower
         {
             public override string BaseTower => TowerType.BananaFarm;
             protected override int Order => 1;
@@ -42,9 +42,8 @@ namespace XmasMod2025.Towers.RoundsTowers
                 towerModel.dontDisplayUpgrades = true;
 
                 var proj = towerModel.GetWeapon().projectile;
-
-                proj.GetBehavior<CashModel>().maximum = 0;
-                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+                proj.RemoveBehavior<CashModel>();
+                proj.AddBehavior(new PickupModel("PickupModel", 10, 0.5f, false));
 
                 proj.RemoveBehavior<AgeModel>();
                 proj.RemoveBehavior<CreateEffectOnExpireModel>();
@@ -60,7 +59,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             }
         }
 
-        public class R40 : ChristmasTower
+        public class Snowman2 : ChristmasTower
         {
             public override string BaseTower => TowerType.BananaFarm;
             public override int Cost => 70;
@@ -80,9 +79,8 @@ namespace XmasMod2025.Towers.RoundsTowers
                 towerModel.dontDisplayUpgrades = true;
 
                 var proj = towerModel.GetWeapon().projectile;
-
-                proj.GetBehavior<CashModel>().maximum = 0;
-                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+                proj.RemoveBehavior<CashModel>();
+                proj.AddBehavior(new PickupModel("PickupModel", 10, 0.5f, false));
 
                 proj.RemoveBehavior<AgeModel>();
                 proj.RemoveBehavior<CreateEffectOnExpireModel>();
@@ -98,7 +96,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             }
         }
 
-        public class R60 : ChristmasTower
+        public class Snowman3 : ChristmasTower
         {
             public override string BaseTower => TowerType.BananaFarm;
             public override int Cost => 120;
@@ -118,9 +116,8 @@ namespace XmasMod2025.Towers.RoundsTowers
                 towerModel.dontDisplayUpgrades = true;
 
                 var proj = towerModel.GetWeapon().projectile;
-
-                proj.GetBehavior<CashModel>().maximum = 0;
-                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+                proj.RemoveBehavior<CashModel>();
+                proj.AddBehavior(new PickupModel("PickupModel", 10, 0.5f, false));
 
                 proj.RemoveBehavior<AgeModel>();
                 proj.RemoveBehavior<CreateEffectOnExpireModel>();
@@ -136,7 +133,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             }
         }
 
-        public class R80 : ChristmasTower
+        public class Snowman4 : ChristmasTower
         {
             public override string BaseTower => TowerType.BananaFarm;
             public override int Cost => 250;
@@ -156,9 +153,8 @@ namespace XmasMod2025.Towers.RoundsTowers
                 towerModel.dontDisplayUpgrades = true;
 
                 var proj = towerModel.GetWeapon().projectile;
-
-                proj.GetBehavior<CashModel>().maximum = 0;
-                proj.GetBehavior<CashModel>().minimum = proj.GetBehavior<CashModel>().maximum;
+                proj.RemoveBehavior<CashModel>();
+                proj.AddBehavior(new PickupModel("PickupModel", 10, 0.5f, false));
 
                 proj.RemoveBehavior<AgeModel>();
                 proj.RemoveBehavior<CreateEffectOnExpireModel>();
@@ -174,7 +170,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             }
         }
 
-        public class R20Display : ModTowerDisplay<R20>
+        public class Snowman1Display : ModTowerDisplay<Snowman1>
         {
             public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
             public override float Scale => 0.5f;
@@ -185,7 +181,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             }
         }
 
-        public class R40Display : ModTowerDisplay<R40>
+        public class Snowman2Display : ModTowerDisplay<Snowman2>
         {
             public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
             public override float Scale => 0.5f;
@@ -196,7 +192,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             }
         }
 
-        public class R60Display : ModTowerDisplay<R60>
+        public class Snowman3Display : ModTowerDisplay<Snowman3>
         {
             public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
             public override float Scale => 0.5f;
@@ -207,7 +203,7 @@ namespace XmasMod2025.Towers.RoundsTowers
             }
         }
 
-        public class R80Display : ModTowerDisplay<R80>
+        public class Snowman4Display : ModTowerDisplay<Snowman4>
         {
             public override string BaseDisplay => "a02429b5250b271449a603a5a8c1e2f7";
             public override float Scale => 0.5f;

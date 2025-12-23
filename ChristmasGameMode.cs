@@ -167,6 +167,9 @@ internal class ChristmasRouds : ModRoundSet
                 roundModel.AddBloonGroup<GiftBloon>(15, 0, 720);
                 roundModel.AddBloonGroup<SnowZomg>(5, 0, 720);
                 break;
+            case 100:
+                roundModel.AddBloonGroup<RoundStaller>();
+                break;
         }
     }
 }

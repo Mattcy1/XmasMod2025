@@ -711,6 +711,7 @@ public class Bloon_Destroy
         else if (__instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
         {
             PostProcessing.DisableNight();
+            XmasMod2025.ShowEndDialogue();
         }
     }
 }

@@ -1,13 +1,17 @@
-﻿using BTD_Mod_Helper.Api;
+﻿using System.Collections.Generic;
+using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
 using ChristmasMod;
 using DialogLib;
 using DialogLib.Ui;
+using HarmonyLib;
+using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
 using XmasMod2025.Assets;
+using XmasMod2025.Bloons;
 using static BTD_Mod_Helper.Api.ModContent;
 
 namespace XmasMod2025;
@@ -90,6 +94,7 @@ public partial class XmasMod2025
             ElfElder("Neutral", "Good job you took that big present down! Make sure you keep beating bosses to ensure you can save Santa!", 25),
             ElfElder("Neutral", "You should know however that the next boss coming can only be damaged by elves. In fact, they were an elf before they got corrupted by the bloons and become one themself!", 25),
             ElfElder("Neutral", "For whatever reason Santa's magic makes it so elves can only be hurt by bloons and other elves, and not by other monkeys.", 25),
+            ElfElder("Neutral", "Some snowmen decided to help us too! They'll generate gifts for you, all you need to do is place them down.", 25),
             new Dialog("Evil Elf", "That darn Santa finally got what he deserved I see. He had it coming for him after not paying us elves enough...", GetSpriteReference("ElfBoss-Icon"), 39, Voice.BassMale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
             new Dialog("Evil Elf", "...Or anything at all really.", GetSpriteReference("ElfBoss-Icon"), 39, Voice.BassMale)  {Background = AssetHelper.GetSprite("KrampusPanel")},
             Player("Disappointed", "Wasn't this brought up last year..?", 39),
@@ -120,8 +125,37 @@ public partial class XmasMod2025
             Player("Confused", "Does this guy not know about what Krampus is all about?", 79),
             new Dialog("Crying Coal", "Aren't you the one who wants to save Santa, just like you did last year?", GetSpriteReference("CoalBossIcon"), 80, Voice.Low)  {Background = AssetHelper.GetSprite("KrampusPanel")},
             new Dialog("Crying Coal", "Look at what Santa gave to me! I'll hate him forever for this! And I hate you by extension that means!", GetSpriteReference("CoalBossIcon"), 80, Voice.Low)  {Background = AssetHelper.GetSprite("KrampusPanel")},
-            Player("Neutral", "I don't think Santa gave you the coal, but whatever.", 80)
+            Player("Neutral", "I don't think Santa gave you the coal, but whatever.", 80),
+            new Dialog("Elf Elder", "Oh no! It became night, that means Krampus is up to something.", GetSpriteReference("ElfElderPanicked"), 90, Voice.Low) { Background = AssetHelper.GetSprite("ChristmasPanel"), OnThis = PostProcessing.EnableNight },
+            ElfElder("Panicked", "I'm not sure how long this night will last, but you should beware!", 90),
+            new Dialog("Elf Elder", "Phew, it seems night ended. Though, chances are Krampus's plan will ensue on the next night.", GetSpriteReference("ElfElderNeutral"), 93, Voice.Low) { Background = AssetHelper.GetSprite("ChristmasPanel"), OnThis = PostProcessing.DisableNight },
+            Player("Worry", "I'm scared now!", 93),
+            Krampus("Neutral", "Didn't I tell you not to try and save Santa?", 98),
+            Santa("Captured", "Please help me " + PlayerName + "!", 98),
+            Santa("Captured", "I don't think Krampus has very nice things planed for me!", 98),
+            Krampus("Neutral", "You be quiet Santa, you'll never be saved.", 98),
+            Player("Neutral", "Don't think I won't take you down Krampus.", 98),
+            Krampus("Yawn", "Well, time to finally finish this I suppose.", 100),
+            ElfElder("Panicked", $"{PlayerName} you need to stop Krampus and save Santa now!", 100),
+            Player("Confused", "Uh, that's no Krampus, that's a bloon...", 100),
+            Krampus("Neutral", "Of course it's not me. You think I'm dumb enough to fully charge into battle like that idiot Grinch did?", 100),
+            Krampus("Neutral", "That was his biggest mistake.", 100),
+            Player("Neutral", "Sounds like you're just a scaredy cat to me.", 100)
         ]);
+    }
+
+    public static void ShowEndDialogue()
+    {
+        DialogUi.instance.ShowQueue(new Queue<Dialog>([
+            Krampus("Neutral", "Impossible! How did you defeat my greatest creation of all time!", 100),
+            Player("Happy", "I'm just too good I guess.", 100),
+            Santa("Happy", $"Thanks for Saving me again, {PlayerName}. I really do owe you one.", 100),
+            Player("Neutral", "Yeah, you do owe me one. Like maybe some extra presents under the Christmas tree?", 100),
+            Santa("Disappointed", "Fine then... But only because I'm such a nice and jolly man and I pay my elves so well", 100),
+            ElfElder("Neutral", "Don't pretend that you do.", 100),
+            Santa("Happy", "Oh, c'mon you know that I'm a great employer.", 100),
+            new Dialog("Santa Claus", "But remember, Merry Christmas (or Happy Holidays) everyone! Ho ho ho...", GetSpriteReference("SantaHappy"), 100, SantaVoice) { OnNext = () => RoundStaller.AliveStaller?.Destroy()}
+        ]));
     }
 
     public static bool TookWallet = false;
