@@ -62,6 +62,8 @@ internal class Snowmen
 
             towerModel.GetWeapon().GetBehavior<EmissionsPerRoundFilterModel>().count = 3;
             towerModel.footprint = Game.instance.model.GetTower(TowerType.DartMonkey).footprint;
+            towerModel.radius = Game.instance.model.GetTower(TowerType.DartMonkey).radius;
+            towerModel.RadiusSquared = Game.instance.model.GetTower(TowerType.DartMonkey).RadiusSquared;
             proj.GetBehavior<CreateTextEffectModel>().assetId = new PrefabReference("");
         }
     }
