@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using BossAPI.Bosses;
+﻿using BossAPI.Bosses;
 using BTD_Mod_Helper.Api;
 using BTD_Mod_Helper.Api.Components;
 using BTD_Mod_Helper.Api.Enums;
@@ -14,6 +10,7 @@ using Il2Cpp;
 using Il2CppAssets.Scripts.Data;
 using Il2CppAssets.Scripts.Data.Legends;
 using Il2CppAssets.Scripts.Models.Bloons;
+using Il2CppAssets.Scripts.Models.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Bloons;
 using Il2CppAssets.Scripts.Simulation.Bloons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Towers;
@@ -25,13 +22,23 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.BloonMenu;
 using Il2CppTMPro;
 using MelonLoader;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using XmasMod2025.Assets;
+using XmasMod2025.Bloons;
+using XmasMod2025.Bloons.Bfbs;
 using XmasMod2025.Bloons.Moabs;
+using XmasMod2025.Bloons.Zomgs;
 using XmasMod2025.Bosses;
+using XmasMod2025.Towers;
+using XmasMod2025.Towers.Upgrades;
 using static XmasMod2025.BossAPI.BossAPI;
 using Color = UnityEngine.Color;
 using Info = BTD_Mod_Helper.Api.Components.Info;
+using Random = System.Random;
 
 namespace XmasMod2025.BossAPI;
 
@@ -104,6 +111,38 @@ public class Hooks
                     BossUI.HandleUI(@this);
                 }
             }
+
+        if (@this.bloonModel.baseId == ModContent.BloonID<SnowBloon>())
+        {
+            var rand = new System.Random();
+            var val = rand.Next(4);
+
+            if (val >= 0)
+            {
+                var time = Game.instance.model.GetBloon("Vortex1").GetBehavior<TimeTriggerModel>().Duplicate();
+                time.interval = 1f;
+                time.actionIds = new[] { "SnowBloonStun" };
+                time.name = "SnowBloonStun";
+
+                if (@this != null) @this.bloonModel.AddBehavior(time);
+            }
+        }
+
+        if (@this.bloonModel.baseId == ModContent.BloonID<ElfBoss>() && tower != null)
+        {
+            string[] allowed =
+            [
+                ModContent.TowerID<ElfMonkey>(), ModContent.TowerID<ToyCart.ToyCartTower>(),
+                ModContent.TowerID<ToyMortar.ToyMortarTower>()
+            ];
+
+            if (!allowed.Contains(tower.towerModel.baseId)) @this.health += (int)totalAmount;
+        }
+
+
+        if (@this.bloonModel.HasTag("Candy"))
+            if (tower != null && tower.towerModel.baseId != ModContent.TowerID<CandyCaneMonkey>())
+                @this.health -= (int)totalAmount;
 
         return true;
     }
@@ -271,6 +310,20 @@ public class Hooks
             foreach (var boss in ModContent.GetContent<ModBoss>())
                 if (boss.Id == __instance.bloonModel.baseId)
                     boss.OnSpawn(__instance);
+
+            var chance = XmasMod2025.PresentBloonChance == 0 ? 0 : 100 / (int)XmasMod2025.PresentBloonChance;
+            if (chance == 0) return;
+
+            var random = new Random().Next(1, chance + 1);
+
+            if (random == chance)
+            {
+                var moab = new Random().Next(1, 100);
+                if (moab == 1)
+                    InGame.instance.SpawnBloons(ModContent.BloonID<GiftMoab>(), 1, 0);
+                else
+                    InGame.instance.SpawnBloons(ModContent.BloonID<GiftBloon>(), 1, 0);
+            }
         }
     }
 
@@ -295,6 +348,7 @@ public class Hooks
         public static void Postfix(Bloon __instance)
         {
             foreach (var bossInfo in BossInfos)
+            {
                 if (__instance.bloonModel.IsModdedBoss())
                 {
                     bossInfo.Boss = __instance;
@@ -336,6 +390,80 @@ public class Hooks
 
                     break;
                 }
+            }
+
+            if (__instance.bloonModel.baseId == ModContent.BloonID<GiftBloon>())
+            {
+                var random = new System.Random().Next(1, 25);
+
+                if (InGame.instance != null || InGame.instance.bridge != null)
+                    InGame.instance.bridge.simulation.CreateTextEffect(__instance.Position,
+                        ModContent.CreatePrefabReference<CollectText>(), 2f, $"+{random} Gifts", true);
+
+                XmasMod2025.Gifts += random;
+
+                var bloons = Game.instance.model.bloons.ToList()
+                    .FindAll(bloon => !bloon.isMoab && !bloon.isBoss && !bloon.IsExclusiveToLegends);
+                System.Random rand = new();
+
+                var bloon = bloons[rand.Next(bloons.Count)];
+                var countRand = rand.Next(1, 5);
+
+
+                if (!bloon.baseId.Contains("Rock") && !bloon.baseId.Contains("TestBloon") &&
+                    !bloon.baseId.Contains("Gold") && !bloon.baseId.Contains(ModContent.BloonID<CoalTotem>()) &&
+                    !bloon.IsRegrowBloon() && !bloon.IsCamoBloon()) InGame.instance.SpawnBloons(bloon.id, countRand, 10);
+            }
+            else if (__instance.bloonModel.baseId == ModContent.BloonID<GiftMoab>())
+            {
+                var bloons = Game.instance.model.bloons.ToList().FindAll(bloon => bloon.isMoab && !bloon.isBoss);
+                System.Random rand = new();
+
+                var bloon = bloons[rand.Next(bloons.Count)];
+                var countRand = rand.Next(1, 3);
+
+                string[] unallowedIds = [];
+
+                var rnd = InGame.instance.bridge.GetCurrentRound();
+
+                if (rnd < 49)
+                    unallowedIds =
+                    [
+                        "Bfb", "Zomg", "Ddt", "Bad", ModContent.BloonID<ChocoBfb>(), ModContent.BloonID<SnowBfb>(),
+                    ModContent.BloonID<IceBfb>(), ModContent.BloonID<IceZomg>(), ModContent.BloonID<SnowZomg>(),
+                    ModContent.BloonID<ChocoZomg>()
+                    ];
+                else if (rnd < 59)
+                    unallowedIds =
+                    [
+                        "Zomg", "Ddt", "Bad", ModContent.BloonID<IceZomg>(), ModContent.BloonID<SnowZomg>(),
+                    ModContent.BloonID<ChocoZomg>()
+                    ];
+                else if (rnd < 69)
+                    unallowedIds =
+                    [
+                        "Zomg", "Bad", ModContent.BloonID<IceZomg>(), ModContent.BloonID<SnowZomg>(),
+                    ModContent.BloonID<ChocoZomg>()
+                    ];
+                else if (rnd < 93) unallowedIds = ["Bad"];
+
+                string[] BossID =
+                    ["Lych", "Phayze", "Bloonarius", "Dreadbloon", "Blastapopoulos", "Vortex", "Test", "Mini"];
+
+                if (!unallowedIds.Contains(bloon.baseId) && !BossID.Contains(bloon.id) && !bloon.HasTag("Sandbox") &&
+                    !bloon.isBoss)
+                {
+                    if (bloon.id.Contains("Mini") || bloon.id.Contains("Test"))
+                        InGame.instance.SpawnBloons(ModContent.BloonID<GiftMoab>(), 1, 10);
+                    else
+                        InGame.instance.SpawnBloons(bloon.id, countRand, 10);
+                }
+            }
+            else if (__instance.bloonModel.baseId == ModContent.BloonID<KrampusBoss>())
+            {
+                PostProcessing.DisableNight();
+                XmasMod2025.ShowEndDialogue();
+            }
         }
     }
 

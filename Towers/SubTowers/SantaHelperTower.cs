@@ -58,7 +58,7 @@ public class ElfHelper : ChristmasTower
     {
         towerModel.dontDisplayUpgrades = true;
         towerModel.isSubTower = true;
-        towerModel.ApplyDisplay<ElfMonkeyDisplay>()
+        towerModel.ApplyDisplay<ElfMonkeyDisplay>();
         towerModel.AddBehavior(new TowerExpireModel("TowerExpireModel", 20, 1, true, false));
     }
 }
