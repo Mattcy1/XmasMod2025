@@ -79,6 +79,8 @@ public partial class XmasMod2025 : BloonsTD6Mod
     public static int UpgradeCount = 0;
     public static bool KrampusAlive = false;
 
+    public static Dictionary<int, List<ChristmasTower>> ChristmasTowerByUnlock = [];
+
     private static double gifts;
 
     private static double snowflakes;
@@ -234,6 +236,8 @@ public partial class XmasMod2025 : BloonsTD6Mod
             SetCurrency(CurrencyType.Gift, 25);
             totalGifts = 25;
         }
+        
+        ChristmasTowerByUnlock.Clear();
 
         foreach (var item in ModContent.GetContent<GiftShopItem>()) item.Reset();
 

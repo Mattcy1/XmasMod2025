@@ -5,6 +5,7 @@ using BTD_Mod_Helper.Extensions;
 using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Simulation;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.RightMenu;
 using Il2CppAssets.Scripts.Unity.UI_New.InGame.StoreMenu;
 using UnityEngine;
@@ -46,19 +47,20 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
 
             if (model.GetModTower() is ChristmasTower cTower && cTower.UnlockRound != 0)
             {
+                if (cTower.UnlockRound <= InGame.instance.bridge.GetCurrentRound())
+                {
+                    return;
+                }
                 cTower.ShopButton = __result.GameObject;
                 cTower.ShopButton.transform.parent.gameObject.SetActive(false);
 
-                if (ButtonsToUnlock.TryGetValue(cTower.UnlockRound, out var buttons))
+                if (!XmasMod2025.ChristmasTowerByUnlock.ContainsKey(cTower.UnlockRound))
                 {
-                    buttons.Add(cTower.ShopButton);
+                    XmasMod2025.ChristmasTowerByUnlock.Add(cTower.UnlockRound, [cTower]);
                 }
                 else
                 {
-                    if (ButtonsToUnlock.ContainsKey(cTower.UnlockRound))
-                        ButtonsToUnlock[cTower.UnlockRound].Add(cTower.ShopButton);
-                    else
-                        ButtonsToUnlock.Add(cTower.UnlockRound, [cTower.ShopButton]);
+                    XmasMod2025.ChristmasTowerByUnlock[cTower.UnlockRound].Add(cTower);
                 }
             }
         }
@@ -69,9 +71,10 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
     {
         public static void Postfix(int spawnedRound)
         {
-            if (ButtonsToUnlock.TryGetValue(spawnedRound, out var buttons))
-                foreach (var button in buttons)
+            if (XmasMod2025.ChristmasTowerByUnlock.TryGetValue(spawnedRound, out var christmasTowers))
+                foreach (var tower in christmasTowers)
                 {
+                    var button = tower.ShopButton;
                     if (!button)
                     {
                         ModHelper.Warning<XmasMod2025>("An unlock button is null?");
