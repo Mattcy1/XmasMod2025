@@ -46,8 +46,8 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
 
             if (model.GetModTower() is ChristmasTower cTower && cTower.UnlockRound != 0)
             {
-                cTower.ShopButton = __result.GameObject.transform.parent.gameObject;
-                cTower.ShopButton.SetActive(false);
+                cTower.ShopButton = __result.GameObject;
+                cTower.ShopButton.transform.parent.gameObject.SetActive(false);
 
                 if (ButtonsToUnlock.TryGetValue(cTower.UnlockRound, out var buttons))
                 {
@@ -78,7 +78,7 @@ public abstract class ChristmasTower : ModTower<XmasTowerSet>
                         return;
                     }
 
-                    button.SetActive(true);
+                    button.transform.parent.gameObject.SetActive(true);
                 }
         }
     }

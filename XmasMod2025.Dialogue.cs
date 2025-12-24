@@ -64,13 +64,13 @@ public partial class XmasMod2025
 
     public static void AddDialogue()
     {
-        if (InGame.instance.GetGameModel().gameMode != GameModeId<ChristmasGameMode>())
+        /*if (InGame.instance.GetGameModel().gameMode != GameModeId<ChristmasGameMode>())
         {
             DialogUi.instance.AddToDialogQueue(
                 Santa("Happy", "To play this mod with the story, you are <b>required</b> to play on the Christmas Game Mode!", InGame.instance.bridge.GetCurrentRound() + 1)
             );
             return;
-        }
+        }*/
 
         DialogUi.instance.AddToDialogQueue(
             Santa("Happy",

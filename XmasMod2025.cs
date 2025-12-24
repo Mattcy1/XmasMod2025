@@ -375,7 +375,8 @@ public partial class XmasMod2025 : BloonsTD6Mod
                 mapData.metaData["XmasMod2025-TookWallet"] = json;
 
             json = JsonConvert.SerializeObject(Gifts);
-            if (!mapData.metaData.TryAdd("XmasMod2025-Gifts", json)) mapData.metaData["XmasMod2025-Gifts"] = json;
+            if (!mapData.metaData.TryAdd("XmasMod2025-Gifts", json))
+                mapData.metaData["XmasMod2025-Gifts"] = json;
 
             json = JsonConvert.SerializeObject(TotalGifts);
             if (!mapData.metaData.TryAdd("XmasMod2025-TotalGifts", json))

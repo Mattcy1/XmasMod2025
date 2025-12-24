@@ -293,24 +293,25 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
     [HarmonyPatch(typeof(Projectile), nameof(Projectile.Initialise))]
     private static class Projectile_Initialize
     {
-        public static Projectile LastProjectile;
-        public static uint ToyCartCounter;
-
         public static void Postfix(Projectile __instance)
         {
             if (__instance.projectileModel.id == "ToyCart_Low")
             {
-                var towerId = ObjectId.Create(9999 + ToyCartCounter++);
-                LastProjectile = __instance;
-                InGame.instance.bridge.CreateTowerAt(__instance.Position.ToUnity(), GetTowerModel<ToyCartTower>(),
-                    towerId, false, new Action<bool>(suc => { }), true, true, false, 0, false);
+                var tower = InGame.instance.bridge.simulation.towerManager.CreateTower(GetTowerModel<ToyCartTower>(),
+                    __instance.Position, -1, __instance.Sim.map.GetAreaAtPoint(__instance.Position.ToVector2()).Id,
+                    __instance.EmittedByTowerId);
+                
+                TowerForProjectile.Add(__instance, tower);
+                ProjectileForTower.Add(tower, __instance);
             }
             else if (__instance.projectileModel.id == "ToyCart_High")
             {
-                var towerId = ObjectId.Create(9999 + ToyCartCounter++);
-                LastProjectile = __instance;
-                InGame.instance.bridge.CreateTowerAt(__instance.Position.ToUnity(), GetTowerModel<ToyCartTower>(0, 1),
-                    towerId, false, new Action<bool>(suc => { }), true, true, false, 0, false);
+                var tower = InGame.instance.bridge.simulation.towerManager.CreateTower(GetTowerModel<ToyCartTower>(0, 1),
+                    __instance.Position, -1, __instance.Sim.map.GetAreaAtPoint(__instance.Position.ToVector2()).Id,
+                    __instance.EmittedByTowerId);
+                
+                TowerForProjectile.Add(__instance, tower);
+                ProjectileForTower.Add(tower, __instance);
             }
         }
     }
@@ -340,19 +341,6 @@ public class ToyCart : ChristmasUpgrade<ElfMonkey>
                 TowerForProjectile.Remove(ProjectileForTower[__instance]);
                 ProjectileForTower[__instance].Destroy();
                 ProjectileForTower.Remove(__instance);
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(Tower), nameof(Il2CppAssets.Scripts.Simulation.Towers.Tower.Initialise))]
-    private static class Tower_Initialize
-    {
-        public static void Postfix(Tower __instance)
-        {
-            if (__instance.towerModel.baseId == TowerID<ToyCartTower>())
-            {
-                TowerForProjectile.Add(Projectile_Initialize.LastProjectile, __instance);
-                __instance.ParentId = Projectile_Initialize.LastProjectile.EmittedByTowerId;
             }
         }
     }

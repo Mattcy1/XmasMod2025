@@ -6,7 +6,7 @@ public static class Ext
 {
     public static string FormatNumber(this double num)
     {
-        if (num < 1000) return num.ToString("#.###");
+        if (num < 1000) return num.ToString("#");
         var zeros = (int)Math.Log10(num);
         if (zeros >= 50)
         {

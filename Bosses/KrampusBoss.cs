@@ -176,6 +176,7 @@ internal class KrampusBoss : ModBoss
 
         public void Start()
         {
+            Log("spawn krampus");
             half = false;
             nextHalf = false;
         }

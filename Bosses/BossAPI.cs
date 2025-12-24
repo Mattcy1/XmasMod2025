@@ -48,8 +48,11 @@ public class BossAPI
     public static List<ModHelperImage> skullUIs = new();
 
     public static List<BossInfo> BossInfos = new();
+    public static IOrderedEnumerable<BossInfo> OrderedInfo;
 
     public static Dictionary<int, BossInfo> roundsSpawn = new();
+
+    public static BossInfo? NextBoss;
 
     public static int RoundsUntilNextBoss;
 
@@ -229,15 +232,21 @@ public class Hooks
                 return;
             }
 
+            BossInfos = BossInfos.OrderBy(info => info.SpawnRound).ToList();
+            
+            if (NextBoss == null)
+            {
+                NextBoss = BossInfos.First();
+            }
+            
             var lowestRound = roundsSpawn.Keys.Min();
-            var FirstBossToSpawn = roundsSpawn[lowestRound];
 
             if (RoundBossUI.instance != null)
                 RoundBossUI.instance.Close();
 
             elaspedRound = __instance.bridge.GetCurrentRound();
 
-            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+            RoundBossUI.CreateRoundsUI(NextBoss);
 
             NearestBoss = lowestRound - elaspedRound;
         }
@@ -259,16 +268,22 @@ public class Hooks
                 MelonLogger.Warning("RoundSpawn dictionary is empty!");
                 return;
             }
+            
+            BossInfos = BossInfos.OrderBy(info => info.SpawnRound).ToList();
 
+            if (NextBoss == null)
+            {
+                NextBoss = BossInfos.First();
+            }
+            
             var lowestRound = roundsSpawn.Keys.Min();
-            var FirstBossToSpawn = roundsSpawn[lowestRound];
 
             if (RoundBossUI.instance != null)
                 RoundBossUI.instance.Close();
 
             elaspedRound = __instance.bridge.GetCurrentRound();
 
-            RoundBossUI.CreateRoundsUI(FirstBossToSpawn);
+            RoundBossUI.CreateRoundsUI(NextBoss);
 
             NearestBoss = lowestRound - elaspedRound;
         }
@@ -328,7 +343,7 @@ public class Hooks
     }
 
     //Credit doombubbles add bosses to sandbox
-    [HarmonyPatch(typeof(BloonMenu), nameof(BloonMenu.CreateBloonButtons))]
+    /*[HarmonyPatch(typeof(BloonMenu), nameof(BloonMenu.CreateBloonButtons))]
     public class BloonMenu_CreateBloonButtons
     {
         [HarmonyPrefix]
@@ -338,7 +353,7 @@ public class Hooks
                 if (bloon.HasTag("Sandbox") && !sortedBloons.Contains(bloon) && bloon.legendsType == LegendsType.None)
                     sortedBloons.Add(bloon);
         }
-    }
+    }*/
 
     //Destroy ui on popped
     [HarmonyPatch(typeof(Bloon), nameof(Bloon.OnDestroy))]
@@ -368,24 +383,11 @@ public class Hooks
                         if (BossUI.instance != null) BossUI.instance.Close();
                     }
 
-                    if (roundsSpawn.Count > 0)
+                    int bossIndex = BossInfos.IndexOf(NextBoss);
+                    if (bossIndex < BossInfos.Count - 1)
                     {
-                        var lowestRound = roundsSpawn.Keys.Min();
-
-                        if (RoundBossUI.instance != null)
-                            RoundBossUI.instance.Close();
-
-                        roundsSpawn.Remove(lowestRound);
-
-                        if (roundsSpawn.Count > 0)
-                        {
-                            var nextLowest = roundsSpawn.Keys.Min();
-
-                            var nextBoss = roundsSpawn[nextLowest];
-                            RoundBossUI.CreateRoundsUI(nextBoss);
-
-                            NearestBoss = nextLowest;
-                        }
+                        NextBoss = BossInfos[bossIndex + 1];
+                        RoundBossUI.CreateRoundsUI(NextBoss);
                     }
 
                     break;
