@@ -1,5 +1,5 @@
 <h1 align="center">
-<a href="https://github.com/doombubbles/template-mod/releases/latest/download/TemplateMod.dll">
+<a href="https://github.com/Mattcy1/XmasMod2025/releases/latest/download/XmasMod2025.dll">
     <img align="left" alt="Icon" height="90" src="https://github.com/Mattcy1/XmasMod2025/blob/master/Assets/XmasTowerSet-Button.png">
     <img align="right" alt="Download" height="75" src="https://raw.githubusercontent.com/gurrenm3/BTD-Mod-Helper/master/BloonsTD6%20Mod%20Helper/Resources/DownloadBtn.png">
 </a>
@@ -25,6 +25,6 @@ Get ready to save Xmas once again!
   models and icons, bloons (except candy cane bloon) and moabs textures and icons, snow moab and bloon logic, post
   processing effects, dialogue messages and portraits (other than Santa's portraits), custom ui panels, xmas tree model
 
-- ReLogic - Made the krampus boos music (FrostMoon.wav is from the game Terraria)
+- ReLogic - Made the krampus boss music (FrostMoon.wav is from the game Terraria)
 
 [![Requires BTD6 Mod Helper](https://raw.githubusercontent.com/gurrenm3/BTD-Mod-Helper/master/banner.png)](https://github.com/gurrenm3/BTD-Mod-Helper#readme)
